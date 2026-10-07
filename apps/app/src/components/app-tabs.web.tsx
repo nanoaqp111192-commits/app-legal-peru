@@ -33,6 +33,9 @@ export default function AppTabs() {
           <TabTrigger name="modelos" href="/modelos" asChild>
             <TabButton>Modelos</TabButton>
           </TabTrigger>
+          <TabTrigger name="plazos" href="/plazos" asChild>
+            <TabButton>Plazos</TabButton>
+          </TabTrigger>
           <TabTrigger name="alertas" href="/alertas" asChild>
             <TabButton>Alertas</TabButton>
           </TabTrigger>
@@ -70,8 +73,10 @@ export function CustomTabList(props: TabListProps) {
   const angosta = !enCliente || ancho < 640;
 
   return (
-    <View {...props} style={styles.tabListContainer}>
-      <ThemedView type="backgroundElement" style={styles.innerContainer}>
+    <View {...props} style={[styles.tabListContainer, angosta && styles.compacto]}>
+      <ThemedView
+        type="backgroundElement"
+        style={[styles.innerContainer, angosta && styles.compacto]}>
         {angosta ? null : (
           <ThemedText type="smallBold" style={[styles.brandText, { color: colors.accent }]}>
             App Legal Perú
@@ -117,6 +122,11 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
     maxWidth: MaxContentWidth,
   },
+  // Cinco pestañas en 360-390 px: menos relleno para que no desborden.
+  compacto: {
+    paddingHorizontal: Spacing.two,
+    gap: Spacing.one,
+  },
   brandText: {
     marginRight: 'auto',
   },
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
   },
   tabButtonView: {
     paddingVertical: Spacing.one,
-    paddingHorizontal: Spacing.three,
+    paddingHorizontal: Spacing.two,
     borderRadius: Spacing.three,
   },
   externalPressable: {

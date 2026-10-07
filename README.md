@@ -4,13 +4,13 @@ Normas legales del Perú publicadas cada día en El Peruano, clasificadas por ra
 derecho, con búsqueda, alertas y modelos de escritos. Una sola base de código para web,
 Android e iOS.
 
-Estado: **fase 1 (MVP)** del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
+Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
 
 ## Qué hay en este repositorio
 
 | Carpeta | Qué es |
 | --- | --- |
-| `apps/app` | App en Expo (React Native + web). Pestañas: Hoy, Buscar, Modelos, Alertas. |
+| `apps/app` | App en Expo (React Native + web). Pestañas: Hoy, Buscar, Modelos, Plazos, Alertas. |
 | `ingesta` | Proceso en Python que trae las normas del día de El Peruano, las clasifica por rama, las guarda y envía los avisos push. |
 | `supabase/migrations` | Esquema de la base de datos (PostgreSQL en Supabase) con búsqueda de texto completo y seguridad por filas. |
 | `contenido/modelos` | Modelos de escritos (JSON). Fuente única: la app y la base de datos se alimentan de aquí. |
@@ -65,6 +65,12 @@ La migración se prueba en CI sobre un PostgreSQL limpio (`supabase/pruebas`).
 - **Clasificación por reglas:** se basa en el sector y palabras del título. Ya se ajustó con
   las normas reales del 07/10/2026 (actos de personal, ceses, municipalidades), pero seguirá
   habiendo errores que conviene revisar y corregir en `ingesta/ingesta/clasificador.py`.
+- **Calculadora de plazos:** es referencial y de alto riesgo (un error puede costar un plazo).
+  La tabla de plazos (`apps/app/src/data/plazos.ts`) y el calendario de feriados
+  (`apps/app/src/data/calendario.ts`) se revisaron el 07/10/2026; la próxima revisión es el
+  07/04/2027. Cada año hay que agregar los feriados (Semana Santa cambia) y los días no
+  laborables que decrete el Ejecutivo. No incluye feriados regionales o locales ni el término
+  de la distancia; el usuario puede agregarlos como días inhábiles.
 - **Íconos y marca:** la app usa todavía los íconos por defecto de Expo.
 - **Avisos por correo:** previstos en el plan; hoy solo hay avisos push.
 - La app no reemplaza la publicación oficial: cada norma enlaza a El Peruano.

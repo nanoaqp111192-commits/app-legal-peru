@@ -24,6 +24,10 @@ export default function AppTabs() {
         <NativeTabs.Trigger.Label>Modelos</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="doc.text" md="description" />
       </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="plazos">
+        <NativeTabs.Trigger.Label>Plazos</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="calendar" md="event" />
+      </NativeTabs.Trigger>
       <NativeTabs.Trigger name="alertas">
         <NativeTabs.Trigger.Label>Alertas</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="bell" md="notifications" />

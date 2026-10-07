@@ -36,5 +36,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.three,
     borderRadius: 999,
     borderWidth: 1,
+    // Los nombres largos (actos procesales) pasan a dos líneas en vez de salirse.
+    maxWidth: '100%',
   },
 });
