@@ -62,3 +62,19 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run export:web
+
+  # Lee el listado real de El Peruano sin guardar nada. No bloquea el PR (depende de un
+  # sitio externo), pero avisa si la fuente cambió de formato.
+  fuente-el-peruano:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: ingesta
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - run: python -m ingesta diaria --seco
