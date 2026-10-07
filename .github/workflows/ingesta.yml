@@ -1,4 +1,4 @@
-name: Ingesta diaria de El Peruano
+name: Ingesta diaria (El Peruano y Tribunal Constitucional)
 
 on:
   schedule:
@@ -46,3 +46,31 @@ jobs:
           # Sin credenciales de Supabase la ingesta corre en seco (útil para probar la fuente).
           if [ "$SECO" = "true" ] || [ -z "$SUPABASE_URL" ]; then args+=(--seco); fi
           python -m ingesta diaria "${args[@]}"
+
+  # Resoluciones del Tribunal Constitucional. Va aparte porque es lento: el
+  # TC pide 30 segundos entre pedidos (unos 30 minutos para un día completo).
+  # Las ya guardadas no se vuelven a pedir, así que el segundo run del día es corto.
+  tribunal-constitucional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: ingesta
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - name: Traer y guardar las resoluciones del último día publicado
+        env:
+          SECO: ${{ inputs.seco }}
+        run: |
+          if [ "$SECO" = "true" ] || [ -z "$SUPABASE_URL" ]; then
+            python -m ingesta tc --seco
+          else
+            python -m ingesta tc
+          fi

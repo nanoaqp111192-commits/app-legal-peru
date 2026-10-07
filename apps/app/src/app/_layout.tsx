@@ -20,6 +20,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerBackButtonDisplayMode: 'minimal' }}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="norma/[id]" options={{ title: 'Norma' }} />
+        <Stack.Screen name="resolucion/[id]" options={{ title: 'Resolución del TC' }} />
         <Stack.Screen name="modelo/[slug]" options={{ title: 'Modelo de escrito' }} />
       </Stack>
     </ThemeProvider>

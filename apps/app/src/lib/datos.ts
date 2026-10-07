@@ -1,8 +1,9 @@
+import { RESOLUCIONES_DEMO } from '@/data/jurisprudencia-demo';
 import { NORMAS_DEMO } from '@/data/normas-demo';
 import MODELOS from '@/data/modelos.json';
 
 import { supabase } from './supabase';
-import type { Alerta, Modelo, Norma } from './tipos';
+import type { Alerta, Modelo, Norma, Resolucion } from './tipos';
 
 const COLUMNAS_NORMA =
   'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en';
@@ -57,6 +58,47 @@ export async function obtenerNorma(id: number): Promise<Norma | null> {
     .maybeSingle();
   if (error) throw error;
   return data as Norma | null;
+}
+
+const COLUMNAS_RESOLUCION =
+  'id,id_fuente,expediente,tipo,proceso,numero,colegiado,demandante,demandado,sumilla,fallo,fecha_publicacion,url_oficial,url_pdf,url_html';
+
+/** Sin consulta ni filtros devuelve lo más reciente. */
+export async function buscarJurisprudencia(
+  consulta: string,
+  procesos: string[],
+): Promise<Resolucion[]> {
+  if (!supabase) {
+    const q = sinTildes(consulta);
+    return RESOLUCIONES_DEMO.filter(
+      (r) =>
+        (!procesos.length || (r.proceso && procesos.includes(r.proceso))) &&
+        (!q ||
+          sinTildes(
+            `${r.expediente} ${r.numero} ${r.sumilla} ${r.demandante} ${r.demandado}`,
+          ).includes(q)),
+    );
+  }
+  const { data, error } = await supabase
+    .rpc('buscar_jurisprudencia', {
+      consulta,
+      filtro_procesos: procesos.length ? procesos : null,
+      limite: 40,
+    })
+    .select(COLUMNAS_RESOLUCION);
+  if (error) throw error;
+  return (data ?? []) as Resolucion[];
+}
+
+export async function obtenerResolucion(id: number): Promise<Resolucion | null> {
+  if (!supabase) return RESOLUCIONES_DEMO.find((r) => r.id === id) ?? null;
+  const { data, error } = await supabase
+    .from('jurisprudencia')
+    .select(`${COLUMNAS_RESOLUCION},texto`)
+    .eq('id', id)
+    .maybeSingle();
+  if (error) throw error;
+  return data as Resolucion | null;
 }
 
 // Los modelos viajan dentro de la app (src/data/modelos.json) para funcionar sin conexión;
