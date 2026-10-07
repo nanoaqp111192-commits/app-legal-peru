@@ -56,16 +56,15 @@ La migración se prueba en CI sobre un PostgreSQL limpio (`supabase/pruebas`).
 
 ## Pendiente y riesgos conocidos
 
-- **Listado de El Peruano sin validar:** el entorno donde se construyó no podía conectarse a
-  elperuano.pe. El lector se probó con HTML de muestra; la primera corrida de
-  `ingesta.yml` (se puede lanzar a mano en modo seco) confirma si la URL del listado es
-  correcta. Si cambia, solo hay que ajustar `pedir_listado` en
-  `ingesta/ingesta/fuentes/el_peruano.py`.
+- **Lectura de El Peruano:** validada el 07/10/2026 contra el listado real (95 normas). Si el
+  diario cambia su web, el job `fuente-el-peruano` del CI lo detecta; el ajuste va en
+  `pedir_listado` o `parsear_listado` de `ingesta/ingesta/fuentes/el_peruano.py`.
 - **Modelos en borrador:** los 10 modelos deben ser revisados por un abogado antes de
   publicarse; la app lo indica en cada uno. Las marcas `[[VERIFICAR]]` señalan lo que
   depende del caso o requiere confirmar el texto vigente.
-- **Clasificación por reglas:** se basa en el sector y palabras del título; habrá aciertos
-  y errores que conviene revisar con normas reales y ajustar en `ingesta/clasificador.py`.
+- **Clasificación por reglas:** se basa en el sector y palabras del título. Ya se ajustó con
+  las normas reales del 07/10/2026 (actos de personal, ceses, municipalidades), pero seguirá
+  habiendo errores que conviene revisar y corregir en `ingesta/ingesta/clasificador.py`.
 - **Íconos y marca:** la app usa todavía los íconos por defecto de Expo.
 - **Avisos por correo:** previstos en el plan; hoy solo hay avisos push.
 - La app no reemplaza la publicación oficial: cada norma enlaza a El Peruano.

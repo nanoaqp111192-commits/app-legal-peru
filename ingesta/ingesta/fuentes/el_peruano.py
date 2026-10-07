@@ -6,11 +6,10 @@ busca cada enlace a ``busquedas.elperuano.pe/dispositivo/...`` y toma el
 sector, la fecha y la sumilla del bloque que lo contiene. La ficha de cada
 norma (``/dispositivo/NL/<id>``) da el texto completo.
 
-PENDIENTE DE VALIDAR: la URL y los parámetros de ``URL_LISTADO`` se
-tomaron de cómo funciona la web pública y no se pudieron probar desde el
-entorno de desarrollo (la red bloquea elperuano.pe). El primer run de la
-GitHub Action ``ingesta`` lo confirma; si falla, solo hay que ajustar
-``pedir_listado``.
+Validado el 07/10/2026 desde GitHub Actions: el listado real de ese día
+dio 95 normas con número, sector y título correctos. El job
+``fuente-el-peruano`` del CI repite la prueba en cada cambio y avisa si el
+diario cambia su web.
 """
 
 from __future__ import annotations

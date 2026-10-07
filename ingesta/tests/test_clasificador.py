@@ -37,6 +37,44 @@ def norma(titulo, sector=None):
         ),
         ("Ordenanza que aprueba el TUPA", "GOBIERNOS LOCALES", ["administrativo", "municipal"]),
         ("Aprueban el plan operativo institucional", "CULTURA", ["otros"]),
+        # Títulos reales del listado de El Peruano del 07/10/2026.
+        ("Cesan por límite de edad a fiscal provincial titular", "MINISTERIO PUBLICO", ["otros"]),
+        (
+            "Dan por concluido el nombramiento de fiscal adjunto provincial provisional",
+            "MINISTERIO PUBLICO",
+            ["otros"],
+        ),
+        (
+            "Declaran improcedente solicitud y cesan por límite de edad a fiscal superior",
+            "MINISTERIO PUBLICO",
+            ["otros"],
+        ),
+        ("Formalizan designación de Gerente General", "INDECOPI", ["otros"]),
+        (
+            "Designan fiscal titular en la Fiscalía Provincial Transitoria Especializada en"
+            " Delitos de Lesiones y Agresiones en contra de las Mujeres e Integrantes del"
+            " Grupo Familiar",
+            "MINISTERIO PUBLICO",
+            ["otros"],
+        ),
+        ("Conceden licencia con goce de haber a juez superior", "PODER JUDICIAL", ["otros"]),
+        (
+            "Autorizan funcionamiento de la Cooperativa de Ahorro y Crédito Central Sindical",
+            "SUPERINTENDENCIA DE BANCA, SEGUROS Y AFP",
+            ["comercial"],
+        ),
+        ("Aprueban el reglamento de libertad sindical", None, ["laboral"]),
+        (
+            "Ordenanza que regula el comercio ambulatorio",
+            "MUNICIPALIDAD DE SAN BORJA",
+            ["municipal"],
+        ),
+        ("Ordenanza regional sobre turismo", "GOBIERNO REGIONAL DE TUMBES", ["municipal"]),
+        (
+            "Aprueban el reglamento sancionador",
+            "MUNICIPALIDAD DE LIMA",
+            ["administrativo", "municipal"],
+        ),
     ],
 )
 def test_clasificar(titulo, sector, esperado):
