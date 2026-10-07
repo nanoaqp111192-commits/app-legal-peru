@@ -1,0 +1,26 @@
+# Node / Expo
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+*.tsbuildinfo
+# Carpetas nativas generadas por Expo (prebuild)
+apps/app/android/
+apps/app/ios/
+
+# Python
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Secretos
+.env
+.env.local
+*.keystore
+*.p8
+*.p12
+
+.DS_Store
