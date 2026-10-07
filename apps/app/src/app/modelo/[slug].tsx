@@ -1,8 +1,9 @@
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState, useSyncExternalStore } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { Vacio } from '@/components/avisos';
+import { Boton } from '@/components/boton';
 import { Pantalla } from '@/components/pantalla';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -214,24 +215,6 @@ function Campo({
   );
 }
 
-function Boton({ etiqueta, alPresionar }: { etiqueta: string; alPresionar: () => void }) {
-  const tema = useTheme();
-  return (
-    <Pressable
-      accessibilityRole="button"
-      onPress={alPresionar}
-      style={({ pressed }) => [
-        styles.boton,
-        { backgroundColor: tema.accent },
-        pressed && { opacity: 0.8 },
-      ]}>
-      <ThemedText type="smallBold" style={{ color: tema.onAccent }}>
-        {etiqueta}
-      </ThemedText>
-    </Pressable>
-  );
-}
-
 const styles = StyleSheet.create({
   titulo: { fontSize: 20, lineHeight: 28 },
   caja: { padding: Spacing.three, borderRadius: Spacing.three, gap: Spacing.one },
@@ -247,9 +230,4 @@ const styles = StyleSheet.create({
   hoja: { borderWidth: 1, borderRadius: Spacing.two, padding: Spacing.four },
   textoHoja: { fontFamily: Fonts?.serif, fontSize: 15, lineHeight: 24 },
   acciones: { flexDirection: 'row', gap: Spacing.three, justifyContent: 'center' },
-  boton: {
-    paddingVertical: Spacing.three,
-    paddingHorizontal: Spacing.four,
-    borderRadius: Spacing.three,
-  },
 });
