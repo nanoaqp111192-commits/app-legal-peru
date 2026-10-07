@@ -1,0 +1,128 @@
+{
+  "slug": "civil-subsanacion-demanda",
+  "titulo": "Escrito de subsanación de demanda",
+  "rama": "civil",
+  "tipo": "judicial",
+  "descripcion": "Para cumplir lo ordenado en la resolución que declara inadmisible la demanda, dentro del plazo concedido.",
+  "base_legal": [
+    "Código Procesal Civil, art. 426 (plazo no mayor de diez días para subsanar)",
+    "Código Procesal Civil, arts. 424 y 425 (requisitos y anexos de la demanda)"
+  ],
+  "campos": [
+    {
+      "clave": "expediente",
+      "etiqueta": "N° de expediente",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+    },
+    {
+      "clave": "especialista",
+      "etiqueta": "Especialista legal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "escrito_numero",
+      "etiqueta": "N° de escrito",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 03"
+    },
+    {
+      "clave": "juzgado",
+      "etiqueta": "Juzgado o sala",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "casilla",
+      "etiqueta": "Casilla electrónica",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número de casilla del SINOE"
+    },
+    {
+      "clave": "partes",
+      "etiqueta": "Partes del proceso",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+    },
+    {
+      "clave": "resolucion",
+      "etiqueta": "Resolución que declara inadmisible",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Resolución N° 01 de fecha 01/10/2026"
+    },
+    {
+      "clave": "fecha_notificacion",
+      "etiqueta": "Fecha de notificación de la resolución",
+      "tipo": "fecha",
+      "requerido": true
+    },
+    {
+      "clave": "observaciones",
+      "etiqueta": "Subsanación de cada observación",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Una observación por línea: qué pidió el juzgado y cómo se cumple"
+    },
+    {
+      "clave": "anexos",
+      "etiqueta": "Anexos que se adjuntan",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Ej.: 1-A Copia de DNI; 1-B Tasa judicial"
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Subsano omisiones\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nQue, habiendo sido notificado el {{fecha_notificacion}} con la {{resolucion}}, que declara inadmisible la demanda, y estando dentro del plazo concedido, cumplo con subsanar las observaciones advertidas en los siguientes términos:\n\n{{observaciones}}\n\nANEXOS:\n\n{{anexos}}\n\nPOR TANTO:\n\nA usted, señor Juez, solicito tener por subsanadas las omisiones advertidas y, en consecuencia, admitir a trámite la demanda.\n\n[[VERIFICAR: cómputo del plazo fijado en la resolución, desde la notificación en casilla electrónica]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "Si no se subsana dentro del plazo, el juez rechaza la demanda y ordena el archivo (art. 426 CPC). Computar el plazo en días hábiles desde que surte efecto la notificación electrónica.",
+  "estado": "borrador"
+}

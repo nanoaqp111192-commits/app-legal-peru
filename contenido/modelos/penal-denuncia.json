@@ -1,0 +1,108 @@
+{
+  "slug": "penal-denuncia",
+  "titulo": "Denuncia penal ante la Fiscalía",
+  "rama": "penal",
+  "tipo": "fiscal",
+  "descripcion": "Para poner en conocimiento del Ministerio Público un hecho con apariencia de delito.",
+  "base_legal": [
+    "Código Procesal Penal, art. 326 (facultad y obligación de denunciar)",
+    "Código Procesal Penal, art. 328 (contenido de la denuncia)",
+    "Código Procesal Penal, art. 329 (inicio de la investigación)"
+  ],
+  "campos": [
+    {
+      "clave": "fiscalia",
+      "etiqueta": "Fiscalía",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: FISCALÍA PROVINCIAL PENAL CORPORATIVA DE TURNO DE AREQUIPA"
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "correo",
+      "etiqueta": "Correo electrónico para notificaciones",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "denunciado",
+      "etiqueta": "Denunciado(s)",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Nombre e identificación, o 'los que resulten responsables'"
+    },
+    {
+      "clave": "delito",
+      "etiqueta": "Delito y artículo del Código Penal",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: estafa (art. 196 del Código Penal)"
+    },
+    {
+      "clave": "hechos",
+      "etiqueta": "Hechos",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Qué pasó, cuándo, dónde y quién intervino, en orden cronológico"
+    },
+    {
+      "clave": "pruebas",
+      "etiqueta": "Medios probatorios",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "diligencias",
+      "etiqueta": "Diligencias que se solicitan",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Ej.: recibir mi declaración, pedir información a la entidad bancaria"
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Sumilla : Formulo denuncia penal\n\nSEÑOR FISCAL DE LA {{fiscalia}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y correo electrónico {{correo}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, al amparo del artículo 326 del Código Procesal Penal, formulo DENUNCIA PENAL contra {{denunciado}}, por la presunta comisión del delito de {{delito}}, en mi agravio, solicitando se inicien las diligencias de investigación correspondientes.\n\nII. HECHOS\n\n{{hechos}}\n\nIII. TIPIFICACIÓN\n\nLos hechos descritos se subsumen en el delito de {{delito}} [[VERIFICAR: texto vigente del tipo penal en el SPIJ y si exige requisito de procedibilidad]].\n\nIV. DILIGENCIAS QUE SE SOLICITAN\n\n{{diligencias}}\n\nV. MEDIOS PROBATORIOS\n\n{{pruebas}}\n\nPOR TANTO:\n\nA usted, señor Fiscal, solicito tener por formulada la denuncia y disponer el inicio de la investigación preliminar.\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "Revisar la prescripción de la acción penal y si el delito es de ejercicio privado (querella ante el juez, no denuncia fiscal), como los delitos contra el honor.",
+  "estado": "borrador"
+}

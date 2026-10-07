@@ -1,0 +1,101 @@
+{
+  "slug": "civil-apersonamiento-casilla",
+  "titulo": "Apersonamiento y señalamiento de casilla electrónica",
+  "rama": "civil",
+  "tipo": "judicial",
+  "descripcion": "Para que una parte (o su nuevo abogado) se apersone al proceso y fije domicilio procesal y casilla electrónica.",
+  "base_legal": [
+    "Código Procesal Civil, arts. 80 y 424 inc. 2",
+    "TUO de la Ley Orgánica del Poder Judicial, art. 155-A y siguientes (notificación electrónica)"
+  ],
+  "campos": [
+    {
+      "clave": "expediente",
+      "etiqueta": "N° de expediente",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+    },
+    {
+      "clave": "especialista",
+      "etiqueta": "Especialista legal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "escrito_numero",
+      "etiqueta": "N° de escrito",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 03"
+    },
+    {
+      "clave": "juzgado",
+      "etiqueta": "Juzgado o sala",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "casilla",
+      "etiqueta": "Casilla electrónica",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número de casilla del SINOE"
+    },
+    {
+      "clave": "partes",
+      "etiqueta": "Partes del proceso",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Me apersono y señalo casilla electrónica\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nI. APERSONAMIENTO\n\nQue, me apersono al presente proceso en calidad de parte, señalando como domicilio procesal el indicado en el encabezado y como casilla electrónica la N° {{casilla}} del Sistema de Notificaciones Electrónicas (SINOE), donde solicito se me notifiquen todas las resoluciones que se expidan.\n\nII. DESIGNACIÓN DE ABOGADO\n\nQue, designo como abogado defensor al letrado que autoriza el presente escrito, {{abogado}}, con registro {{colegiatura}}, otorgándole las facultades generales de representación del artículo 74 del Código Procesal Civil [[VERIFICAR: si se otorgan facultades especiales del art. 75 CPC se requiere poder por escritura pública o acta ante el juez]].\n\nPOR TANTO:\n\nA usted, señor Juez, solicito tenerme por apersonado y proveer conforme a ley.\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "Revisar si el poder del abogado requiere facultades especiales. La casilla electrónica es obligatoria para abogados según la normativa del Poder Judicial.",
+  "estado": "borrador"
+}

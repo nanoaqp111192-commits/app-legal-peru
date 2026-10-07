@@ -1,0 +1,142 @@
+{
+  "slug": "civil-apelacion-sentencia",
+  "titulo": "Recurso de apelación de sentencia (civil)",
+  "rama": "civil",
+  "tipo": "judicial",
+  "descripcion": "Apelación contra una sentencia civil, estructurada por agravios.",
+  "base_legal": [
+    "Código Procesal Civil, arts. 364 a 367 (objeto, requisitos y fundamentación del agravio)",
+    "Código Procesal Civil, art. 478 inc. 13 (10 días en proceso de conocimiento) y art. 556 (3 días en sumarísimo)"
+  ],
+  "campos": [
+    {
+      "clave": "expediente",
+      "etiqueta": "N° de expediente",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+    },
+    {
+      "clave": "especialista",
+      "etiqueta": "Especialista legal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "escrito_numero",
+      "etiqueta": "N° de escrito",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 03"
+    },
+    {
+      "clave": "juzgado",
+      "etiqueta": "Juzgado o sala",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "casilla",
+      "etiqueta": "Casilla electrónica",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número de casilla del SINOE"
+    },
+    {
+      "clave": "partes",
+      "etiqueta": "Partes del proceso",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+    },
+    {
+      "clave": "sentencia",
+      "etiqueta": "Sentencia que se apela",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Resolución N° 15 (sentencia) de fecha 20/09/2026"
+    },
+    {
+      "clave": "fecha_notificacion",
+      "etiqueta": "Fecha de notificación de la sentencia",
+      "tipo": "fecha",
+      "requerido": true
+    },
+    {
+      "clave": "via",
+      "etiqueta": "Vía procedimental",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Conocimiento, abreviado o sumarísimo"
+    },
+    {
+      "clave": "pretension_impugnatoria",
+      "etiqueta": "Pretensión impugnatoria",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Ej.: que se revoque la sentencia y, reformándola, se declare fundada la demanda"
+    },
+    {
+      "clave": "agravios",
+      "etiqueta": "Agravios",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Por cada agravio: error de hecho o de derecho, considerando donde está y por qué perjudica"
+    },
+    {
+      "clave": "tasa",
+      "etiqueta": "Tasa judicial",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número y monto del arancel por apelación de sentencia"
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Interpongo recurso de apelación\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, no encontrándome conforme con la {{sentencia}}, notificada el {{fecha_notificacion}}, interpongo RECURSO DE APELACIÓN con efecto suspensivo [[VERIFICAR: efecto que corresponde según la vía y la materia]], a fin de que el superior jerárquico {{pretension_impugnatoria}}.\n\nII. FUNDAMENTACIÓN DEL AGRAVIO (art. 366 CPC)\n\n{{agravios}}\n\nIII. NATURALEZA DEL AGRAVIO\n\nLa sentencia apelada me causa agravio porque afecta directamente mi derecho, conforme se ha explicado en cada punto anterior.\n\nIV. ANEXOS\n\n1-A. Tasa judicial por apelación de sentencia: {{tasa}}.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito conceder el recurso y elevar los actuados al superior jerárquico.\n\n[[VERIFICAR: plazo según la vía ({{via}}): conocimiento 10 días, abreviado 5 días, sumarísimo 3 días, contados en días hábiles desde la notificación]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "El art. 366 CPC exige precisar el error de hecho o de derecho, sustentar el agravio y la pretensión impugnatoria. Una apelación genérica se declara improcedente.",
+  "estado": "borrador"
+}

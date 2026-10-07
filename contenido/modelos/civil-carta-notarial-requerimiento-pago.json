@@ -1,0 +1,81 @@
+{
+  "slug": "civil-carta-notarial-requerimiento-pago",
+  "titulo": "Carta notarial de requerimiento de pago",
+  "rama": "civil",
+  "tipo": "extrajudicial",
+  "descripcion": "Intimación de pago al deudor antes de demandar; deja constancia fehaciente de la fecha y constituye en mora.",
+  "base_legal": [
+    "Código Civil, art. 1333 (constitución en mora por intimación)",
+    "Decreto Legislativo 1049, Ley del Notariado, art. 100 (certificación de cartas)"
+  ],
+  "campos": [
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    },
+    {
+      "clave": "destinatario",
+      "etiqueta": "Nombre del deudor",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_destinatario",
+      "etiqueta": "Domicilio del deudor",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "acreedor",
+      "etiqueta": "Nombre del acreedor",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "acreedor_dni",
+      "etiqueta": "DNI o RUC del acreedor",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "origen_deuda",
+      "etiqueta": "Origen de la deuda",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Contrato, préstamo, facturas, con fechas"
+    },
+    {
+      "clave": "monto",
+      "etiqueta": "Monto adeudado",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: S/ 15,000.00 (quince mil con 00/100 soles)"
+    },
+    {
+      "clave": "plazo_pago",
+      "etiqueta": "Plazo para pagar",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: cinco (5) días calendario"
+    },
+    {
+      "clave": "forma_pago",
+      "etiqueta": "Forma de pago",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Cuenta bancaria o lugar de pago"
+    }
+  ],
+  "cuerpo": "{{lugar}}, {{fecha}}\n\nCARTA NOTARIAL\n\nSeñor(a):\n{{destinatario}}\n{{domicilio_destinatario}}\nPresente.-\n\nAsunto: Requerimiento de pago\n\nDe mi consideración:\n\nPor medio de la presente, yo, {{acreedor}}, identificado(a) con documento N° {{acreedor_dni}}, me dirijo a usted para requerirle el pago de la suma de {{monto}}, cuyo origen es el siguiente:\n\n{{origen_deuda}}\n\nA la fecha, dicha obligación se encuentra vencida e impaga. En consecuencia, conforme al artículo 1333 del Código Civil, le INTIMO para que en el plazo de {{plazo_pago}} de recibida la presente cumpla con pagar la suma adeudada mediante {{forma_pago}}, más los intereses que correspondan.\n\nDe no cumplir dentro del plazo indicado, me veré obligado(a) a iniciar las acciones legales que correspondan, incluida la conciliación extrajudicial y el proceso judicial respectivo, con la consiguiente condena en costas y costos.\n\nAtentamente,\n\n\n____________________________\n{{acreedor}}\n\n[[VERIFICAR: si el contrato pactó mora automática (art. 1333 inc. 1 CC), la intimación no es necesaria para la mora, pero sigue siendo útil como prueba]]",
+  "notas": "Antes de demandar una obligación de dar suma de dinero, verificar si la materia exige conciliación extrajudicial previa (Ley 26872 y su reglamento).",
+  "estado": "borrador"
+}

@@ -1,0 +1,99 @@
+{
+  "slug": "penal-apersonamiento-copias-carpeta-fiscal",
+  "titulo": "Apersonamiento ante Fiscalía y pedido de copias de la carpeta fiscal",
+  "rama": "penal",
+  "tipo": "fiscal",
+  "descripcion": "Para que el investigado o el agraviado se apersone a la investigación, designe abogado y pida copias.",
+  "base_legal": [
+    "Código Procesal Penal (D. Leg. 957), art. 84 inc. 7 (acceso a la carpeta y copias)",
+    "Código Procesal Penal, art. 138 (obtención de copias)",
+    "Código Procesal Penal, arts. 71 y 95 (derechos del imputado y del agraviado)"
+  ],
+  "campos": [
+    {
+      "clave": "carpeta",
+      "etiqueta": "N° de carpeta fiscal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "fiscalia",
+      "etiqueta": "Fiscalía",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: SEGUNDA FISCALÍA PROVINCIAL PENAL CORPORATIVA DE AREQUIPA"
+    },
+    {
+      "clave": "fiscal",
+      "etiqueta": "Fiscal a cargo",
+      "tipo": "texto",
+      "requerido": false
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "condicion",
+      "etiqueta": "Condición del recurrente",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Investigado o agraviado"
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "correo",
+      "etiqueta": "Correo electrónico para notificaciones",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "delito",
+      "etiqueta": "Delito investigado",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Carpeta Fiscal N° : {{carpeta}}\nFiscal : {{fiscal}}\nSumilla : Me apersono y solicito copias\n\nSEÑOR FISCAL DE LA {{fiscalia}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, en calidad de {{condicion}}, con domicilio procesal en {{domicilio_procesal}} y correo electrónico {{correo}}, en la investigación por el presunto delito de {{delito}}, a usted respetuosamente digo:\n\nI. APERSONAMIENTO\n\nQue, me apersono a la presente investigación en calidad de {{condicion}}, señalando domicilio procesal y correo electrónico donde solicito se me notifique.\n\nII. DESIGNACIÓN DE ABOGADO DEFENSOR\n\nQue, designo como abogado defensor a {{abogado}}, con registro {{colegiatura}}, quien autoriza el presente escrito.\n\nIII. SOLICITUD DE COPIAS\n\nQue, al amparo del artículo 84 inciso 7 y del artículo 138 del Código Procesal Penal, solicito se expidan copias simples de todo lo actuado en la carpeta fiscal, para el ejercicio de la defensa, asumiendo el costo que corresponda.\n\nPOR TANTO:\n\nA usted, señor Fiscal, solicito tenerme por apersonado y acceder a lo solicitado.\n\n[[VERIFICAR: si la investigación tiene reserva o secreto dispuesto (art. 324 CPP), el acceso puede limitarse]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "El campo 'Fiscal a cargo' es opcional; se puede omitir del encabezado si no se conoce.",
+  "estado": "borrador"
+}
