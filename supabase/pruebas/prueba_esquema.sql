@@ -41,3 +41,30 @@ do $$ begin
   raise exception 'alerta vacía aceptada';
 exception when check_violation then raise notice 'ok: alerta vacía rechazada';
 end $$;
+
+-- Jurisprudencia del TC
+insert into jurisprudencia (id_fuente, expediente, tipo, proceso, numero, colegiado, demandante, demandado, sumilla, fallo, fecha_publicacion, url_oficial) values
+  ('2026/05853-2025-AA', '05853-2025-AA', 'sentencia', 'Amparo', 'Sentencia 1635/2026', 'SALA PRIMERA', 'PROTEKTOR SEGURIDAD INTEGRAL SAC', 'OECE', 'Recurso de agravio constitucional contra la resolución que declaró improcedente la demanda de amparo', 'Declarar IMPROCEDENTE la demanda.', '2026-09-30', 'https://x/a'),
+  ('2026/05750-2025-HC', '05750-2025-HC', 'sentencia', 'Hábeas corpus', null, 'SALA PRIMERA', 'JIAN FRANCO HUAMAN NAVARRO', 'JUEZ SUPREMO', 'Hábeas corpus contra resolución judicial que confirmó la prisión preventiva', 'Declarar INFUNDADA la demanda.', '2026-09-30', 'https://x/b');
+do $$ begin
+  if (select count(*) from buscar_jurisprudencia('prision preventiva')) <> 1 then
+    raise exception 'búsqueda sin tildes en jurisprudencia falló';
+  end if;
+  if (select expediente from buscar_jurisprudencia('05853-2025') limit 1) <> '05853-2025-AA' then
+    raise exception 'búsqueda por expediente falló';
+  end if;
+  if (select count(*) from buscar_jurisprudencia('', array['Amparo'])) <> 1 then
+    raise exception 'filtro por proceso falló';
+  end if;
+  raise notice 'ok: búsqueda de jurisprudencia';
+end $$;
+set role anon;
+do $$ begin
+  if (select count(*) from jurisprudencia) <> 2 then raise exception 'anon no lee jurisprudencia'; end if;
+end $$;
+do $$ begin
+  insert into jurisprudencia (id_fuente, expediente, tipo, fecha_publicacion, url_oficial) values ('x', 'x', 'auto', now(), 'x');
+  raise exception 'anon pudo escribir jurisprudencia';
+exception when insufficient_privilege then raise notice 'ok: anon no escribe jurisprudencia';
+end $$;
+reset role;

@@ -4,14 +4,14 @@ Normas legales del Perú publicadas cada día en El Peruano, clasificadas por ra
 derecho, con búsqueda, alertas y modelos de escritos. Una sola base de código para web,
 Android e iOS.
 
-Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
+Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos lista; jurisprudencia del TC) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
 
 ## Qué hay en este repositorio
 
 | Carpeta | Qué es |
 | --- | --- |
 | `apps/app` | App en Expo (React Native + web). Pestañas: Hoy, Buscar, Modelos, Plazos, Alertas. |
-| `ingesta` | Proceso en Python que trae las normas del día de El Peruano, las clasifica por rama, las guarda y envía los avisos push. |
+| `ingesta` | Proceso en Python que trae las normas del día de El Peruano y las resoluciones del Tribunal Constitucional, las clasifica, las guarda y envía los avisos push. |
 | `supabase/migrations` | Esquema de la base de datos (PostgreSQL en Supabase) con búsqueda de texto completo y seguridad por filas. |
 | `contenido/modelos` | Modelos de escritos (JSON). Fuente única: la app y la base de datos se alimentan de aquí. |
 | `.github/workflows` | Pruebas en cada cambio (`ci.yml`) e ingesta programada dos veces al día (`ingesta.yml`). |
@@ -65,6 +65,12 @@ La migración se prueba en CI sobre un PostgreSQL limpio (`supabase/pruebas`).
 - **Clasificación por reglas:** se basa en el sector y palabras del título. Ya se ajustó con
   las normas reales del 07/10/2026 (actos de personal, ceses, municipalidades), pero seguirá
   habiendo errores que conviene revisar y corregir en `ingesta/ingesta/clasificador.py`.
+- **Jurisprudencia del TC:** se lee la página de resoluciones del último día publicado
+  (`ingesta/ingesta/fuentes/tribunal_constitucional.py`). El robots.txt del TC pide 30 segundos
+  entre pedidos, así que un día completo tarda unos 30 minutos; las resoluciones ya guardadas no
+  se vuelven a pedir. Si la GitHub Action no corre algún día, ese día se pierde (la página solo
+  muestra el último). Se guardan los nombres de las partes como los publica el TC (que ya
+  anonimiza algunos) y se ocultan los DNI del texto.
 - **Calculadora de plazos:** es referencial y de alto riesgo (un error puede costar un plazo).
   La tabla de plazos (`apps/app/src/data/plazos.ts`) y el calendario de feriados
   (`apps/app/src/data/calendario.ts`) se revisaron el 07/10/2026; la próxima revisión es el

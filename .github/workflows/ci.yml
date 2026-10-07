@@ -78,3 +78,19 @@ jobs:
           python-version: "3.13"
       - run: pip install -e .
       - run: python -m ingesta diaria --seco
+
+  # Igual que la anterior, para el Tribunal Constitucional: lee el listado del
+  # último día y completa 2 resoluciones (el TC pide 30 s entre pedidos).
+  fuente-tc:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: ingesta
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - run: python -m ingesta tc --seco

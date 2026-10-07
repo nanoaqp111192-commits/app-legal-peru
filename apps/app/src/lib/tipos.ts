@@ -50,3 +50,22 @@ export type Alerta = {
   sectores: string[];
   activa: boolean;
 };
+
+export type Resolucion = {
+  id: number;
+  id_fuente: string;
+  expediente: string;
+  tipo: string; // 'sentencia' | 'auto' | 'sentencia interlocutoria'
+  proceso: string | null;
+  numero: string | null;
+  colegiado: string | null;
+  demandante: string | null;
+  demandado: string | null;
+  sumilla: string | null;
+  fallo: string | null;
+  texto: string | null;
+  fecha_publicacion: string; // AAAA-MM-DD
+  url_oficial: string;
+  url_pdf: string | null;
+  url_html: string | null;
+};

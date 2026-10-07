@@ -13,8 +13,8 @@ export function AvisoDemo() {
   return (
     <ThemedView style={[styles.caja, { backgroundColor: tema.verificar }]}>
       <ThemedText type="small">
-        Modo demostración: las normas que ves son ejemplos, no publicaciones reales. Conecta el
-        servidor (ver README) para ver El Peruano del día.
+        Modo demostración: las normas y resoluciones que ves son ejemplos, no publicaciones reales.
+        Conecta el servidor (ver README) para ver El Peruano del día.
       </ThemedText>
     </ThemedView>
   );
