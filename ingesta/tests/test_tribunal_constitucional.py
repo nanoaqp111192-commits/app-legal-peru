@@ -59,6 +59,7 @@ def test_parsear_resolucion():
     assert datos["sumilla"].startswith(
         "Recurso de agravio constitucional interpuesto por la empresa"
     )
+    assert "de setiembre de 2025, expedida" in datos["sumilla"]  # sin la llamada a nota "1"
     assert datos["fallo"] == "Declarar IMPROCEDENTE la demanda."
     assert "vía igualmente satisfactoria" in datos["texto"]
     assert "Foja 120" not in datos["texto"]  # sin notas al pie
@@ -114,3 +115,15 @@ def test_lector_respeta_la_pausa(monkeypatch):
     lector.get("https://x/1")
     lector.get("https://x/2")
     assert len(esperas) == 1 and 29 < esperas[0] <= 30
+
+
+def test_asunto_con_numeral_o_sin_titulo():
+    con_numeral = "<p><strong>I. ASUNTO</strong></p><p>Recurso de agravio interpuesto por X.</p>"
+    assert tc.parsear_resolucion(con_numeral)["sumilla"] == "Recurso de agravio interpuesto por X."
+    sin_titulo = (
+        "<p>En Lima, a los 3 días...</p>"
+        "<p>Recurso de agravio constitucional interpuesto por Y contra la resolución.</p>"
+    )
+    assert tc.parsear_resolucion(sin_titulo)["sumilla"].startswith(
+        "Recurso de agravio constitucional"
+    )

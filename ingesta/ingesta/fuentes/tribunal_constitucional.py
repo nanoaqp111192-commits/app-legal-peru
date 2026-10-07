@@ -67,6 +67,10 @@ _RE_PDF = re.compile(r'href="(https?://[^"]+/jurisprudencia/[^"]+\.pdf)"', re.IG
 _RE_NUMERO = re.compile(
     r"\b((?:Sentencia|Auto|Resolución)\s+(?:interlocutoria\s+)?\d+/\d{4})", re.I
 )
+# "ASUNTO", "I. ASUNTO", "A. ASUNTO"...
+_RE_ASUNTO = re.compile(r"^(?:[IVXA-D]+\.\s*)?ASUNTO$")
+# Sin sección ASUNTO (p. ej. algunas sentencias del Pleno): primer párrafo que la describe.
+_RE_INICIO_ASUNTO = re.compile(r"^(Recurso de agravio constitucional|Demanda de |Recurso de queja)")
 _RE_DNI = re.compile(
     r"((?:DNI|D\.N\.I\.?|documento nacional de identidad)\s*(?:N\.?\s*[°º]?\.?|número)?\s*)\d{8}",
     re.IGNORECASE,
@@ -124,7 +128,8 @@ def _texto(nodo: Tag | None) -> str | None:
     if nodo is None:
         return None
     texto = " ".join(nodo.get_text(" ").split())
-    return texto or None
+    # get_text(" ") deja espacios antes de la puntuación al unir etiquetas en línea.
+    return re.sub(r" ([,.;:)])", r"\1", texto) or None
 
 
 def _url(url: str) -> str:
@@ -208,7 +213,7 @@ def _parrafos(sopa: BeautifulSoup) -> list[str]:
 def parsear_resolucion(html: str) -> dict:
     """Número, asunto, fallo y texto (sin notas al pie) de la versión HTML."""
     sopa = BeautifulSoup(html, "html.parser")
-    for nota in sopa.select("section.footnotes, script, style"):
+    for nota in sopa.select("section.footnotes, a.footnote-ref, script, style"):
         nota.decompose()
     numero = None
 
@@ -217,7 +222,7 @@ def parsear_resolucion(html: str) -> dict:
     fallo: list[str] = []
     for i, p in enumerate(parrafos):
         clave = p.upper().strip(" :")
-        if clave == "ASUNTO" and sumilla is None and i + 1 < len(parrafos):
+        if _RE_ASUNTO.match(clave) and sumilla is None and i + 1 < len(parrafos):
             sumilla = parrafos[i + 1]
         if clave in ("HA RESUELTO", "RESUELVE"):
             for siguiente in parrafos[i + 1 :]:
@@ -226,6 +231,8 @@ def parsear_resolucion(html: str) -> dict:
                 fallo.append(siguiente)
             break
 
+    if sumilla is None:
+        sumilla = next((p for p in parrafos if _RE_INICIO_ASUNTO.match(p)), None)
     cabecera = [t for t in (_texto(a) for a in sopa.find_all("a")[:4]) if t]
     texto = "\n".join(cabecera + parrafos)
     return {
