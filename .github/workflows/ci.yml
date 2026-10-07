@@ -62,6 +62,12 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run export:web
+      # Con credenciales la app usa otro camino (cliente de Supabase); debe exportar igual.
+      - name: Exportar web con servidor configurado
+        run: npx expo export -p web --output-dir /tmp/dist-con-servidor
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: https://ejemplo.supabase.co
+          EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: clave-de-prueba
 
   # Lee el listado real de El Peruano sin guardar nada. No bloquea el PR (depende de un
   # sitio externo), pero avisa si la fuente cambió de formato.

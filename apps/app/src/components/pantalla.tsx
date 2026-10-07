@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { AvisoSinConexion } from './avisos';
 import { ThemedView } from './themed-view';
 
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
@@ -26,7 +27,10 @@ export function Pantalla({ children, refrescando, alRefrescar, conEncabezado }: 
               <RefreshControl refreshing={!!refrescando} onRefresh={alRefrescar} />
             ) : undefined
           }>
-          <View style={styles.columna}>{children}</View>
+          <View style={styles.columna}>
+            <AvisoSinConexion />
+            {children}
+          </View>
         </ScrollView>
       </SafeAreaView>
     </ThemedView>

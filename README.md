@@ -4,7 +4,7 @@ Normas legales del Perú publicadas cada día en El Peruano, clasificadas por ra
 derecho, con búsqueda, alertas y modelos de escritos. Una sola base de código para web,
 Android e iOS.
 
-Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos lista; jurisprudencia del TC) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
+Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos, jurisprudencia del TC y modo sin conexión listos) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
 
 ## Qué hay en este repositorio
 
@@ -26,6 +26,13 @@ npm run web        # o: npm run android
 
 Sin variables de entorno arranca en **modo demostración**, con normas de ejemplo
 marcadas como tales. Los modelos de escritos funcionan completos sin conexión.
+
+## Sin conexión
+
+Lo que ya se abrió con señal (normas del día, fichas, resoluciones y búsquedas por rama o
+proceso) queda guardado en el dispositivo y se puede ver sin internet, con un aviso que
+indica la fecha de la copia. Sin señal, la búsqueda por texto filtra lo guardado. Se
+conservan las 120 consultas más recientes. Las alertas necesitan conexión.
 
 ## Poner en marcha el servidor
 

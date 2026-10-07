@@ -5,6 +5,8 @@ import { ThemedView } from './themed-view';
 
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
+import { useCopiaSinConexion } from '@/lib/conexion';
+import { fechaCorta } from '@/lib/fechas';
 import { modoDemo } from '@/lib/supabase';
 
 export function AvisoDemo() {
@@ -20,16 +22,39 @@ export function AvisoDemo() {
   );
 }
 
+export function AvisoSinConexion() {
+  const tema = useTheme();
+  const copia = useCopiaSinConexion();
+  if (!copia) return null;
+  // La copia se guardó en UTC; se muestra la hora de Lima (UTC-5).
+  const lima = new Date(new Date(copia).getTime() - 5 * 3600 * 1000).toISOString();
+  return (
+    <ThemedView style={[styles.caja, { backgroundColor: tema.verificar }]}>
+      <ThemedText type="small">
+        Sin conexión: ves lo guardado en este dispositivo (copia del {fechaCorta(lima.slice(0, 10))}{' '}
+        a las {lima.slice(11, 16)}). Puede no incluir lo publicado después.
+      </ThemedText>
+    </ThemedView>
+  );
+}
+
 export function Cargando() {
   return <ActivityIndicator style={{ marginTop: Spacing.five }} />;
 }
 
 export function MensajeError({ error }: { error: unknown }) {
   const tema = useTheme();
-  const texto = error instanceof Error ? error.message : String(error);
+  // Supabase devuelve objetos con `message` que no son instancias de Error.
+  const texto =
+    error && typeof error === 'object' && 'message' in error
+      ? String((error as { message: unknown }).message)
+      : String(error);
+  const sinSenal = /fetch|network|abort|internet/i.test(texto);
   return (
     <ThemedText type="small" style={{ color: tema.vacio }}>
-      No se pudo cargar la información: {texto}
+      {sinSenal
+        ? 'Sin conexión, y esto no está guardado en el dispositivo. Lo que hayas abierto antes sí se puede ver sin señal.'
+        : `No se pudo cargar la información: ${texto}`}
     </ThemedText>
   );
 }
