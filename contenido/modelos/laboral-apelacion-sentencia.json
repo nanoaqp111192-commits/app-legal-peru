@@ -1,0 +1,125 @@
+{
+  "slug": "laboral-apelacion-sentencia",
+  "titulo": "Recurso de apelación de sentencia (laboral)",
+  "rama": "laboral",
+  "tipo": "judicial",
+  "descripcion": "Apelación contra la sentencia del proceso laboral, dentro de los cinco días hábiles.",
+  "base_legal": [
+    "Ley 29497, art. 32 (apelación: 5 días hábiles desde el día siguiente a la audiencia o a la citación para notificación)",
+    "Código Procesal Civil, art. 366, de aplicación supletoria (fundamentación del agravio)"
+  ],
+  "campos": [
+    {
+      "clave": "expediente",
+      "etiqueta": "N° de expediente",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+    },
+    {
+      "clave": "especialista",
+      "etiqueta": "Especialista legal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "escrito_numero",
+      "etiqueta": "N° de escrito",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 03"
+    },
+    {
+      "clave": "juzgado",
+      "etiqueta": "Juzgado o sala",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "casilla",
+      "etiqueta": "Casilla electrónica",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número de casilla del SINOE"
+    },
+    {
+      "clave": "partes",
+      "etiqueta": "Partes del proceso",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+    },
+    {
+      "clave": "sentencia",
+      "etiqueta": "Sentencia que se apela",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "fecha_notificacion",
+      "etiqueta": "Fecha de notificación o de la audiencia",
+      "tipo": "fecha",
+      "requerido": true
+    },
+    {
+      "clave": "pretension_impugnatoria",
+      "etiqueta": "Pretensión impugnatoria",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "agravios",
+      "etiqueta": "Agravios",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Interpongo recurso de apelación\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, no encontrándome conforme con la {{sentencia}}, notificada el {{fecha_notificacion}}, interpongo RECURSO DE APELACIÓN, a fin de que la Sala Laboral {{pretension_impugnatoria}}.\n\nII. AGRAVIOS\n\n{{agravios}}\n\nIII. FUNDAMENTO\n\nEl presente recurso se interpone dentro del plazo de cinco días hábiles previsto en el artículo 32 de la Ley 29497 y cumple con precisar los errores y agravios, conforme al artículo 366 del Código Procesal Civil, aplicable supletoriamente.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito conceder el recurso con efecto suspensivo y elevar los actuados.\n\n[[VERIFICAR: si corresponde tasa judicial (el trabajador con pretensión menor a 70 URP está exonerado, art. III del Título Preliminar de la NLPT)]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "El plazo corre desde el día hábil siguiente a la audiencia de notificación de sentencia o a la citación para ella (art. 32 NLPT), no desde la casilla.",
+  "estado": "borrador"
+}

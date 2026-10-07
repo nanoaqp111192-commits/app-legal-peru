@@ -1,0 +1,87 @@
+{
+  "slug": "laboral-descargos-falta-grave",
+  "titulo": "Carta de descargos ante imputación de falta grave",
+  "rama": "laboral",
+  "tipo": "extrajudicial",
+  "descripcion": "Respuesta del trabajador a la carta de preaviso de despido por falta grave.",
+  "base_legal": [
+    "TUO del D. Leg. 728, Ley de Productividad y Competitividad Laboral (D.S. 003-97-TR), art. 31 (plazo no menor de seis días naturales para el descargo)",
+    "D.S. 003-97-TR, art. 25 (falta grave)",
+    "Constitución Política, art. 139 inc. 14 (derecho de defensa)"
+  ],
+  "campos": [
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    },
+    {
+      "clave": "empleador",
+      "etiqueta": "Empleador (razón social)",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "representante",
+      "etiqueta": "Dirigido a",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Gerente de Recursos Humanos"
+    },
+    {
+      "clave": "trabajador",
+      "etiqueta": "Nombre del trabajador",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "trabajador_dni",
+      "etiqueta": "DNI del trabajador",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "cargo",
+      "etiqueta": "Cargo del trabajador",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "carta_imputacion",
+      "etiqueta": "Carta de imputación",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Carta N° 045-2026-RRHH recibida el 01/10/2026"
+    },
+    {
+      "clave": "falta_imputada",
+      "etiqueta": "Falta imputada",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Inciso del art. 25 que invoca el empleador"
+    },
+    {
+      "clave": "descargos",
+      "etiqueta": "Descargos punto por punto",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "pruebas",
+      "etiqueta": "Pruebas que se adjuntan u ofrecen",
+      "tipo": "parrafo",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "{{lugar}}, {{fecha}}\n\nSeñores:\n{{empleador}}\nAtención: {{representante}}\nPresente.-\n\nAsunto: Descargos a la {{carta_imputacion}}\n\nDe mi consideración:\n\nYo, {{trabajador}}, identificado(a) con DNI N° {{trabajador_dni}}, en mi condición de trabajador(a) de la empresa en el cargo de {{cargo}}, dentro del plazo otorgado conforme al artículo 31 del TUO del Decreto Legislativo 728, presento mis descargos a la {{carta_imputacion}}, mediante la cual se me imputa la falta grave de {{falta_imputada}}.\n\nI. NIEGO Y CONTRADIGO LA IMPUTACIÓN\n\nNiego la imputación en todos sus extremos, por las siguientes razones:\n\n{{descargos}}\n\nII. PRUEBAS\n\n{{pruebas}}\n\nIII. CONCLUSIÓN\n\nPor lo expuesto, al no configurarse la falta grave imputada, solicito se archive el procedimiento y se me permita continuar laborando con normalidad. Me reservo el derecho de ejercer las acciones legales que correspondan en defensa de mis derechos.\n\nAtentamente,\n\n\n____________________________\n{{trabajador}}\nDNI N° {{trabajador_dni}}\n\n[[VERIFICAR: que la carta se entregue dentro del plazo otorgado (no menor de seis días naturales) y conservar el cargo de recepción]]",
+  "notas": "Entregar con cargo de recepción fechado o por vía notarial. Si la falta es flagrante, la ley permite omitir el plazo (art. 31): revisar la carta de imputación.",
+  "estado": "borrador"
+}

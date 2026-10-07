@@ -1,0 +1,133 @@
+{
+  "slug": "penal-constitucion-actor-civil",
+  "titulo": "Solicitud de constitución en actor civil",
+  "rama": "penal",
+  "tipo": "judicial",
+  "descripcion": "Para que el agraviado se constituya en actor civil y reclame la reparación civil dentro del proceso penal.",
+  "base_legal": [
+    "Código Procesal Penal, art. 98 (constitución y derechos)",
+    "Código Procesal Penal, art. 100 (requisitos)",
+    "Código Procesal Penal, art. 101 (oportunidad: antes de culminar la investigación preparatoria)",
+    "Código Procesal Penal, art. 102 (trámite)"
+  ],
+  "campos": [
+    {
+      "clave": "expediente",
+      "etiqueta": "N° de expediente",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+    },
+    {
+      "clave": "especialista",
+      "etiqueta": "Especialista legal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "escrito_numero",
+      "etiqueta": "N° de escrito",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: 03"
+    },
+    {
+      "clave": "juzgado",
+      "etiqueta": "Juzgado de Investigación Preparatoria",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "carpeta",
+      "etiqueta": "N° de carpeta fiscal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "casilla",
+      "etiqueta": "Casilla electrónica",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número de casilla del SINOE"
+    },
+    {
+      "clave": "imputado",
+      "etiqueta": "Nombre del imputado",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "delito",
+      "etiqueta": "Delito",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "hechos",
+      "etiqueta": "Hechos",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Narración breve y cronológica del hecho y del daño sufrido"
+    },
+    {
+      "clave": "pretension",
+      "etiqueta": "Pretensión reparatoria",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: S/ 20,000.00 por daño emergente, lucro cesante y daño moral"
+    },
+    {
+      "clave": "pruebas",
+      "etiqueta": "Medios probatorios",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Expediente N° : {{expediente}}\nCarpeta Fiscal N° : {{carpeta}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Solicito constitución en actor civil\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en el proceso seguido contra {{imputado}} por el delito de {{delito}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, en mi condición de agraviado(a), solicito se me constituya en ACTOR CIVIL, a fin de reclamar la reparación civil por la suma de {{pretension}}.\n\nII. REQUISITOS (art. 100 CPP)\n\na) Datos del agraviado: los consignados en el encabezado.\nb) Persona contra quien se dirige la pretensión: {{imputado}}.\nc) Relato de los hechos y razones que justifican la pretensión:\n\n{{hechos}}\n\nd) Prueba documental que acredita el derecho a constituirse en actor civil:\n\n{{pruebas}}\n\nIII. OPORTUNIDAD\n\nLa presente solicitud se formula antes de la culminación de la investigación preparatoria, conforme al artículo 101 del Código Procesal Penal.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito correr traslado y, en su oportunidad, declarar fundada la solicitud.\n\n[[VERIFICAR: que la investigación preparatoria no haya concluido a la fecha de presentación]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "Una vez constituido en actor civil, el agraviado ya no puede reclamar la indemnización en la vía civil (art. 106 CPP). Evaluar la estrategia antes de presentar.",
+  "estado": "borrador"
+}

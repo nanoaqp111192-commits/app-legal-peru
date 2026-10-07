@@ -1,0 +1,133 @@
+{
+  "slug": "laboral-demanda-beneficios-sociales",
+  "titulo": "Demanda de pago de beneficios sociales",
+  "rama": "laboral",
+  "tipo": "judicial",
+  "descripcion": "Demanda por CTS, gratificaciones, vacaciones u otros beneficios impagos, en el proceso ordinario laboral.",
+  "base_legal": [
+    "Ley 29497, Nueva Ley Procesal del Trabajo, art. 16 (requisitos de la demanda)",
+    "Ley 29497, art. 1 (competencia del juez de paz letrado hasta 50 URP)",
+    "D.S. 001-97-TR (CTS); Ley 27735 (gratificaciones); D. Leg. 713 (vacaciones)",
+    "D. Ley 25920 (intereses legales laborales)"
+  ],
+  "campos": [
+    {
+      "clave": "juzgado",
+      "etiqueta": "Juzgado",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Juzgado de Paz Letrado Laboral o Juzgado Especializado de Trabajo, según cuantía"
+    },
+    {
+      "clave": "recurrente",
+      "etiqueta": "Nombre del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "recurrente_dni",
+      "etiqueta": "DNI del recurrente",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_procesal",
+      "etiqueta": "Domicilio procesal",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "casilla",
+      "etiqueta": "Casilla electrónica",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Número de casilla del SINOE"
+    },
+    {
+      "clave": "demandado",
+      "etiqueta": "Empleador demandado (razón social y RUC)",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "domicilio_demandado",
+      "etiqueta": "Domicilio del demandado",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "periodo",
+      "etiqueta": "Periodo laborado",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: del 01/03/2022 al 31/07/2026"
+    },
+    {
+      "clave": "cargo",
+      "etiqueta": "Cargo",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "remuneracion",
+      "etiqueta": "Última remuneración computable",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: S/ 2,500.00"
+    },
+    {
+      "clave": "conceptos",
+      "etiqueta": "Conceptos y montos reclamados",
+      "tipo": "parrafo",
+      "requerido": true,
+      "ayuda": "Un concepto por línea con su liquidación"
+    },
+    {
+      "clave": "total",
+      "etiqueta": "Monto total demandado",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "hechos",
+      "etiqueta": "Fundamentos de hecho",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "pruebas",
+      "etiqueta": "Medios probatorios",
+      "tipo": "parrafo",
+      "requerido": true
+    },
+    {
+      "clave": "abogado",
+      "etiqueta": "Abogado que autoriza",
+      "tipo": "texto",
+      "requerido": true
+    },
+    {
+      "clave": "colegiatura",
+      "etiqueta": "Colegiatura",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: CAA N° 00000"
+    },
+    {
+      "clave": "lugar",
+      "etiqueta": "Ciudad",
+      "tipo": "texto",
+      "requerido": true,
+      "ayuda": "Ej.: Arequipa"
+    },
+    {
+      "clave": "fecha",
+      "etiqueta": "Fecha del escrito",
+      "tipo": "fecha",
+      "requerido": true
+    }
+  ],
+  "cuerpo": "Sumilla : Demanda de pago de beneficios sociales\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, a usted respetuosamente digo:\n\nI. DEMANDADO\n\n{{demandado}}, a quien se le notificará en {{domicilio_demandado}}.\n\nII. PETITORIO\n\nInterpongo demanda de PAGO DE BENEFICIOS SOCIALES a fin de que la demandada me pague la suma total de {{total}}, más intereses legales laborales, costas y costos del proceso, por los siguientes conceptos:\n\n{{conceptos}}\n\nIII. FUNDAMENTOS DE HECHO\n\nLaboré para la demandada en el cargo de {{cargo}} durante el periodo {{periodo}}, con una última remuneración computable de {{remuneracion}}.\n\n{{hechos}}\n\nIV. FUNDAMENTOS DE DERECHO\n\nLey 29497, Nueva Ley Procesal del Trabajo; D.S. 001-97-TR, TUO de la Ley de CTS; Ley 27735, gratificaciones; D. Leg. 713, descansos remunerados; D. Ley 25920, intereses legales laborales. [[VERIFICAR: aplicar solo los que correspondan al régimen laboral del trabajador (general, MYPE u otro)]]\n\nV. MEDIOS PROBATORIOS\n\n{{pruebas}}\n\nVI. ANEXOS\n\n1-A. Copia del DNI.\n1-B. Medios probatorios indicados.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito admitir la demanda y declararla fundada en su oportunidad.\n\n[[VERIFICAR: competencia por cuantía (hasta 50 URP, juez de paz letrado), plazo de prescripción de 4 años desde el cese (Ley 27321) y exoneración de tasas para el trabajador]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+  "notas": "La liquidación debe detallar el cálculo por periodo. Revisar el régimen laboral: en la microempresa no hay CTS ni gratificaciones y las vacaciones son de 15 días.",
+  "estado": "borrador"
+}

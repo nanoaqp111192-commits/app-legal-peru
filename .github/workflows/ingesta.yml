@@ -1,0 +1,48 @@
+name: Ingesta diaria de El Peruano
+
+on:
+  schedule:
+    # 07:00 hora de Lima: edición ordinaria del día.
+    - cron: "0 12 * * *"
+    # 22:30 hora de Lima: recoge ediciones extraordinarias publicadas en la tarde.
+    - cron: "30 3 * * *"
+  workflow_dispatch:
+    inputs:
+      fecha:
+        description: "Fecha a procesar (AAAA-MM-DD). Vacío = hoy en Lima."
+        required: false
+      seco:
+        description: "Solo mostrar lo que encontraría, sin guardar ni avisar"
+        type: boolean
+        default: false
+
+concurrency:
+  group: ingesta
+  cancel-in-progress: false
+
+jobs:
+  diaria:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ingesta
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - name: Traer, clasificar, guardar y avisar
+        env:
+          FECHA: ${{ inputs.fecha }}
+          SECO: ${{ inputs.seco }}
+        run: |
+          args=()
+          if [ -n "$FECHA" ]; then args+=(--fecha "$FECHA"); fi
+          # Sin credenciales de Supabase la ingesta corre en seco (útil para probar la fuente).
+          if [ "$SECO" = "true" ] || [ -z "$SUPABASE_URL" ]; then args+=(--seco); fi
+          python -m ingesta diaria "${args[@]}"

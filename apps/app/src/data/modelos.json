@@ -1,0 +1,1139 @@
+[
+  {
+    "slug": "civil-apelacion-sentencia",
+    "titulo": "Recurso de apelación de sentencia (civil)",
+    "rama": "civil",
+    "tipo": "judicial",
+    "descripcion": "Apelación contra una sentencia civil, estructurada por agravios.",
+    "base_legal": [
+      "Código Procesal Civil, arts. 364 a 367 (objeto, requisitos y fundamentación del agravio)",
+      "Código Procesal Civil, art. 478 inc. 13 (10 días en proceso de conocimiento) y art. 556 (3 días en sumarísimo)"
+    ],
+    "campos": [
+      {
+        "clave": "expediente",
+        "etiqueta": "N° de expediente",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+      },
+      {
+        "clave": "especialista",
+        "etiqueta": "Especialista legal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "escrito_numero",
+        "etiqueta": "N° de escrito",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 03"
+      },
+      {
+        "clave": "juzgado",
+        "etiqueta": "Juzgado o sala",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "casilla",
+        "etiqueta": "Casilla electrónica",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número de casilla del SINOE"
+      },
+      {
+        "clave": "partes",
+        "etiqueta": "Partes del proceso",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+      },
+      {
+        "clave": "sentencia",
+        "etiqueta": "Sentencia que se apela",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Resolución N° 15 (sentencia) de fecha 20/09/2026"
+      },
+      {
+        "clave": "fecha_notificacion",
+        "etiqueta": "Fecha de notificación de la sentencia",
+        "tipo": "fecha",
+        "requerido": true
+      },
+      {
+        "clave": "via",
+        "etiqueta": "Vía procedimental",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Conocimiento, abreviado o sumarísimo"
+      },
+      {
+        "clave": "pretension_impugnatoria",
+        "etiqueta": "Pretensión impugnatoria",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Ej.: que se revoque la sentencia y, reformándola, se declare fundada la demanda"
+      },
+      {
+        "clave": "agravios",
+        "etiqueta": "Agravios",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Por cada agravio: error de hecho o de derecho, considerando donde está y por qué perjudica"
+      },
+      {
+        "clave": "tasa",
+        "etiqueta": "Tasa judicial",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número y monto del arancel por apelación de sentencia"
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Interpongo recurso de apelación\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, no encontrándome conforme con la {{sentencia}}, notificada el {{fecha_notificacion}}, interpongo RECURSO DE APELACIÓN con efecto suspensivo [[VERIFICAR: efecto que corresponde según la vía y la materia]], a fin de que el superior jerárquico {{pretension_impugnatoria}}.\n\nII. FUNDAMENTACIÓN DEL AGRAVIO (art. 366 CPC)\n\n{{agravios}}\n\nIII. NATURALEZA DEL AGRAVIO\n\nLa sentencia apelada me causa agravio porque afecta directamente mi derecho, conforme se ha explicado en cada punto anterior.\n\nIV. ANEXOS\n\n1-A. Tasa judicial por apelación de sentencia: {{tasa}}.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito conceder el recurso y elevar los actuados al superior jerárquico.\n\n[[VERIFICAR: plazo según la vía ({{via}}): conocimiento 10 días, abreviado 5 días, sumarísimo 3 días, contados en días hábiles desde la notificación]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "El art. 366 CPC exige precisar el error de hecho o de derecho, sustentar el agravio y la pretensión impugnatoria. Una apelación genérica se declara improcedente.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "civil-apersonamiento-casilla",
+    "titulo": "Apersonamiento y señalamiento de casilla electrónica",
+    "rama": "civil",
+    "tipo": "judicial",
+    "descripcion": "Para que una parte (o su nuevo abogado) se apersone al proceso y fije domicilio procesal y casilla electrónica.",
+    "base_legal": [
+      "Código Procesal Civil, arts. 80 y 424 inc. 2",
+      "TUO de la Ley Orgánica del Poder Judicial, art. 155-A y siguientes (notificación electrónica)"
+    ],
+    "campos": [
+      {
+        "clave": "expediente",
+        "etiqueta": "N° de expediente",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+      },
+      {
+        "clave": "especialista",
+        "etiqueta": "Especialista legal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "escrito_numero",
+        "etiqueta": "N° de escrito",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 03"
+      },
+      {
+        "clave": "juzgado",
+        "etiqueta": "Juzgado o sala",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "casilla",
+        "etiqueta": "Casilla electrónica",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número de casilla del SINOE"
+      },
+      {
+        "clave": "partes",
+        "etiqueta": "Partes del proceso",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Me apersono y señalo casilla electrónica\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nI. APERSONAMIENTO\n\nQue, me apersono al presente proceso en calidad de parte, señalando como domicilio procesal el indicado en el encabezado y como casilla electrónica la N° {{casilla}} del Sistema de Notificaciones Electrónicas (SINOE), donde solicito se me notifiquen todas las resoluciones que se expidan.\n\nII. DESIGNACIÓN DE ABOGADO\n\nQue, designo como abogado defensor al letrado que autoriza el presente escrito, {{abogado}}, con registro {{colegiatura}}, otorgándole las facultades generales de representación del artículo 74 del Código Procesal Civil [[VERIFICAR: si se otorgan facultades especiales del art. 75 CPC se requiere poder por escritura pública o acta ante el juez]].\n\nPOR TANTO:\n\nA usted, señor Juez, solicito tenerme por apersonado y proveer conforme a ley.\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "Revisar si el poder del abogado requiere facultades especiales. La casilla electrónica es obligatoria para abogados según la normativa del Poder Judicial.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "civil-carta-notarial-requerimiento-pago",
+    "titulo": "Carta notarial de requerimiento de pago",
+    "rama": "civil",
+    "tipo": "extrajudicial",
+    "descripcion": "Intimación de pago al deudor antes de demandar; deja constancia fehaciente de la fecha y constituye en mora.",
+    "base_legal": [
+      "Código Civil, art. 1333 (constitución en mora por intimación)",
+      "Decreto Legislativo 1049, Ley del Notariado, art. 100 (certificación de cartas)"
+    ],
+    "campos": [
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      },
+      {
+        "clave": "destinatario",
+        "etiqueta": "Nombre del deudor",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_destinatario",
+        "etiqueta": "Domicilio del deudor",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "acreedor",
+        "etiqueta": "Nombre del acreedor",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "acreedor_dni",
+        "etiqueta": "DNI o RUC del acreedor",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "origen_deuda",
+        "etiqueta": "Origen de la deuda",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Contrato, préstamo, facturas, con fechas"
+      },
+      {
+        "clave": "monto",
+        "etiqueta": "Monto adeudado",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: S/ 15,000.00 (quince mil con 00/100 soles)"
+      },
+      {
+        "clave": "plazo_pago",
+        "etiqueta": "Plazo para pagar",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: cinco (5) días calendario"
+      },
+      {
+        "clave": "forma_pago",
+        "etiqueta": "Forma de pago",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Cuenta bancaria o lugar de pago"
+      }
+    ],
+    "cuerpo": "{{lugar}}, {{fecha}}\n\nCARTA NOTARIAL\n\nSeñor(a):\n{{destinatario}}\n{{domicilio_destinatario}}\nPresente.-\n\nAsunto: Requerimiento de pago\n\nDe mi consideración:\n\nPor medio de la presente, yo, {{acreedor}}, identificado(a) con documento N° {{acreedor_dni}}, me dirijo a usted para requerirle el pago de la suma de {{monto}}, cuyo origen es el siguiente:\n\n{{origen_deuda}}\n\nA la fecha, dicha obligación se encuentra vencida e impaga. En consecuencia, conforme al artículo 1333 del Código Civil, le INTIMO para que en el plazo de {{plazo_pago}} de recibida la presente cumpla con pagar la suma adeudada mediante {{forma_pago}}, más los intereses que correspondan.\n\nDe no cumplir dentro del plazo indicado, me veré obligado(a) a iniciar las acciones legales que correspondan, incluida la conciliación extrajudicial y el proceso judicial respectivo, con la consiguiente condena en costas y costos.\n\nAtentamente,\n\n\n____________________________\n{{acreedor}}\n\n[[VERIFICAR: si el contrato pactó mora automática (art. 1333 inc. 1 CC), la intimación no es necesaria para la mora, pero sigue siendo útil como prueba]]",
+    "notas": "Antes de demandar una obligación de dar suma de dinero, verificar si la materia exige conciliación extrajudicial previa (Ley 26872 y su reglamento).",
+    "estado": "borrador"
+  },
+  {
+    "slug": "civil-subsanacion-demanda",
+    "titulo": "Escrito de subsanación de demanda",
+    "rama": "civil",
+    "tipo": "judicial",
+    "descripcion": "Para cumplir lo ordenado en la resolución que declara inadmisible la demanda, dentro del plazo concedido.",
+    "base_legal": [
+      "Código Procesal Civil, art. 426 (plazo no mayor de diez días para subsanar)",
+      "Código Procesal Civil, arts. 424 y 425 (requisitos y anexos de la demanda)"
+    ],
+    "campos": [
+      {
+        "clave": "expediente",
+        "etiqueta": "N° de expediente",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+      },
+      {
+        "clave": "especialista",
+        "etiqueta": "Especialista legal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "escrito_numero",
+        "etiqueta": "N° de escrito",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 03"
+      },
+      {
+        "clave": "juzgado",
+        "etiqueta": "Juzgado o sala",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "casilla",
+        "etiqueta": "Casilla electrónica",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número de casilla del SINOE"
+      },
+      {
+        "clave": "partes",
+        "etiqueta": "Partes del proceso",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+      },
+      {
+        "clave": "resolucion",
+        "etiqueta": "Resolución que declara inadmisible",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Resolución N° 01 de fecha 01/10/2026"
+      },
+      {
+        "clave": "fecha_notificacion",
+        "etiqueta": "Fecha de notificación de la resolución",
+        "tipo": "fecha",
+        "requerido": true
+      },
+      {
+        "clave": "observaciones",
+        "etiqueta": "Subsanación de cada observación",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Una observación por línea: qué pidió el juzgado y cómo se cumple"
+      },
+      {
+        "clave": "anexos",
+        "etiqueta": "Anexos que se adjuntan",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Ej.: 1-A Copia de DNI; 1-B Tasa judicial"
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Subsano omisiones\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nQue, habiendo sido notificado el {{fecha_notificacion}} con la {{resolucion}}, que declara inadmisible la demanda, y estando dentro del plazo concedido, cumplo con subsanar las observaciones advertidas en los siguientes términos:\n\n{{observaciones}}\n\nANEXOS:\n\n{{anexos}}\n\nPOR TANTO:\n\nA usted, señor Juez, solicito tener por subsanadas las omisiones advertidas y, en consecuencia, admitir a trámite la demanda.\n\n[[VERIFICAR: cómputo del plazo fijado en la resolución, desde la notificación en casilla electrónica]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "Si no se subsana dentro del plazo, el juez rechaza la demanda y ordena el archivo (art. 426 CPC). Computar el plazo en días hábiles desde que surte efecto la notificación electrónica.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "laboral-apelacion-sentencia",
+    "titulo": "Recurso de apelación de sentencia (laboral)",
+    "rama": "laboral",
+    "tipo": "judicial",
+    "descripcion": "Apelación contra la sentencia del proceso laboral, dentro de los cinco días hábiles.",
+    "base_legal": [
+      "Ley 29497, art. 32 (apelación: 5 días hábiles desde el día siguiente a la audiencia o a la citación para notificación)",
+      "Código Procesal Civil, art. 366, de aplicación supletoria (fundamentación del agravio)"
+    ],
+    "campos": [
+      {
+        "clave": "expediente",
+        "etiqueta": "N° de expediente",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+      },
+      {
+        "clave": "especialista",
+        "etiqueta": "Especialista legal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "escrito_numero",
+        "etiqueta": "N° de escrito",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 03"
+      },
+      {
+        "clave": "juzgado",
+        "etiqueta": "Juzgado o sala",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: PRIMER JUZGADO CIVIL DE AREQUIPA"
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "casilla",
+        "etiqueta": "Casilla electrónica",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número de casilla del SINOE"
+      },
+      {
+        "clave": "partes",
+        "etiqueta": "Partes del proceso",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: por Juan Pérez contra María López sobre obligación de dar suma de dinero"
+      },
+      {
+        "clave": "sentencia",
+        "etiqueta": "Sentencia que se apela",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "fecha_notificacion",
+        "etiqueta": "Fecha de notificación o de la audiencia",
+        "tipo": "fecha",
+        "requerido": true
+      },
+      {
+        "clave": "pretension_impugnatoria",
+        "etiqueta": "Pretensión impugnatoria",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "agravios",
+        "etiqueta": "Agravios",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Expediente N° : {{expediente}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Interpongo recurso de apelación\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en los seguidos {{partes}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, no encontrándome conforme con la {{sentencia}}, notificada el {{fecha_notificacion}}, interpongo RECURSO DE APELACIÓN, a fin de que la Sala Laboral {{pretension_impugnatoria}}.\n\nII. AGRAVIOS\n\n{{agravios}}\n\nIII. FUNDAMENTO\n\nEl presente recurso se interpone dentro del plazo de cinco días hábiles previsto en el artículo 32 de la Ley 29497 y cumple con precisar los errores y agravios, conforme al artículo 366 del Código Procesal Civil, aplicable supletoriamente.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito conceder el recurso con efecto suspensivo y elevar los actuados.\n\n[[VERIFICAR: si corresponde tasa judicial (el trabajador con pretensión menor a 70 URP está exonerado, art. III del Título Preliminar de la NLPT)]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "El plazo corre desde el día hábil siguiente a la audiencia de notificación de sentencia o a la citación para ella (art. 32 NLPT), no desde la casilla.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "laboral-demanda-beneficios-sociales",
+    "titulo": "Demanda de pago de beneficios sociales",
+    "rama": "laboral",
+    "tipo": "judicial",
+    "descripcion": "Demanda por CTS, gratificaciones, vacaciones u otros beneficios impagos, en el proceso ordinario laboral.",
+    "base_legal": [
+      "Ley 29497, Nueva Ley Procesal del Trabajo, art. 16 (requisitos de la demanda)",
+      "Ley 29497, art. 1 (competencia del juez de paz letrado hasta 50 URP)",
+      "D.S. 001-97-TR (CTS); Ley 27735 (gratificaciones); D. Leg. 713 (vacaciones)",
+      "D. Ley 25920 (intereses legales laborales)"
+    ],
+    "campos": [
+      {
+        "clave": "juzgado",
+        "etiqueta": "Juzgado",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Juzgado de Paz Letrado Laboral o Juzgado Especializado de Trabajo, según cuantía"
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "casilla",
+        "etiqueta": "Casilla electrónica",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número de casilla del SINOE"
+      },
+      {
+        "clave": "demandado",
+        "etiqueta": "Empleador demandado (razón social y RUC)",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_demandado",
+        "etiqueta": "Domicilio del demandado",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "periodo",
+        "etiqueta": "Periodo laborado",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: del 01/03/2022 al 31/07/2026"
+      },
+      {
+        "clave": "cargo",
+        "etiqueta": "Cargo",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "remuneracion",
+        "etiqueta": "Última remuneración computable",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: S/ 2,500.00"
+      },
+      {
+        "clave": "conceptos",
+        "etiqueta": "Conceptos y montos reclamados",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Un concepto por línea con su liquidación"
+      },
+      {
+        "clave": "total",
+        "etiqueta": "Monto total demandado",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "hechos",
+        "etiqueta": "Fundamentos de hecho",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "pruebas",
+        "etiqueta": "Medios probatorios",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Sumilla : Demanda de pago de beneficios sociales\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, a usted respetuosamente digo:\n\nI. DEMANDADO\n\n{{demandado}}, a quien se le notificará en {{domicilio_demandado}}.\n\nII. PETITORIO\n\nInterpongo demanda de PAGO DE BENEFICIOS SOCIALES a fin de que la demandada me pague la suma total de {{total}}, más intereses legales laborales, costas y costos del proceso, por los siguientes conceptos:\n\n{{conceptos}}\n\nIII. FUNDAMENTOS DE HECHO\n\nLaboré para la demandada en el cargo de {{cargo}} durante el periodo {{periodo}}, con una última remuneración computable de {{remuneracion}}.\n\n{{hechos}}\n\nIV. FUNDAMENTOS DE DERECHO\n\nLey 29497, Nueva Ley Procesal del Trabajo; D.S. 001-97-TR, TUO de la Ley de CTS; Ley 27735, gratificaciones; D. Leg. 713, descansos remunerados; D. Ley 25920, intereses legales laborales. [[VERIFICAR: aplicar solo los que correspondan al régimen laboral del trabajador (general, MYPE u otro)]]\n\nV. MEDIOS PROBATORIOS\n\n{{pruebas}}\n\nVI. ANEXOS\n\n1-A. Copia del DNI.\n1-B. Medios probatorios indicados.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito admitir la demanda y declararla fundada en su oportunidad.\n\n[[VERIFICAR: competencia por cuantía (hasta 50 URP, juez de paz letrado), plazo de prescripción de 4 años desde el cese (Ley 27321) y exoneración de tasas para el trabajador]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "La liquidación debe detallar el cálculo por periodo. Revisar el régimen laboral: en la microempresa no hay CTS ni gratificaciones y las vacaciones son de 15 días.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "laboral-descargos-falta-grave",
+    "titulo": "Carta de descargos ante imputación de falta grave",
+    "rama": "laboral",
+    "tipo": "extrajudicial",
+    "descripcion": "Respuesta del trabajador a la carta de preaviso de despido por falta grave.",
+    "base_legal": [
+      "TUO del D. Leg. 728, Ley de Productividad y Competitividad Laboral (D.S. 003-97-TR), art. 31 (plazo no menor de seis días naturales para el descargo)",
+      "D.S. 003-97-TR, art. 25 (falta grave)",
+      "Constitución Política, art. 139 inc. 14 (derecho de defensa)"
+    ],
+    "campos": [
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      },
+      {
+        "clave": "empleador",
+        "etiqueta": "Empleador (razón social)",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "representante",
+        "etiqueta": "Dirigido a",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Gerente de Recursos Humanos"
+      },
+      {
+        "clave": "trabajador",
+        "etiqueta": "Nombre del trabajador",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "trabajador_dni",
+        "etiqueta": "DNI del trabajador",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "cargo",
+        "etiqueta": "Cargo del trabajador",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "carta_imputacion",
+        "etiqueta": "Carta de imputación",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Carta N° 045-2026-RRHH recibida el 01/10/2026"
+      },
+      {
+        "clave": "falta_imputada",
+        "etiqueta": "Falta imputada",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Inciso del art. 25 que invoca el empleador"
+      },
+      {
+        "clave": "descargos",
+        "etiqueta": "Descargos punto por punto",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "pruebas",
+        "etiqueta": "Pruebas que se adjuntan u ofrecen",
+        "tipo": "parrafo",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "{{lugar}}, {{fecha}}\n\nSeñores:\n{{empleador}}\nAtención: {{representante}}\nPresente.-\n\nAsunto: Descargos a la {{carta_imputacion}}\n\nDe mi consideración:\n\nYo, {{trabajador}}, identificado(a) con DNI N° {{trabajador_dni}}, en mi condición de trabajador(a) de la empresa en el cargo de {{cargo}}, dentro del plazo otorgado conforme al artículo 31 del TUO del Decreto Legislativo 728, presento mis descargos a la {{carta_imputacion}}, mediante la cual se me imputa la falta grave de {{falta_imputada}}.\n\nI. NIEGO Y CONTRADIGO LA IMPUTACIÓN\n\nNiego la imputación en todos sus extremos, por las siguientes razones:\n\n{{descargos}}\n\nII. PRUEBAS\n\n{{pruebas}}\n\nIII. CONCLUSIÓN\n\nPor lo expuesto, al no configurarse la falta grave imputada, solicito se archive el procedimiento y se me permita continuar laborando con normalidad. Me reservo el derecho de ejercer las acciones legales que correspondan en defensa de mis derechos.\n\nAtentamente,\n\n\n____________________________\n{{trabajador}}\nDNI N° {{trabajador_dni}}\n\n[[VERIFICAR: que la carta se entregue dentro del plazo otorgado (no menor de seis días naturales) y conservar el cargo de recepción]]",
+    "notas": "Entregar con cargo de recepción fechado o por vía notarial. Si la falta es flagrante, la ley permite omitir el plazo (art. 31): revisar la carta de imputación.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "penal-apersonamiento-copias-carpeta-fiscal",
+    "titulo": "Apersonamiento ante Fiscalía y pedido de copias de la carpeta fiscal",
+    "rama": "penal",
+    "tipo": "fiscal",
+    "descripcion": "Para que el investigado o el agraviado se apersone a la investigación, designe abogado y pida copias.",
+    "base_legal": [
+      "Código Procesal Penal (D. Leg. 957), art. 84 inc. 7 (acceso a la carpeta y copias)",
+      "Código Procesal Penal, art. 138 (obtención de copias)",
+      "Código Procesal Penal, arts. 71 y 95 (derechos del imputado y del agraviado)"
+    ],
+    "campos": [
+      {
+        "clave": "carpeta",
+        "etiqueta": "N° de carpeta fiscal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "fiscalia",
+        "etiqueta": "Fiscalía",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: SEGUNDA FISCALÍA PROVINCIAL PENAL CORPORATIVA DE AREQUIPA"
+      },
+      {
+        "clave": "fiscal",
+        "etiqueta": "Fiscal a cargo",
+        "tipo": "texto",
+        "requerido": false
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "condicion",
+        "etiqueta": "Condición del recurrente",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Investigado o agraviado"
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "correo",
+        "etiqueta": "Correo electrónico para notificaciones",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "delito",
+        "etiqueta": "Delito investigado",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Carpeta Fiscal N° : {{carpeta}}\nFiscal : {{fiscal}}\nSumilla : Me apersono y solicito copias\n\nSEÑOR FISCAL DE LA {{fiscalia}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, en calidad de {{condicion}}, con domicilio procesal en {{domicilio_procesal}} y correo electrónico {{correo}}, en la investigación por el presunto delito de {{delito}}, a usted respetuosamente digo:\n\nI. APERSONAMIENTO\n\nQue, me apersono a la presente investigación en calidad de {{condicion}}, señalando domicilio procesal y correo electrónico donde solicito se me notifique.\n\nII. DESIGNACIÓN DE ABOGADO DEFENSOR\n\nQue, designo como abogado defensor a {{abogado}}, con registro {{colegiatura}}, quien autoriza el presente escrito.\n\nIII. SOLICITUD DE COPIAS\n\nQue, al amparo del artículo 84 inciso 7 y del artículo 138 del Código Procesal Penal, solicito se expidan copias simples de todo lo actuado en la carpeta fiscal, para el ejercicio de la defensa, asumiendo el costo que corresponda.\n\nPOR TANTO:\n\nA usted, señor Fiscal, solicito tenerme por apersonado y acceder a lo solicitado.\n\n[[VERIFICAR: si la investigación tiene reserva o secreto dispuesto (art. 324 CPP), el acceso puede limitarse]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "El campo 'Fiscal a cargo' es opcional; se puede omitir del encabezado si no se conoce.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "penal-constitucion-actor-civil",
+    "titulo": "Solicitud de constitución en actor civil",
+    "rama": "penal",
+    "tipo": "judicial",
+    "descripcion": "Para que el agraviado se constituya en actor civil y reclame la reparación civil dentro del proceso penal.",
+    "base_legal": [
+      "Código Procesal Penal, art. 98 (constitución y derechos)",
+      "Código Procesal Penal, art. 100 (requisitos)",
+      "Código Procesal Penal, art. 101 (oportunidad: antes de culminar la investigación preparatoria)",
+      "Código Procesal Penal, art. 102 (trámite)"
+    ],
+    "campos": [
+      {
+        "clave": "expediente",
+        "etiqueta": "N° de expediente",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 01234-2026-0-0401-JR-CI-01"
+      },
+      {
+        "clave": "especialista",
+        "etiqueta": "Especialista legal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "escrito_numero",
+        "etiqueta": "N° de escrito",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: 03"
+      },
+      {
+        "clave": "juzgado",
+        "etiqueta": "Juzgado de Investigación Preparatoria",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "carpeta",
+        "etiqueta": "N° de carpeta fiscal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "casilla",
+        "etiqueta": "Casilla electrónica",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Número de casilla del SINOE"
+      },
+      {
+        "clave": "imputado",
+        "etiqueta": "Nombre del imputado",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "delito",
+        "etiqueta": "Delito",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "hechos",
+        "etiqueta": "Hechos",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Narración breve y cronológica del hecho y del daño sufrido"
+      },
+      {
+        "clave": "pretension",
+        "etiqueta": "Pretensión reparatoria",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: S/ 20,000.00 por daño emergente, lucro cesante y daño moral"
+      },
+      {
+        "clave": "pruebas",
+        "etiqueta": "Medios probatorios",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Expediente N° : {{expediente}}\nCarpeta Fiscal N° : {{carpeta}}\nEspecialista : {{especialista}}\nEscrito N° : {{escrito_numero}}\nSumilla : Solicito constitución en actor civil\n\nSEÑOR JUEZ DEL {{juzgado}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y casilla electrónica N° {{casilla}}, en el proceso seguido contra {{imputado}} por el delito de {{delito}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, en mi condición de agraviado(a), solicito se me constituya en ACTOR CIVIL, a fin de reclamar la reparación civil por la suma de {{pretension}}.\n\nII. REQUISITOS (art. 100 CPP)\n\na) Datos del agraviado: los consignados en el encabezado.\nb) Persona contra quien se dirige la pretensión: {{imputado}}.\nc) Relato de los hechos y razones que justifican la pretensión:\n\n{{hechos}}\n\nd) Prueba documental que acredita el derecho a constituirse en actor civil:\n\n{{pruebas}}\n\nIII. OPORTUNIDAD\n\nLa presente solicitud se formula antes de la culminación de la investigación preparatoria, conforme al artículo 101 del Código Procesal Penal.\n\nPOR TANTO:\n\nA usted, señor Juez, solicito correr traslado y, en su oportunidad, declarar fundada la solicitud.\n\n[[VERIFICAR: que la investigación preparatoria no haya concluido a la fecha de presentación]]\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "Una vez constituido en actor civil, el agraviado ya no puede reclamar la indemnización en la vía civil (art. 106 CPP). Evaluar la estrategia antes de presentar.",
+    "estado": "borrador"
+  },
+  {
+    "slug": "penal-denuncia",
+    "titulo": "Denuncia penal ante la Fiscalía",
+    "rama": "penal",
+    "tipo": "fiscal",
+    "descripcion": "Para poner en conocimiento del Ministerio Público un hecho con apariencia de delito.",
+    "base_legal": [
+      "Código Procesal Penal, art. 326 (facultad y obligación de denunciar)",
+      "Código Procesal Penal, art. 328 (contenido de la denuncia)",
+      "Código Procesal Penal, art. 329 (inicio de la investigación)"
+    ],
+    "campos": [
+      {
+        "clave": "fiscalia",
+        "etiqueta": "Fiscalía",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: FISCALÍA PROVINCIAL PENAL CORPORATIVA DE TURNO DE AREQUIPA"
+      },
+      {
+        "clave": "recurrente",
+        "etiqueta": "Nombre del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "recurrente_dni",
+        "etiqueta": "DNI del recurrente",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "domicilio_procesal",
+        "etiqueta": "Domicilio procesal",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "correo",
+        "etiqueta": "Correo electrónico para notificaciones",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "denunciado",
+        "etiqueta": "Denunciado(s)",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Nombre e identificación, o 'los que resulten responsables'"
+      },
+      {
+        "clave": "delito",
+        "etiqueta": "Delito y artículo del Código Penal",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: estafa (art. 196 del Código Penal)"
+      },
+      {
+        "clave": "hechos",
+        "etiqueta": "Hechos",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Qué pasó, cuándo, dónde y quién intervino, en orden cronológico"
+      },
+      {
+        "clave": "pruebas",
+        "etiqueta": "Medios probatorios",
+        "tipo": "parrafo",
+        "requerido": true
+      },
+      {
+        "clave": "diligencias",
+        "etiqueta": "Diligencias que se solicitan",
+        "tipo": "parrafo",
+        "requerido": true,
+        "ayuda": "Ej.: recibir mi declaración, pedir información a la entidad bancaria"
+      },
+      {
+        "clave": "abogado",
+        "etiqueta": "Abogado que autoriza",
+        "tipo": "texto",
+        "requerido": true
+      },
+      {
+        "clave": "colegiatura",
+        "etiqueta": "Colegiatura",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: CAA N° 00000"
+      },
+      {
+        "clave": "lugar",
+        "etiqueta": "Ciudad",
+        "tipo": "texto",
+        "requerido": true,
+        "ayuda": "Ej.: Arequipa"
+      },
+      {
+        "clave": "fecha",
+        "etiqueta": "Fecha del escrito",
+        "tipo": "fecha",
+        "requerido": true
+      }
+    ],
+    "cuerpo": "Sumilla : Formulo denuncia penal\n\nSEÑOR FISCAL DE LA {{fiscalia}}:\n\n{{recurrente}}, identificado(a) con DNI N° {{recurrente_dni}}, con domicilio procesal en {{domicilio_procesal}} y correo electrónico {{correo}}, a usted respetuosamente digo:\n\nI. PETITORIO\n\nQue, al amparo del artículo 326 del Código Procesal Penal, formulo DENUNCIA PENAL contra {{denunciado}}, por la presunta comisión del delito de {{delito}}, en mi agravio, solicitando se inicien las diligencias de investigación correspondientes.\n\nII. HECHOS\n\n{{hechos}}\n\nIII. TIPIFICACIÓN\n\nLos hechos descritos se subsumen en el delito de {{delito}} [[VERIFICAR: texto vigente del tipo penal en el SPIJ y si exige requisito de procedibilidad]].\n\nIV. DILIGENCIAS QUE SE SOLICITAN\n\n{{diligencias}}\n\nV. MEDIOS PROBATORIOS\n\n{{pruebas}}\n\nPOR TANTO:\n\nA usted, señor Fiscal, solicito tener por formulada la denuncia y disponer el inicio de la investigación preliminar.\n\n{{lugar}}, {{fecha}}\n\n\n____________________________\n{{recurrente}}\nDNI N° {{recurrente_dni}}\n\n\n____________________________\n{{abogado}}\nAbogado\n{{colegiatura}}",
+    "notas": "Revisar la prescripción de la acción penal y si el delito es de ejercicio privado (querella ante el juez, no denuncia fiscal), como los delitos contra el honor.",
+    "estado": "borrador"
+  }
+]
