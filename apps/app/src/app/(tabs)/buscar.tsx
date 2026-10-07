@@ -109,10 +109,10 @@ export default function Buscar() {
       {activa && cargando ? <Cargando /> : null}
       {error ? <MensajeError error={error} /> : null}
       {activa && !cargando && datos?.lista.length === 0 ? <Vacio>Sin resultados.</Vacio> : null}
-      {datos?.fuente === 'normas'
+      {!error && datos?.fuente === 'normas'
         ? datos.lista.map((n) => <TarjetaNorma key={n.id} norma={n} mostrarFecha />)
         : null}
-      {datos?.fuente === 'tc'
+      {!error && datos?.fuente === 'tc'
         ? datos.lista.map((r) => <TarjetaResolucion key={r.id} resolucion={r} />)
         : null}
     </Pantalla>

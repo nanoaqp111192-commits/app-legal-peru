@@ -2,6 +2,8 @@ import { RESOLUCIONES_DEMO } from '@/data/jurisprudencia-demo';
 import { NORMAS_DEMO } from '@/data/normas-demo';
 import MODELOS from '@/data/modelos.json';
 
+import { crearCache } from './cache';
+import { marcarCopia } from './conexion';
 import { supabase } from './supabase';
 import type { Alerta, Modelo, Norma, Resolucion } from './tipos';
 
@@ -10,54 +12,139 @@ const COLUMNAS_NORMA =
 
 const modelosLocales = MODELOS as Modelo[];
 
+const cache = crearCache(() => (typeof localStorage === 'undefined' ? null : localStorage));
+
+function respaldo<T>(clave: string, cargar: () => Promise<T>): Promise<T> {
+  return cache.conRespaldo(clave, cargar, marcarCopia);
+}
+
+/** Lista guardada con id único, del más reciente al más antiguo. */
+function unicos<T extends { id: number }>(listas: T[][]): T[] {
+  const vistos = new Map<number, T>();
+  for (const item of listas.flat()) if (!vistos.has(item.id)) vistos.set(item.id, item);
+  return [...vistos.values()];
+}
+
+/**
+ * Búsqueda con respaldo: si no hay señal, se busca dentro de lo ya consultado. Solo se
+ * guardan las listas sin texto de búsqueda (filtros, lo más reciente): guardar cada término
+ * que se escribe desplazaría de la copia las fichas con texto completo.
+ */
+async function buscarConRespaldo<T>(
+  clave: string,
+  consulta: string,
+  cargar: () => Promise<T[]>,
+  local: () => T[],
+): Promise<T[]> {
+  try {
+    if (!consulta.trim()) return await respaldo(clave, cargar);
+    const resultado = await cargar();
+    marcarCopia(null);
+    return resultado;
+  } catch (error) {
+    const encontrados = local();
+    if (!encontrados.length) throw error;
+    marcarCopia(new Date().toISOString());
+    return encontrados;
+  }
+}
+
+function filtrarNormas(normas: Norma[], consulta: string, ramas: string[]): Norma[] {
+  const q = sinTildes(consulta);
+  return normas.filter(
+    (n) =>
+      (!ramas.length || n.ramas.some((r) => ramas.includes(r))) &&
+      (!q || sinTildes(`${n.numero} ${n.titulo} ${n.sector} ${n.sumilla ?? ''}`).includes(q)),
+  );
+}
+
+function filtrarResoluciones(lista: Resolucion[], consulta: string, procesos: string[]) {
+  const q = sinTildes(consulta);
+  return lista.filter(
+    (r) =>
+      (!procesos.length || (r.proceso && procesos.includes(r.proceso))) &&
+      (!q ||
+        sinTildes(
+          `${r.expediente} ${r.numero} ${r.sumilla} ${r.demandante} ${r.demandado}`,
+        ).includes(q)),
+  );
+}
+
 export async function normasDeFecha(fecha: string): Promise<Norma[]> {
   if (!supabase) return NORMAS_DEMO.filter((n) => n.fecha_publicacion === fecha);
-  const { data, error } = await supabase
-    .from('normas')
-    .select(COLUMNAS_NORMA)
-    .eq('fecha_publicacion', fecha)
-    .order('id', { ascending: true });
-  if (error) throw error;
-  return (data ?? []) as Norma[];
+  const cliente = supabase;
+  return respaldo(`normas-dia:${fecha}`, async () => {
+    const { data, error } = await cliente
+      .from('normas')
+      .select(COLUMNAS_NORMA)
+      .eq('fecha_publicacion', fecha)
+      .order('id', { ascending: true });
+    if (error) throw error;
+    return (data ?? []) as Norma[];
+  });
 }
 
 /** La fecha más reciente con normas, para no mostrar un día vacío temprano en la mañana. */
 export async function ultimaFechaConNormas(): Promise<string | null> {
   if (!supabase) return NORMAS_DEMO[0]?.fecha_publicacion ?? null;
-  const { data, error } = await supabase
-    .from('normas')
-    .select('fecha_publicacion')
-    .order('fecha_publicacion', { ascending: false })
-    .limit(1);
-  if (error) throw error;
-  return data?.[0]?.fecha_publicacion ?? null;
+  const cliente = supabase;
+  return respaldo('ultima-fecha', async () => {
+    const { data, error } = await cliente
+      .from('normas')
+      .select('fecha_publicacion')
+      .order('fecha_publicacion', { ascending: false })
+      .limit(1);
+    if (error) throw error;
+    return (data?.[0]?.fecha_publicacion as string | undefined) ?? null;
+  });
 }
 
 export async function buscarNormas(consulta: string, ramas: string[]): Promise<Norma[]> {
-  if (!supabase) {
-    const q = sinTildes(consulta);
-    return NORMAS_DEMO.filter(
-      (n) =>
-        (!ramas.length || n.ramas.some((r) => ramas.includes(r))) &&
-        (!q || sinTildes(`${n.numero} ${n.titulo} ${n.sector}`).includes(q)),
-    );
-  }
-  const { data, error } = await supabase
-    .rpc('buscar_normas', { consulta, filtro_ramas: ramas.length ? ramas : null, limite: 40 })
-    .select(COLUMNAS_NORMA);
-  if (error) throw error;
-  return (data ?? []) as Norma[];
+  if (!supabase) return filtrarNormas(NORMAS_DEMO, consulta, ramas);
+  const cliente = supabase;
+  return buscarConRespaldo(
+    `busqueda-normas:${ramas.join(',')}`,
+    consulta,
+    async () => {
+      const { data, error } = await cliente
+        .rpc('buscar_normas', { consulta, filtro_ramas: ramas.length ? ramas : null, limite: 40 })
+        .select(COLUMNAS_NORMA);
+      if (error) throw error;
+      return (data ?? []) as Norma[];
+    },
+    () =>
+      filtrarNormas(
+        unicos([
+          cache.todos<Norma>('norma:'),
+          ...cache.todos<Norma[]>('normas-dia:'),
+          ...cache.todos<Norma[]>('busqueda-normas:'),
+        ]),
+        consulta,
+        ramas,
+      ),
+  );
 }
 
 export async function obtenerNorma(id: number): Promise<Norma | null> {
   if (!supabase) return NORMAS_DEMO.find((n) => n.id === id) ?? null;
-  const { data, error } = await supabase
-    .from('normas')
-    .select(`${COLUMNAS_NORMA},texto`)
-    .eq('id', id)
-    .maybeSingle();
-  if (error) throw error;
-  return data as Norma | null;
+  const cliente = supabase;
+  try {
+    return await respaldo(`norma:${id}`, async () => {
+      const { data, error } = await cliente
+        .from('normas')
+        .select(`${COLUMNAS_NORMA},texto`)
+        .eq('id', id)
+        .maybeSingle();
+      if (error) throw error;
+      return data as Norma | null;
+    });
+  } catch (error) {
+    // Sin señal y sin la ficha guardada: al menos lo que trajo una lista (sin el texto).
+    const enLista = unicos(cache.todos<Norma[]>('normas-dia:')).find((n) => n.id === id);
+    if (!enLista) throw error;
+    marcarCopia(new Date().toISOString());
+    return enLista;
+  }
 }
 
 const COLUMNAS_RESOLUCION =
@@ -68,37 +155,46 @@ export async function buscarJurisprudencia(
   consulta: string,
   procesos: string[],
 ): Promise<Resolucion[]> {
-  if (!supabase) {
-    const q = sinTildes(consulta);
-    return RESOLUCIONES_DEMO.filter(
-      (r) =>
-        (!procesos.length || (r.proceso && procesos.includes(r.proceso))) &&
-        (!q ||
-          sinTildes(
-            `${r.expediente} ${r.numero} ${r.sumilla} ${r.demandante} ${r.demandado}`,
-          ).includes(q)),
-    );
-  }
-  const { data, error } = await supabase
-    .rpc('buscar_jurisprudencia', {
-      consulta,
-      filtro_procesos: procesos.length ? procesos : null,
-      limite: 40,
-    })
-    .select(COLUMNAS_RESOLUCION);
-  if (error) throw error;
-  return (data ?? []) as Resolucion[];
+  if (!supabase) return filtrarResoluciones(RESOLUCIONES_DEMO, consulta, procesos);
+  const cliente = supabase;
+  return buscarConRespaldo(
+    `busqueda-tc:${procesos.join(',')}`,
+    consulta,
+    async () => {
+      const { data, error } = await cliente
+        .rpc('buscar_jurisprudencia', {
+          consulta,
+          filtro_procesos: procesos.length ? procesos : null,
+          limite: 40,
+        })
+        .select(COLUMNAS_RESOLUCION);
+      if (error) throw error;
+      return (data ?? []) as Resolucion[];
+    },
+    () =>
+      filtrarResoluciones(
+        unicos([
+          cache.todos<Resolucion>('resolucion:'),
+          ...cache.todos<Resolucion[]>('busqueda-tc:'),
+        ]),
+        consulta,
+        procesos,
+      ),
+  );
 }
 
 export async function obtenerResolucion(id: number): Promise<Resolucion | null> {
   if (!supabase) return RESOLUCIONES_DEMO.find((r) => r.id === id) ?? null;
-  const { data, error } = await supabase
-    .from('jurisprudencia')
-    .select(`${COLUMNAS_RESOLUCION},texto`)
-    .eq('id', id)
-    .maybeSingle();
-  if (error) throw error;
-  return data as Resolucion | null;
+  const cliente = supabase;
+  return respaldo(`resolucion:${id}`, async () => {
+    const { data, error } = await cliente
+      .from('jurisprudencia')
+      .select(`${COLUMNAS_RESOLUCION},texto`)
+      .eq('id', id)
+      .maybeSingle();
+    if (error) throw error;
+    return data as Resolucion | null;
+  });
 }
 
 // Los modelos viajan dentro de la app (src/data/modelos.json) para funcionar sin conexión;
