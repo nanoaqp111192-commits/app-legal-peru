@@ -19,6 +19,25 @@ export type Norma = {
   texto: string | null;
   ramas: string[];
   verificado_en: string;
+  clave?: string | null;
+};
+
+export type Efecto = 'deroga' | 'modifica' | 'deja_sin_efecto';
+
+/** Lo que el título de una norma declara sobre otra (detección automática). */
+export type Afectacion = {
+  efecto: Efecto;
+  parcial: boolean;
+  referencia: string;
+  clave_afectada: string;
+  norma: Pick<Norma, 'id' | 'numero' | 'titulo' | 'fecha_publicacion'> | null;
+};
+
+export type Vigencia = {
+  /** Normas posteriores que derogan, modifican o dejan sin efecto a esta. */
+  afectadaPor: Afectacion[];
+  /** Lo que esta norma declara derogar o modificar. */
+  afecta: Afectacion[];
 };
 
 export type CampoModelo = {

@@ -1,0 +1,69 @@
+name: Carga histórica de normas (El Peruano)
+
+# Carga normas de días pasados, mes por mes, sin enviar avisos. Repetirla es
+# seguro: las normas ya guardadas se actualizan, no se duplican.
+on:
+  workflow_dispatch:
+    inputs:
+      desde:
+        description: "Primer día (AAAA-MM-DD)"
+        required: true
+        default: "2026-01-01"
+      hasta:
+        description: "Último día (AAAA-MM-DD). Vacío = ayer en Lima."
+        required: false
+
+concurrency:
+  group: historico
+  cancel-in-progress: false
+
+jobs:
+  meses:
+    runs-on: ubuntu-latest
+    outputs:
+      tramos: ${{ steps.tramos.outputs.tramos }}
+    steps:
+      - id: tramos
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          from datetime import date, datetime, timedelta, timezone
+          desde = date.fromisoformat(os.environ["DESDE"])
+          ayer = datetime.now(timezone(timedelta(hours=-5))).date() - timedelta(days=1)
+          hasta = date.fromisoformat(os.environ["HASTA"]) if os.environ.get("HASTA") else ayer
+          tramos, inicio = [], desde
+          while inicio <= hasta:
+              siguiente = (inicio.replace(day=1) + timedelta(days=32)).replace(day=1)
+              fin = min(siguiente - timedelta(days=1), hasta)
+              tramos.append({"desde": inicio.isoformat(), "hasta": fin.isoformat()})
+              inicio = siguiente
+          print("tramos=" + json.dumps(tramos))
+          PY
+
+  cargar:
+    needs: meses
+    runs-on: ubuntu-latest
+    # Unas 100 normas por día con su texto, a 1 pedido por segundo: ~75 min por mes.
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        tramo: ${{ fromJson(needs.meses.outputs.tramos) }}
+    defaults:
+      run:
+        working-directory: ingesta
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - name: Cargar ${{ matrix.tramo.desde }} a ${{ matrix.tramo.hasta }}
+        run: python -m ingesta historico --desde "${{ matrix.tramo.desde }}" --hasta "${{ matrix.tramo.hasta }}"

@@ -12,10 +12,10 @@ import {
   type Precedente,
 } from './precedentes';
 import { supabase } from './supabase';
-import type { Alerta, Modelo, Norma, Resolucion } from './tipos';
+import type { Afectacion, Alerta, Modelo, Norma, Resolucion, Vigencia } from './tipos';
 
 const COLUMNAS_NORMA =
-  'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en';
+  'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en,clave';
 
 const modelosLocales = MODELOS as Modelo[];
 /** Precedentes de la Corte Suprema y de tribunales administrativos: viajan en la app. */
@@ -158,6 +158,38 @@ export async function obtenerNorma(id: number): Promise<Norma | null> {
     marcarCopia(new Date().toISOString());
     return enLista;
   }
+}
+
+const COLUMNAS_AFECTACION = 'efecto,parcial,referencia,clave_afectada';
+
+/**
+ * Verificación mínima de vigencia: qué normas cargadas declaran derogar o modificar
+ * a esta, y qué declara ella. Sin servidor no hay datos (null), no "vigente".
+ */
+export async function vigenciaDe(norma: Norma): Promise<Vigencia | null> {
+  if (!supabase) return null;
+  const cliente = supabase;
+  return respaldo(`vigencia:${norma.id}`, async () => {
+    const [recibidas, emitidas] = await Promise.all([
+      norma.clave
+        ? cliente
+            .from('afectaciones')
+            .select(`${COLUMNAS_AFECTACION},norma:normas(id,numero,titulo,fecha_publicacion)`)
+            .eq('clave_afectada', norma.clave)
+        : Promise.resolve({ data: [], error: null }),
+      cliente.from('afectaciones').select(COLUMNAS_AFECTACION).eq('norma_id', norma.id),
+    ]);
+    if (recibidas.error) throw recibidas.error;
+    if (emitidas.error) throw emitidas.error;
+    const afectadaPor = ((recibidas.data ?? []) as unknown as Afectacion[]).sort((a, b) =>
+      (b.norma?.fecha_publicacion ?? '').localeCompare(a.norma?.fecha_publicacion ?? ''),
+    );
+    const afecta = ((emitidas.data ?? []) as unknown as Afectacion[]).map((a) => ({
+      ...a,
+      norma: null,
+    }));
+    return { afectadaPor, afecta };
+  });
 }
 
 const COLUMNAS_RESOLUCION =
