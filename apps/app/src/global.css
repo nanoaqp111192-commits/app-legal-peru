@@ -7,3 +7,17 @@
   --font-rounded: 'SF Pro Rounded', 'Hiragino Maru Gothic ProN', Meiryo, 'MS PGothic', sans-serif;
   --font-serif: Georgia, 'Times New Roman', serif;
 }
+
+/* Menú lateral (escritorio) o pestañas abajo (pantallas angostas). Se decide con CSS
+   para que la página estática llegue con el diseño correcto antes de cargar el código. */
+[data-marco='lateral'] {
+  display: none !important;
+}
+@media (min-width: 1024px) {
+  [data-marco='lateral'] {
+    display: flex !important;
+  }
+  [data-marco='pestanas'] {
+    display: none !important;
+  }
+}

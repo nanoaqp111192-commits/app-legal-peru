@@ -1,0 +1,36 @@
+name: Reparar textos de normas
+
+# Limpia, una sola vez, el texto de las normas guardadas antes de que la
+# ingesta leyera el visor de la ficha de El Peruano. Se puede repetir sin daño.
+on:
+  workflow_dispatch:
+    inputs:
+      seco:
+        description: "Solo contar y mostrar dos ejemplos, sin guardar"
+        type: boolean
+        default: false
+
+concurrency:
+  group: reparar-textos
+  cancel-in-progress: false
+
+jobs:
+  reparar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: ingesta
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - name: Reparar
+        env:
+          SECO: ${{ inputs.seco }}
+        run: python -m ingesta reparar-textos $([ "$SECO" = "true" ] && echo --seco)

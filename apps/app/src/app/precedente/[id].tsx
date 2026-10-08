@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { Vacio } from '@/components/avisos';
-import { ExternalLink } from '@/components/external-link';
+import { BotonEnlace } from '@/components/boton';
 import { Pantalla } from '@/components/pantalla';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -51,16 +51,17 @@ export default function DetallePrecedente() {
               Aquí ves la materia; la regla vinculante está en el texto oficial. Léelo antes de
               citarlo y confirma que no haya sido modificado por un pleno posterior.
             </ThemedText>
-            {p.url_oficial ? (
-              <ExternalLink href={p.url_oficial}>
-                <ThemedText type="linkPrimary">Ver el texto oficial</ThemedText>
-              </ExternalLink>
-            ) : null}
-            <ExternalLink href={p.url_verificacion}>
-              <ThemedText type="linkPrimary">
-                {p.url_oficial ? 'Ver la fuente de verificación' : 'Ver el texto'}
-              </ThemedText>
-            </ExternalLink>
+            <View style={styles.acciones}>
+              {p.url_oficial ? (
+                <BotonEnlace href={p.url_oficial} externo etiqueta="Ver el texto oficial" />
+              ) : null}
+              <BotonEnlace
+                href={p.url_verificacion}
+                externo
+                variante={p.url_oficial ? 'secundario' : 'primario'}
+                etiqueta={p.url_oficial ? 'Ver la fuente de verificación' : 'Ver el texto'}
+              />
+            </View>
           </ThemedView>
         </>
       ) : null}
@@ -69,6 +70,7 @@ export default function DetallePrecedente() {
 }
 
 const styles = StyleSheet.create({
+  acciones: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
   bloque: { gap: Spacing.one },
   titulo: { fontSize: 20, lineHeight: 28, fontWeight: 600 },
   caja: { padding: Spacing.three, borderRadius: Spacing.three, gap: Spacing.one },

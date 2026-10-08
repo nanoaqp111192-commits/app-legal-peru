@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Switch, TextInput, View } from 'react-native';
 
 import { Cargando, MensajeError, Vacio } from '@/components/avisos';
+import { Boton } from '@/components/boton';
 import { Pantalla } from '@/components/pantalla';
 import { SelectorRamas } from '@/components/selector-ramas';
 import { ThemedText } from '@/components/themed-text';
@@ -80,7 +81,7 @@ function Ingreso() {
     { color: tema.text, borderColor: tema.border, backgroundColor: tema.backgroundElement },
   ];
   return (
-    <ThemedView type="backgroundElement" style={styles.caja}>
+    <ThemedView type="backgroundElement" style={[styles.caja, styles.ingreso]}>
       <ThemedText type="smallBold">Ingresa con tu correo</ThemedText>
       <ThemedText type="small">Te enviaremos un código; no necesitas contraseña.</ThemedText>
       <TextInput
@@ -106,6 +107,7 @@ function Ingreso() {
         />
       ) : null}
       <Boton
+        ancho
         etiqueta={enviado ? 'Ingresar' : 'Enviar código'}
         alPresionar={enviado ? verificar : pedirCodigo}
       />
@@ -175,7 +177,7 @@ function MisAlertas({ correo }: { correo: string }) {
         Sesión: {correo}
       </ThemedText>
       {process.env.EXPO_OS !== 'web' ? (
-        <Boton etiqueta="Activar avisos en este teléfono" alPresionar={avisos} />
+        <Boton etiqueta="Activar avisos en este teléfono" icono="alertas" alPresionar={avisos} />
       ) : null}
 
       <ThemedText type="smallBold">Mis alertas</ThemedText>
@@ -216,7 +218,7 @@ function MisAlertas({ correo }: { correo: string }) {
 
       <ThemedText type="smallBold">Nueva alerta</ThemedText>
       <ThemedText type="small">Ramas del derecho</ThemedText>
-      <SelectorRamas seleccion={ramas} alCambiar={setRamas} />
+      <SelectorRamas seleccion={ramas} alCambiar={setRamas} titulo={null} />
       <ThemedText type="small">Palabras clave (separadas por comas, opcional)</ThemedText>
       <TextInput
         value={palabras}
@@ -249,26 +251,9 @@ function MisAlertas({ correo }: { correo: string }) {
   );
 }
 
-function Boton({ etiqueta, alPresionar }: { etiqueta: string; alPresionar: () => void }) {
-  const tema = useTheme();
-  return (
-    <Pressable
-      accessibilityRole="button"
-      onPress={alPresionar}
-      style={({ pressed }) => [
-        styles.boton,
-        { backgroundColor: tema.accent },
-        pressed && { opacity: 0.8 },
-      ]}>
-      <ThemedText type="smallBold" style={{ color: tema.onAccent }}>
-        {etiqueta}
-      </ThemedText>
-    </Pressable>
-  );
-}
-
 const styles = StyleSheet.create({
   caja: { padding: Spacing.three, borderRadius: Spacing.three, gap: Spacing.two },
+  ingreso: { maxWidth: 520, gap: Spacing.three },
   fila: { flexDirection: 'row', alignItems: 'center', gap: Spacing.three },
   entrada: {
     borderWidth: 1,
@@ -277,5 +262,4 @@ const styles = StyleSheet.create({
     paddingVertical: Spacing.two,
     fontSize: 16,
   },
-  boton: { paddingVertical: Spacing.three, borderRadius: Spacing.three, alignItems: 'center' },
 });

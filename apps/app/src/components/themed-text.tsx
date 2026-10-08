@@ -21,7 +21,7 @@ export function ThemedText({ style, type = 'default', themeColor, ...rest }: The
         type === 'smallBold' && styles.smallBold,
         type === 'subtitle' && styles.subtitle,
         type === 'link' && styles.link,
-        type === 'linkPrimary' && styles.linkPrimary,
+        type === 'linkPrimary' && [styles.linkPrimary, { color: theme.accent }],
         type === 'code' && styles.code,
         style,
       ]}
@@ -61,9 +61,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   linkPrimary: {
-    lineHeight: 30,
+    lineHeight: 22,
     fontSize: 14,
-    color: '#3c87f7',
+    fontWeight: 600,
+    textDecorationLine: 'underline',
   },
   code: {
     fontFamily: Fonts.mono,

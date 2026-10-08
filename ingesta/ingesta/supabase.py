@@ -65,3 +65,9 @@ class Supabase:
             return []
         lista = ",".join(str(v) for v in valores)
         return self.leer(tabla, **{columna: f"in.({lista})"})
+
+    def actualizar(self, tabla: str, datos: dict, **filtros: str) -> None:
+        respuesta = self.http.patch(
+            f"/{tabla}", params=filtros, json=datos, headers={"Prefer": "return=minimal"}
+        )
+        respuesta.raise_for_status()

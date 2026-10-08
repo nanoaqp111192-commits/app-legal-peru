@@ -15,6 +15,7 @@ export const Colors = {
     backgroundSelected: '#E0E1E6',
     textSecondary: '#60646C',
     accent: '#8C1D2F',
+    accentSuave: '#F6E8EA',
     onAccent: '#ffffff',
     border: '#D9D9E0',
     verificar: '#FFF3B0',
@@ -27,6 +28,7 @@ export const Colors = {
     backgroundSelected: '#2E3135',
     textSecondary: '#B0B4BA',
     accent: '#E8838F',
+    accentSuave: '#3A1A20',
     onAccent: '#1A0006',
     border: '#3A3D42',
     verificar: '#5C4B00',
@@ -73,3 +75,9 @@ export const Spacing = {
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
+/** Ancho máximo en escritorio: listas y paneles, y columna de lectura de textos largos. */
+export const AnchoAmplio = 1120;
+export const AnchoLectura = 760;
+/** Desde este ancho (px) la web usa el menú lateral y columnas. */
+export const AnchoEscritorio = 1024;
+export const AnchoBarraLateral = 264;

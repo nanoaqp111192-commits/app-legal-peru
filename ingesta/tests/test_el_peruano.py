@@ -86,3 +86,52 @@ def test_listado_se_rinde_tras_los_reintentos(monkeypatch):
     http = _cliente([corte] * (len(el_peruano.ESPERAS_REINTENTO) + 1))
     with pytest.raises(httpx.ConnectError):
         el_peruano.pedir_listado(http, date(2026, 2, 5))
+
+
+def test_dispositivo_real_lee_el_visor_sin_cabecera_ni_titulo_ajeno():
+    ficha = parsear_dispositivo((FIXTURES / "dispositivo_real.html").read_text())
+    assert ficha["titulo"].startswith("Ordenanza Distrital que aprueba la conformación")
+    assert ficha["fecha_publicacion"] == date(2026, 10, 8)
+    lineas = ficha["texto"].splitlines()
+    assert lineas[0] == "ORDENANZA N° 014-2026-MDSMM"
+    assert "OSINERGMIN" not in ficha["texto"]
+    assert "Cuadernillo" not in ficha["texto"]
+    assert any(linea.startswith("Artículo Noveno.- DEJAR SIN EFECTO") for linea in lineas)
+    assert lineas[-1] == "Alcalde"
+
+
+GUARDADO = """PDF
+HTML
+Cuadernillo
+Fecha de publicación:
+08/10/2026
+Autorizan viaje de Especialista Técnico del OSINERGMIN a Chile
+Ordenanza Distrital que aprueba el Comité, Instancia de Coordinación
+ORDENANZA N° 014-2026-MDSMM
+CONSIDERANDO:
+Que, el artículo 194º de la Constitución;
+Artículo Sexto
+.-
+CONSTITUIR al Jefe del Puesto de Salud.
+Artículo Segundo.-
+El desplazamiento no irrogará gasto.
+Regístrese, comuníquese y cúmplase.
+2557156-1"""
+
+
+def test_limpiar_texto_guardado_repara_cabecera_y_negritas():
+    from ingesta.fuentes.el_peruano import limpiar_texto_guardado
+
+    titulo = "Ordenanza Distrital que aprueba el Comité Instancia de Coordinación"
+    limpio = limpiar_texto_guardado(GUARDADO, titulo)
+    assert limpio.splitlines() == [
+        "ORDENANZA N° 014-2026-MDSMM",
+        "CONSIDERANDO:",
+        "Que, el artículo 194º de la Constitución;",
+        "Artículo Sexto.- CONSTITUIR al Jefe del Puesto de Salud.",
+        "Artículo Segundo.- El desplazamiento no irrogará gasto.",
+        "Regístrese, comuníquese y cúmplase.",
+    ]
+    assert limpiar_texto_guardado(limpio, titulo) == limpio
+    # Sin título también reconoce la cabecera.
+    assert limpiar_texto_guardado(GUARDADO).splitlines()[0] == "ORDENANZA N° 014-2026-MDSMM"

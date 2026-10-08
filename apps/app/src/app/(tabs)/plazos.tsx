@@ -213,7 +213,7 @@ export default function Plazos() {
           ))}
 
           <View style={styles.acciones}>
-            <Boton etiqueta="Copiar cómputo" alPresionar={copiarComputo} />
+            <Boton etiqueta="Copiar cómputo" icono="copiar" alPresionar={copiarComputo} />
           </View>
           {aviso ? (
             <ThemedText type="small" style={{ textAlign: 'center' }}>

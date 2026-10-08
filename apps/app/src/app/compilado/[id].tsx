@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { Cargando, MensajeError, Vacio } from '@/components/avisos';
-import { ExternalLink } from '@/components/external-link';
+import { BotonEnlace } from '@/components/boton';
 import { ListaModificaciones } from '@/components/lista-modificaciones';
 import { Pantalla } from '@/components/pantalla';
 import { ThemedText } from '@/components/themed-text';
@@ -39,9 +39,7 @@ export default function DetalleCompilado() {
             ) : null}
           </View>
           <ThemedView type="backgroundElement" style={styles.caja}>
-            <ExternalLink href={c.url_pdf}>
-              <ThemedText type="linkPrimary">Abrir el PDF de El Peruano</ThemedText>
-            </ExternalLink>
+            <BotonEnlace href={c.url_pdf} externo etiqueta="Abrir el PDF de El Peruano" />
             <ThemedText type="small" themeColor="textSecondary">
               {c.cambiado_en
                 ? `El PDF cambió el ${fechaCorta(diaEnLima(c.cambiado_en))}.`
