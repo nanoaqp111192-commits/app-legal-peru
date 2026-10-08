@@ -6,20 +6,23 @@ import { Chip } from '@/components/chip';
 import { Pantalla } from '@/components/pantalla';
 import { SelectorRamas } from '@/components/selector-ramas';
 import { TarjetaNorma } from '@/components/tarjeta-norma';
+import { TarjetaPrecedente } from '@/components/tarjeta-precedente';
 import { TarjetaResolucion } from '@/components/tarjeta-resolucion';
 import { ThemedText } from '@/components/themed-text';
 import { Spacing } from '@/constants/theme';
 import { PROCESOS_TC } from '@/data/jurisprudencia-demo';
 import { useCarga } from '@/hooks/use-carga';
 import { useTheme } from '@/hooks/use-theme';
-import { buscarJurisprudencia, buscarNormas } from '@/lib/datos';
+import { buscarJurisprudencia, buscarNormas, buscarPrecedentes } from '@/lib/datos';
+import { CATEGORIAS, type Categoria, type Precedente } from '@/lib/precedentes';
 import type { Norma, Resolucion } from '@/lib/tipos';
 
-type Fuente = 'normas' | 'tc';
+type Fuente = 'normas' | 'tc' | 'cs';
 
 type Resultados =
   | { fuente: 'normas'; lista: Norma[] }
   | { fuente: 'tc'; lista: Resolucion[] }
+  | { fuente: 'cs'; lista: Precedente[] }
   | null;
 
 export default function Buscar() {
@@ -29,6 +32,7 @@ export default function Buscar() {
   const [consulta, setConsulta] = useState('');
   const [ramas, setRamas] = useState<string[]>([]);
   const [procesos, setProcesos] = useState<string[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
 
   // Espera a que la persona deje de escribir antes de consultar.
   useEffect(() => {
@@ -37,16 +41,17 @@ export default function Buscar() {
   }, [texto]);
 
   // En jurisprudencia, sin consulta se muestran las resoluciones más recientes.
-  const activa = fuente === 'tc' || consulta.length > 0 || ramas.length > 0;
+  const activa = fuente !== 'normas' || consulta.length > 0 || ramas.length > 0;
   const { datos, error, cargando } = useCarga<Resultados>(
     async () => {
       if (fuente === 'tc') return { fuente, lista: await buscarJurisprudencia(consulta, procesos) };
+      if (fuente === 'cs') return { fuente, lista: await buscarPrecedentes(consulta, categorias) };
       return activa ? { fuente, lista: await buscarNormas(consulta, ramas) } : null;
     },
-    `${fuente}|${consulta}|${ramas.join(',')}|${procesos.join(',')}`,
+    `${fuente}|${consulta}|${ramas.join(',')}|${procesos.join(',')}|${categorias.join(',')}`,
   );
 
-  const alternar = (lista: string[], valor: string) =>
+  const alternar = <T,>(lista: T[], valor: T) =>
     lista.includes(valor) ? lista.filter((v) => v !== valor) : [...lista, valor];
 
   return (
@@ -59,32 +64,50 @@ export default function Buscar() {
           alPresionar={() => setFuente('normas')}
         />
         <Chip
-          etiqueta="Jurisprudencia del TC"
+          etiqueta="Tribunal Constitucional"
           activo={fuente === 'tc'}
           alPresionar={() => setFuente('tc')}
         />
+        <Chip
+          etiqueta="Corte Suprema"
+          activo={fuente === 'cs'}
+          alPresionar={() => setFuente('cs')}
+        />
       </View>
-      <AvisoDemo />
+      {fuente !== 'cs' ? <AvisoDemo /> : null}
       <TextInput
         value={texto}
         onChangeText={setTexto}
         placeholder={
           fuente === 'tc'
             ? 'Expediente, parte o tema (ej.: 05853-2025, prisión preventiva)'
-            : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
+            : fuente === 'cs'
+              ? 'Número o tema (ej.: precario, colusión, 4-2016)'
+              : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
         }
         placeholderTextColor={tema.textSecondary}
         returnKeyType="search"
         autoCorrect={false}
-        accessibilityLabel={fuente === 'tc' ? 'Buscar jurisprudencia' : 'Buscar normas'}
+        accessibilityLabel={fuente === 'normas' ? 'Buscar normas' : 'Buscar jurisprudencia'}
         style={[
           styles.entrada,
           { color: tema.text, borderColor: tema.border, backgroundColor: tema.backgroundElement },
         ]}
       />
-      {fuente === 'normas' ? (
-        <SelectorRamas seleccion={ramas} alCambiar={setRamas} />
-      ) : (
+      {fuente === 'normas' ? <SelectorRamas seleccion={ramas} alCambiar={setRamas} /> : null}
+      {fuente === 'cs' ? (
+        <View style={styles.fila}>
+          {(Object.keys(CATEGORIAS) as Categoria[]).map((c) => (
+            <Chip
+              key={c}
+              etiqueta={CATEGORIAS[c]}
+              activo={categorias.includes(c)}
+              alPresionar={() => setCategorias((l) => alternar(l, c))}
+            />
+          ))}
+        </View>
+      ) : null}
+      {fuente === 'tc' ? (
         <View style={styles.fila}>
           {PROCESOS_TC.map((p) => (
             <Chip
@@ -95,7 +118,7 @@ export default function Buscar() {
             />
           ))}
         </View>
-      )}
+      ) : null}
       {!activa ? (
         <Vacio>
           Escribe un término o elige una rama. La búsqueda tolera tildes y errores de tipeo.
@@ -106,6 +129,12 @@ export default function Buscar() {
           Resoluciones publicadas más recientemente por el Tribunal Constitucional.
         </ThemedText>
       ) : null}
+      {fuente === 'cs' ? (
+        <ThemedText type="small" themeColor="textSecondary">
+          Plenos casatorios, acuerdos plenarios y precedentes vinculantes de la Corte Suprema,
+          verificados uno por uno. Disponibles sin conexión.
+        </ThemedText>
+      ) : null}
       {activa && cargando ? <Cargando /> : null}
       {error ? <MensajeError error={error} /> : null}
       {activa && !cargando && datos?.lista.length === 0 ? <Vacio>Sin resultados.</Vacio> : null}
@@ -114,6 +143,9 @@ export default function Buscar() {
         : null}
       {!error && datos?.fuente === 'tc'
         ? datos.lista.map((r) => <TarjetaResolucion key={r.id} resolucion={r} />)
+        : null}
+      {!error && datos?.fuente === 'cs'
+        ? datos.lista.map((p) => <TarjetaPrecedente key={p.id} precedente={p} />)
         : null}
     </Pantalla>
   );
