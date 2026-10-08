@@ -1,0 +1,63 @@
+name: Android (APK de prueba)
+
+# Compila un APK instalable para revisar la app en un celular Android, sin cuentas externas.
+# Queda publicado en la versión "android-prueba" del repositorio (se reemplaza en cada compilación).
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, android-apk-prueba]
+    paths:
+      - "apps/app/**"
+      - "contenido/**"
+      - ".github/workflows/android.yml"
+
+concurrency:
+  group: android
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: apps/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/app/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci
+      - run: npm run modelos -- --comprobar
+      - name: Generar el proyecto Android
+        run: npx expo prebuild --platform android --clean
+      - name: Compilar el APK
+        working-directory: apps/app/android
+        # Solo arm64 (casi todos los celulares desde 2017) para compilar más rápido.
+        run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a --no-daemon
+      - name: Publicar en la versión android-prueba
+        if: github.ref_name == 'main' || github.ref_name == 'android-apk-prueba'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk app-legal-peru.apk
+          gh release delete android-prueba --yes --cleanup-tag || true
+          gh release create android-prueba app-legal-peru.apk \
+            --prerelease --target "$GITHUB_SHA" \
+            --title "App Legal Perú para Android (prueba)" \
+            --notes "Versión de prueba compilada el $(TZ=America/Lima date '+%d/%m/%Y %H:%M') (hora de Lima) desde ${GITHUB_SHA::7}. Sin servidor: normas y resoluciones del TC son de demostración; Corte Suprema, modelos y plazos son reales."
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-legal-peru-apk
+          path: apps/app/android/app/build/outputs/apk/release/app-release.apk
+          retention-days: 14
