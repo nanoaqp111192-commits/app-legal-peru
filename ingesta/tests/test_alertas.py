@@ -25,6 +25,18 @@ def test_coincide_exige_todos_los_criterios_llenos():
     assert coincide({"palabras_clave": ["JORNADA"]}, DS)
 
 
+def test_actos_de_personal_solo_avisan_con_sector_o_palabra_clave():
+    fiscal = {
+        "id": 3,
+        "titulo": "Nombran fiscal provincial provisional del Distrito Fiscal de Lima Sur",
+        "sector": "MINISTERIO PUBLICO",
+        "ramas": ["personal", "penal"],
+    }
+    assert not coincide({"ramas": ["penal"]}, fiscal)
+    assert coincide({"ramas": ["penal"], "palabras_clave": ["Lima Sur"]}, fiscal)
+    assert coincide({"sectores": ["Ministerio Publico"]}, fiscal)
+
+
 def test_planificar_agrupa_por_usuario_y_omite_lo_ya_enviado():
     alertas = [
         {"id": 10, "usuario_id": "u1", "ramas": ["penal"], "activa": True},

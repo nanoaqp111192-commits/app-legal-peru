@@ -20,7 +20,11 @@ export default function AppTabs() {
       <TabList asChild>
         <View
           dataSet={{ marco: 'pestanas' }}
-          style={[styles.barra, { backgroundColor: tema.background, borderColor: tema.border }]}>
+          // TabList asChild anida el estilo en otro arreglo, que el DOM no acepta: se aplana.
+          style={StyleSheet.flatten([
+            styles.barra,
+            { backgroundColor: tema.background, borderColor: tema.border },
+          ])}>
           {SECCIONES.map((s) => (
             <TabTrigger key={s.nombre} name={s.nombre} href={s.href} asChild>
               <Pestana icono={s.icono}>{s.etiqueta}</Pestana>

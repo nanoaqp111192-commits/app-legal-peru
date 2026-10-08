@@ -68,17 +68,17 @@ def norma(titulo, sector=None):
         (
             "Cesan por límite de edad a fiscal provincial titular",
             "MINISTERIO PUBLICO",
-            ["personal"],
+            ["personal", "penal"],
         ),
         (
             "Dan por concluido el nombramiento de fiscal adjunto provincial provisional",
             "MINISTERIO PUBLICO",
-            ["personal"],
+            ["personal", "penal"],
         ),
         (
             "Declaran improcedente solicitud y cesan por límite de edad a fiscal superior",
             "MINISTERIO PUBLICO",
-            ["personal"],
+            ["personal", "penal"],
         ),
         ("Formalizan designación de Gerente General", "INDECOPI", ["personal"]),
         (
@@ -86,7 +86,7 @@ def norma(titulo, sector=None):
             " Delitos de Lesiones y Agresiones en contra de las Mujeres e Integrantes del"
             " Grupo Familiar",
             "MINISTERIO PUBLICO",
-            ["personal"],
+            ["personal", "penal"],
         ),
         ("Conceden licencia con goce de haber a juez superior", "PODER JUDICIAL", ["personal"]),
         (

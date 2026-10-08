@@ -14,7 +14,12 @@ LOTE_EXPO = 100  # máximo de mensajes por pedido que acepta Expo
 
 def coincide(alerta: dict, norma: dict) -> bool:
     """Una alerta coincide si cumple TODOS los criterios que el usuario llenó."""
-    if alerta.get("ramas") and not set(alerta["ramas"]) & set(norma.get("ramas") or []):
+    ramas = set(norma.get("ramas") or [])
+    if alerta.get("ramas") and not set(alerta["ramas"]) & ramas:
+        return False
+    # Los actos de personal (p. ej. nombramientos de fiscales, que también van a "penal")
+    # solo avisan si la alerta pide además un sector o una palabra clave.
+    if "personal" in ramas and not (alerta.get("sectores") or alerta.get("palabras_clave")):
         return False
     if alerta.get("sectores"):
         sector = normalizar(norma.get("sector"))
