@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from datetime import date
 
+from ingesta.vigencia import clave_de
+
 
 @dataclass
 class Norma:
@@ -25,4 +27,5 @@ class Norma:
     def como_fila(self) -> dict:
         fila = asdict(self)
         fila["fecha_publicacion"] = self.fecha_publicacion.isoformat()
+        fila["clave"] = clave_de(self.numero)
         return fila
