@@ -135,3 +135,14 @@ def test_limpiar_texto_guardado_repara_cabecera_y_negritas():
     assert limpiar_texto_guardado(limpio, titulo) == limpio
     # Sin título también reconoce la cabecera.
     assert limpiar_texto_guardado(GUARDADO).splitlines()[0] == "ORDENANZA N° 014-2026-MDSMM"
+
+
+def test_limpiar_texto_guardado_quita_la_sumilla_aunque_cambie_al_final():
+    from ingesta.fuentes.el_peruano import limpiar_texto_guardado
+
+    texto = (
+        "Acceden a solicitud de extradición activa de ciudadano peruano, y otros\n"
+        "RESOLUCIÓN SUPREMA\nNº 202-2026-JUS"
+    )
+    titulo = "Acceden a solicitud de extradición activa de ciudadano peruano para ser extraditado"
+    assert limpiar_texto_guardado(texto, titulo).splitlines()[0] == "RESOLUCIÓN SUPREMA"

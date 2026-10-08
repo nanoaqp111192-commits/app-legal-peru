@@ -243,6 +243,10 @@ def limpiar_texto_guardado(texto: str, titulo: str | None = None) -> str:
         if corte is None:
             corte = 2 if len(lineas) > 2 else 0
         lineas = lineas[corte:]
+    # La sumilla repetida al inicio (a veces con otra puntuación que el título guardado).
+    objetivo = _comparable(titulo or "")[:40]
+    if objetivo and lineas and _comparable(lineas[0])[:40] == objetivo:
+        lineas = lineas[1:]
     while lineas and _RE_CODIGO_CIERRE.fullmatch(lineas[-1]):
         lineas.pop()
 
