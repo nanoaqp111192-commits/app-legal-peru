@@ -46,7 +46,8 @@
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "modelos": "node scripts/sincronizar-modelos.mjs",
-    "export:web": "expo export --platform web"
+    "export:web": "expo export --platform web",
+    "build:web": "expo export --platform web && node scripts/preparar-web.mjs"
   },
   "private": true
 }
