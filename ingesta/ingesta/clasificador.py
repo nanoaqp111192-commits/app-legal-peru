@@ -4,7 +4,8 @@ Reglas simples y auditables: el sector que publica la norma y palabras clave
 en su título. Una norma puede pertenecer a varias ramas. Los actos de
 personal (designaciones, ceses, renuncias, licencias, encargos, viajes) van
 siempre a "personal", aunque el título nombre una materia ("Designan fiscal
-... Delitos de Lesiones"), para que no ensucien las alertas. "otros" queda
+... Delitos de Lesiones"), para que no ensucien las alertas; los del
+Ministerio Público van además a "penal". "otros" queda
 para lo que no encaja en ninguna rama.
 """
 
@@ -114,7 +115,8 @@ def clasificar(norma: Norma) -> list[str]:
     titulo = normalizar(f"{norma.titulo} {norma.sumilla or ''} {norma.numero or ''}")
     sector = normalizar(norma.sector)
     if _ACTO_DE_PERSONAL.search(normalizar(norma.titulo).strip()):
-        return ["personal"]
+        # Los nombramientos de fiscales también interesan a quien litiga en penal.
+        return ["personal", "penal"] if "ministerio publico" in sector else ["personal"]
 
     ramas: list[str] = []
     for patron, destino in POR_PALABRAS:

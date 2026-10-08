@@ -1,16 +1,19 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme } from 'react-native';
 
 import { BotonVolver } from '@/components/boton-volver';
 import { Marco } from '@/components/marco';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useAbrirNotificaciones } from '@/hooks/use-abrir-notificaciones';
+import { useTheme } from '@/hooks/use-theme';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  // En la web, el esquema se lee después de hidratar para que coincida con la página estática.
   const colorScheme = useColorScheme();
+  const tema = useTheme();
   useAbrirNotificaciones();
 
   useEffect(() => {
@@ -24,6 +27,8 @@ export default function RootLayout() {
           screenOptions={{
             headerBackButtonDisplayMode: 'minimal',
             headerShadowVisible: false,
+            headerStyle: { backgroundColor: tema.background },
+            headerTintColor: tema.text,
             ...(process.env.EXPO_OS === 'web'
               ? { headerLeft: () => <BotonVolver />, headerTitleStyle: { fontSize: 16 } }
               : {}),
