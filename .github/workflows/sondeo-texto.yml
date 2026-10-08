@@ -6,30 +6,47 @@ jobs:
   sondeo:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - run: |
+          mkdir -p out && cd out
           U=https://oqzkvtvvctiekodcxgfg.supabase.co/rest/v1
           K=sb_publishable_GAGFqluWty9vaopysXjoyw_UmHqeGkz
-          curl -s -H "apikey: $K" "$U/normas?select=id,url_oficial,texto&texto=not.is.null&order=id.desc&limit=3" > n.json
-          jq -r '.[] | "=== \(.id) \(.url_oficial)\nCOLA:\n\(.texto[-1500:])\n"' n.json
-          URL=$(jq -r '.[0].url_oficial' n.json)
-          curl -sL -A "Mozilla/5.0" "$URL" -o d.html || true
-          echo "--- bytes $(wc -c < d.html)"
-          python3 - <<'PY'
-          from html.parser import HTMLParser
-          import re
-          s=open('d.html',encoding='utf-8',errors='replace').read()
-          # esqueleto: etiquetas con id/class y longitud de texto
-          class P(HTMLParser):
-              def __init__(s):
-                  super().__init__(); s.d=0
-              def handle_starttag(s,t,a):
-                  a=dict(a)
-                  if t in('div','section','article','main','header','footer','nav','ul','table','h1','h2','h3','h4','p','span','a','textarea','iframe','object','embed') and s.d<14:
-                      print('  '*s.d+t, a.get('id',''), a.get('class',''), (a.get('href') or a.get('src') or '')[:80])
-                  if t not in('br','img','meta','link','input','hr'): s.d+=1
-              def handle_endtag(s,t):
-                  if t not in('br','img','meta','link','input','hr'): s.d=max(0,s.d-1)
-          P().feed(s)
-          PY
-          echo "--- fragmento"
-          grep -n -i "Cuadernillo\|OSINERGMIN\|POR CUANTO\|Regístrese" d.html | cut -c1-300 | head -20
+          g() { curl -s -H "apikey: $K" "$U/$1"; }
+          g "normas?select=*&fecha_publicacion=eq.2026-10-08&order=id" > normas-dia.json
+          g "normas?select=*&texto=not.is.null&order=id.desc&limit=5" > normas-texto.json
+          g "normas?select=*&clave=not.is.null&tipo=ilike.*LEY*&order=id.desc&limit=5" > normas-ley.json
+          g "compilados?select=*&order=titulo" > compilados.json
+          g "afectaciones?select=*&limit=200" > afectaciones.json
+          ls -la
+          curl -sL -A "Mozilla/5.0" "$(jq -r '.[0].url_oficial' normas-texto.json)" -o ficha.html
+      - run: |
+          npm i -g playwright@1.56.1 >/dev/null 2>&1 && npx playwright install --with-deps chromium >/dev/null 2>&1
+          cat > cap.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const b = await chromium.launch();
+          const B = 'https://app-legal-peru.nanoaqp111192.workers.dev';
+          const ids = JSON.parse(require('fs').readFileSync('out/normas-texto.json'));
+          JS
+          cat > cap.cjs <<'JS'
+          const { chromium } = require('playwright');
+          (async () => {
+            const b = await chromium.launch();
+            const B = 'https://app-legal-peru.nanoaqp111192.workers.dev';
+            const id = JSON.parse(require('fs').readFileSync('out/normas-texto.json'))[0].id;
+            for (const [n, w, h] of [['escritorio', 1440, 900], ['movil', 390, 844]]) {
+              const p = await b.newPage({ viewport: { width: w, height: h } });
+              for (const r of ['/', '/buscar', `/norma/${id}`, '/plazos', '/modelos', '/alertas']) {
+                await p.goto(B + r, { waitUntil: 'networkidle' }); await p.waitForTimeout(1500);
+                await p.screenshot({ path: `out/${n}${r.replaceAll('/', '_')}.png` });
+              }
+            }
+            await b.close();
+          })();
+          JS
+          NODE_PATH=$(npm root -g) node cap.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sondeo
+          path: out
