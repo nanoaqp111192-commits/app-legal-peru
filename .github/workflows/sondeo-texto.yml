@@ -38,8 +38,9 @@ jobs:
             const b = await chromium.launch();
             const B = 'https://app-legal-peru.nanoaqp111192.workers.dev';
             const id = JSON.parse(require('fs').readFileSync('out/normas-texto.json'))[0].id;
-            for (const [n, w, h] of [['escritorio', 1440, 900], ['movil', 390, 844]]) {
-              const p = await b.newPage({ viewport: { width: w, height: h } });
+            for (const [n, w, h, c] of [['escritorio', 1440, 900, 'light'], ['movil', 390, 844, 'light'], ['oscuro_movil', 390, 844, 'dark'], ['oscuro_escritorio', 1440, 900, 'dark']]) {
+              const p = await b.newPage({ viewport: { width: w, height: h }, colorScheme: c });
+              p.on('pageerror', (e) => console.log('ERROR', n, e.message));
               for (const r of ['/', '/buscar', `/norma/${id}`, '/plazos', '/modelos', '/alertas']) {
                 await p.goto(B + r, { waitUntil: 'networkidle' }); await p.waitForTimeout(1500);
                 await p.screenshot({ path: `out/${n}${r.replaceAll('/', '_')}.png` });
