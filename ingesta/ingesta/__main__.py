@@ -4,13 +4,16 @@
     python -m ingesta historico --desde AAAA-MM-DD [--hasta AAAA-MM-DD]
     python -m ingesta tc [--seco] [--maximo N]
     python -m ingesta modelos [--validar]
+    python -m ingesta compilados [--seco]
 
 ``diaria`` trae las normas del día de El Peruano, las clasifica, las guarda
 y envía los avisos; también registra qué normas anteriores derogan o
 modifican. ``historico`` hace lo mismo día por día hacia atrás, sin avisos
 (sirve para cargar meses pasados). ``tc`` trae las resoluciones del último día publicado
 por el Tribunal Constitucional (en seco, solo las 2 primeras: el TC pide 30
-segundos entre pedidos). Con ``--seco`` solo imprimen lo que harían.
+segundos entre pedidos). ``compilados`` revisa si cambió algún PDF de las
+"Normas actualizadas" de El Peruano (en seco, lista y calcula la huella de 2).
+Con ``--seco`` solo imprimen lo que harían.
 """
 
 from __future__ import annotations
@@ -18,10 +21,11 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import date, timedelta
+from datetime import UTC, date, datetime, timedelta
 
 from ingesta import alertas, modelos, vigencia
 from ingesta.clasificador import clasificar
+from ingesta.fuentes import compilados as fuente_compilados
 from ingesta.fuentes import el_peruano
 from ingesta.fuentes import tribunal_constitucional as tc
 
@@ -111,6 +115,54 @@ def tribunal(seco: bool, maximo: int | None) -> int:
     return 0
 
 
+def compilados(seco: bool) -> int:
+    with el_peruano.cliente() as http:
+        actuales = fuente_compilados.pedir_lista(http)
+        print(f"{len(actuales)} normas actualizadas en la lista de El Peruano")
+        if not actuales:
+            print("AVISO: la lista llegó vacía; revisar la sección Normas actualizadas")
+            return 2
+        if seco:
+            for c, (sha, peso) in fuente_compilados.huellas(http, actuales[:2]).items():
+                print(f"{c}: {peso} bytes, sha256 {sha[:16]}…")
+            for c in actuales[:5]:
+                print(json.dumps(c.__dict__, ensure_ascii=False))
+            return 0
+
+        from ingesta.supabase import Supabase
+
+        db = Supabase()
+        guardados = db.leer("compilados")
+        vigentes = sum(1 for g in guardados if g.get("activo", True))
+        if len(actuales) < fuente_compilados.MINIMO_RAZONABLE * vigentes:
+            print(f"AVISO: la lista trae {len(actuales)} de {vigentes}; no se toca nada")
+            return 2
+        vistas = fuente_compilados.huellas(http, actuales)
+
+    ahora = datetime.now(UTC).isoformat()
+    filas, cambios = fuente_compilados.comparar(guardados, actuales, vistas, ahora)
+    ids = {f["id_fuente"]: f["id"] for f in db.upsert("compilados", filas, conflicto="id_fuente")}
+    db.insertar_ignorando_duplicados(
+        "compilados_cambios",
+        [
+            {
+                "compilado_id": ids[c["id_fuente"]],
+                **{k: v for k, v in c.items() if k != "id_fuente"},
+            }
+            for c in cambios
+        ],
+    )
+    titulos = {f["id_fuente"]: f["titulo"] for f in filas}
+    for c in cambios:
+        print(f"{c['tipo']}: {titulos[c['id_fuente']][:90]}")
+    fallidos = len(actuales) - len(vistas)
+    print(
+        f"{len(vistas)} PDF revisados, {len(cambios)} cambios registrados, "
+        f"{fallidos} sin poder descargar"
+    )
+    return 1 if fallidos > len(actuales) // 10 else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="ingesta")
     sub = parser.add_subparsers(dest="orden", required=True)
@@ -123,6 +175,8 @@ def main(argv: list[str] | None = None) -> int:
     p_tc = sub.add_parser("tc")
     p_tc.add_argument("--seco", action="store_true")
     p_tc.add_argument("--maximo", type=int, default=None)
+    p_comp = sub.add_parser("compilados")
+    p_comp.add_argument("--seco", action="store_true")
     p_modelos = sub.add_parser("modelos")
     p_modelos.add_argument("--validar", action="store_true")
     args = parser.parse_args(argv)
@@ -133,6 +187,8 @@ def main(argv: list[str] | None = None) -> int:
         return historico(args.desde, args.hasta or el_peruano.hoy_en_lima())
     if args.orden == "tc":
         return tribunal(args.seco, args.maximo)
+    if args.orden == "compilados":
+        return compilados(args.seco)
 
     problemas = [e for m in modelos.leer() for e in modelos.errores(m)]
     if problemas:

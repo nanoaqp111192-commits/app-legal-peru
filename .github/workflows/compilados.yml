@@ -1,0 +1,45 @@
+name: Normas actualizadas (revisión de compilados de El Peruano)
+
+# Descarga cada PDF de la sección "Normas actualizadas" y compara su huella con
+# la guardada. Una vez al día basta: el diario actualiza estos textos cuando se
+# publica una modificación, no varias veces al día.
+on:
+  schedule:
+    # 08:00 hora de Lima (Lima no tiene horario de verano).
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      seco:
+        description: "Solo listar y calcular la huella de 2 PDF, sin guardar"
+        type: boolean
+        default: false
+
+concurrency:
+  group: compilados
+  cancel-in-progress: false
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: ingesta
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - name: Comparar huellas y registrar cambios
+        env:
+          SECO: ${{ inputs.seco }}
+        run: |
+          if [ "$SECO" = "true" ] || [ -z "$SUPABASE_URL" ]; then
+            python -m ingesta compilados --seco
+          else
+            python -m ingesta compilados
+          fi
