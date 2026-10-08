@@ -97,7 +97,8 @@ jobs:
         with:
           python-version: "3.13"
       - run: pip install -e .
-      - run: python -m ingesta diaria --seco
+      # Edición de ayer en Lima: la de hoy aún no existe en la madrugada.
+      - run: python -m ingesta diaria --seco --fecha "$(TZ=America/Lima date -d yesterday +%F)"
       - run: python -m ingesta compilados --seco
         if: always()
 
