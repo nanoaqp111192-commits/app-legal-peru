@@ -5,11 +5,13 @@ import { AvisoDemo, Cargando, MensajeError, Vacio } from '@/components/avisos';
 import { Chip } from '@/components/chip';
 import { Pantalla } from '@/components/pantalla';
 import { SelectorRamas } from '@/components/selector-ramas';
+import { TarjetaCompilado } from '@/components/tarjeta-compilado';
 import { TarjetaNorma } from '@/components/tarjeta-norma';
 import { ThemedText } from '@/components/themed-text';
 import { Spacing } from '@/constants/theme';
 import { useCarga } from '@/hooks/use-carga';
-import { normasDeFecha, ultimaFechaConNormas } from '@/lib/datos';
+import { cambiosRecientes } from '@/lib/compilados';
+import { listarCompilados, normasDeFecha, ultimaFechaConNormas } from '@/lib/datos';
 import { fechaLarga, hoyEnLima } from '@/lib/fechas';
 
 export default function Hoy() {
@@ -31,6 +33,13 @@ export default function Hoy() {
     return { fecha, hoy, normas };
   });
 
+  // Aparte: si falla, las normas del día se muestran igual.
+  const compilados = useCarga(async () => cambiosRecientes(await listarCompilados()));
+  const recargarTodo = () => {
+    recargar();
+    compilados.recargar();
+  };
+
   const visibles = (datos?.normas ?? []).filter(
     (n) =>
       (verDesignaciones || !(n.ramas.length === 1 && n.ramas[0] === 'otros')) &&
@@ -39,7 +48,7 @@ export default function Hoy() {
   const ocultas = (datos?.normas.length ?? 0) - visibles.length;
 
   return (
-    <Pantalla refrescando={cargando && !!datos} alRefrescar={recargar}>
+    <Pantalla refrescando={cargando && !!datos} alRefrescar={recargarTodo}>
       <View style={styles.cabecera}>
         <ThemedText type="subtitle">Normas del día</ThemedText>
         {datos ? (
@@ -59,6 +68,15 @@ export default function Hoy() {
           alPresionar={() => setVerDesignaciones((v) => !v)}
         />
       </View>
+
+      {compilados.datos?.length ? (
+        <View style={styles.cabecera}>
+          <ThemedText type="smallBold">Textos actualizados que cambiaron esta semana</ThemedText>
+          {compilados.datos.map((c) => (
+            <TarjetaCompilado key={c.id} compilado={c} />
+          ))}
+        </View>
+      ) : null}
 
       {cargando && !datos ? <Cargando /> : null}
       {error ? <MensajeError error={error} /> : null}

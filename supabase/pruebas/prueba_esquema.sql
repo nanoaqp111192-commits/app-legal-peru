@@ -93,3 +93,27 @@ do $$ begin
   if (select count(*) from afectaciones) <> 1 then raise exception 'anon no lee afectaciones'; end if;
 end $$;
 reset role;
+
+-- Normas actualizadas: un compilado y su historial de cambios
+insert into compilados (id_fuente, titulo, materia, url_pdf, hash) values
+  (48, 'NUEVA LEY PROCESAL DEL TRABAJO', 'Procesal', 'https://x/48', 'a');
+insert into compilados_cambios (compilado_id, tipo, hash_anterior, hash_nuevo)
+  select id, 'modificado', 'a', 'b' from compilados where id_fuente = 48;
+do $$ begin
+  begin
+    insert into compilados_cambios (compilado_id, tipo) select id, 'otro' from compilados;
+    raise exception 'se aceptó un tipo de cambio inválido';
+  exception when check_violation then null;
+  end;
+  raise notice 'ok: compilados';
+end $$;
+set role anon;
+do $$ begin
+  if (select count(*) from compilados_cambios) <> 1 then raise exception 'anon no lee cambios'; end if;
+  begin
+    insert into compilados (id_fuente, titulo, url_pdf) values (1, 'x', 'x');
+    raise exception 'anon pudo escribir compilados';
+  exception when insufficient_privilege then raise notice 'ok: anon no escribe compilados';
+  end;
+end $$;
+reset role;

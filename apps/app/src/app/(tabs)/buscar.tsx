@@ -5,6 +5,7 @@ import { AvisoDemo, Cargando, MensajeError, Vacio } from '@/components/avisos';
 import { Chip } from '@/components/chip';
 import { Pantalla } from '@/components/pantalla';
 import { SelectorRamas } from '@/components/selector-ramas';
+import { TarjetaCompilado } from '@/components/tarjeta-compilado';
 import { TarjetaNorma } from '@/components/tarjeta-norma';
 import { TarjetaPrecedente } from '@/components/tarjeta-precedente';
 import { TarjetaResolucion } from '@/components/tarjeta-resolucion';
@@ -13,15 +14,22 @@ import { Spacing } from '@/constants/theme';
 import { PROCESOS_TC } from '@/data/jurisprudencia-demo';
 import { useCarga } from '@/hooks/use-carga';
 import { useTheme } from '@/hooks/use-theme';
-import { buscarJurisprudencia, buscarNormas, buscarPrecedentes } from '@/lib/datos';
+import { filtrarCompilados } from '@/lib/compilados';
+import {
+  buscarJurisprudencia,
+  buscarNormas,
+  buscarPrecedentes,
+  listarCompilados,
+} from '@/lib/datos';
 import { CATEGORIAS, categoriasDe, type Categoria, type Precedente } from '@/lib/precedentes';
-import type { Norma, Resolucion } from '@/lib/tipos';
+import type { Compilado, Norma, Resolucion } from '@/lib/tipos';
 
-type Fuente = 'normas' | 'tc' | 'cs' | 'ta';
+type Fuente = 'normas' | 'na' | 'tc' | 'cs' | 'ta';
 const esPrecedente = (f: Fuente): f is 'cs' | 'ta' => f === 'cs' || f === 'ta';
 
 type Resultados =
   | { fuente: 'normas'; lista: Norma[] }
+  | { fuente: 'na'; lista: Compilado[] }
   | { fuente: 'tc'; lista: Resolucion[] }
   | { fuente: 'cs' | 'ta'; lista: Precedente[] }
   | null;
@@ -45,6 +53,8 @@ export default function Buscar() {
   const activa = fuente !== 'normas' || consulta.length > 0 || ramas.length > 0;
   const { datos, error, cargando } = useCarga<Resultados>(
     async () => {
+      if (fuente === 'na')
+        return { fuente, lista: filtrarCompilados(await listarCompilados(), consulta) };
       if (fuente === 'tc') return { fuente, lista: await buscarJurisprudencia(consulta, procesos) };
       if (esPrecedente(fuente))
         return { fuente, lista: await buscarPrecedentes(consulta, categorias, fuente) };
@@ -71,6 +81,11 @@ export default function Buscar() {
           alPresionar={() => cambiarFuente('normas')}
         />
         <Chip
+          etiqueta="Textos actualizados"
+          activo={fuente === 'na'}
+          alPresionar={() => cambiarFuente('na')}
+        />
+        <Chip
           etiqueta="Tribunal Constitucional"
           activo={fuente === 'tc'}
           alPresionar={() => cambiarFuente('tc')}
@@ -91,18 +106,22 @@ export default function Buscar() {
         value={texto}
         onChangeText={setTexto}
         placeholder={
-          fuente === 'tc'
-            ? 'Expediente, parte o tema (ej.: 05853-2025, prisión preventiva)'
-            : fuente === 'cs'
-              ? 'Número o tema (ej.: precario, colusión, 4-2016)'
-              : fuente === 'ta'
-                ? 'Número o tema (ej.: intereses moratorios, idoneidad, penalidad)'
-                : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
+          fuente === 'na'
+            ? 'Ley o tema (ej.: 29497, sociedades, CTS)'
+            : fuente === 'tc'
+              ? 'Expediente, parte o tema (ej.: 05853-2025, prisión preventiva)'
+              : fuente === 'cs'
+                ? 'Número o tema (ej.: precario, colusión, 4-2016)'
+                : fuente === 'ta'
+                  ? 'Número o tema (ej.: intereses moratorios, idoneidad, penalidad)'
+                  : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
         }
         placeholderTextColor={tema.textSecondary}
         returnKeyType="search"
         autoCorrect={false}
-        accessibilityLabel={fuente === 'normas' ? 'Buscar normas' : 'Buscar jurisprudencia'}
+        accessibilityLabel={
+          fuente === 'normas' || fuente === 'na' ? 'Buscar normas' : 'Buscar jurisprudencia'
+        }
         style={[
           styles.entrada,
           { color: tema.text, borderColor: tema.border, backgroundColor: tema.backgroundElement },
@@ -143,6 +162,12 @@ export default function Buscar() {
           Resoluciones publicadas más recientemente por el Tribunal Constitucional.
         </ThemedText>
       ) : null}
+      {fuente === 'na' ? (
+        <ThemedText type="small" themeColor="textSecondary">
+          Textos compilados por El Peruano con sus modificaciones. La app descarga cada PDF a diario
+          y avisa la fecha en que detectó un cambio; no dice qué artículo cambió.
+        </ThemedText>
+      ) : null}
       {esPrecedente(fuente) ? (
         <ThemedText type="small" themeColor="textSecondary">
           {fuente === 'cs'
@@ -156,6 +181,9 @@ export default function Buscar() {
       {activa && !cargando && datos?.lista.length === 0 ? <Vacio>Sin resultados.</Vacio> : null}
       {!error && datos?.fuente === 'normas'
         ? datos.lista.map((n) => <TarjetaNorma key={n.id} norma={n} mostrarFecha />)
+        : null}
+      {!error && datos?.fuente === 'na'
+        ? datos.lista.map((c) => <TarjetaCompilado key={c.id} compilado={c} />)
         : null}
       {!error && datos?.fuente === 'tc'
         ? datos.lista.map((r) => <TarjetaResolucion key={r.id} resolucion={r} />)

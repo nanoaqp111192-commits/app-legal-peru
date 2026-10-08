@@ -88,3 +88,16 @@ export type Resolucion = {
   url_pdf: string | null;
   url_html: string | null;
 };
+
+/** Texto compilado de "Normas actualizadas" de El Peruano. */
+export type Compilado = {
+  id: number;
+  id_fuente: number;
+  titulo: string;
+  numeros: string | null;
+  materia: string | null;
+  url_pdf: string;
+  verificado_en: string | null;
+  cambiado_en: string | null;
+  creado_en: string;
+};

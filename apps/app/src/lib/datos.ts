@@ -12,7 +12,7 @@ import {
   type Precedente,
 } from './precedentes';
 import { supabase } from './supabase';
-import type { Afectacion, Alerta, Modelo, Norma, Resolucion, Vigencia } from './tipos';
+import type { Afectacion, Alerta, Compilado, Modelo, Norma, Resolucion, Vigencia } from './tipos';
 
 const COLUMNAS_NORMA =
   'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en,clave';
@@ -189,6 +189,24 @@ export async function vigenciaDe(norma: Norma): Promise<Vigencia | null> {
       norma: null,
     }));
     return { afectadaPor, afecta };
+  });
+}
+
+/**
+ * Normas actualizadas de El Peruano (unas 150): se traen todas de una vez y se
+ * filtran en el teléfono. Sin servidor la lista está vacía.
+ */
+export async function listarCompilados(): Promise<Compilado[]> {
+  if (!supabase) return [];
+  const cliente = supabase;
+  return respaldo('compilados', async () => {
+    const { data, error } = await cliente
+      .from('compilados')
+      .select('id,id_fuente,titulo,numeros,materia,url_pdf,verificado_en,cambiado_en,creado_en')
+      .eq('activo', true)
+      .order('titulo');
+    if (error) throw error;
+    return (data ?? []) as Compilado[];
   });
 }
 

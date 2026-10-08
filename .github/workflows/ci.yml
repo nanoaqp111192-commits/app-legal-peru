@@ -98,6 +98,8 @@ jobs:
           python-version: "3.13"
       - run: pip install -e .
       - run: python -m ingesta diaria --seco
+      - run: python -m ingesta compilados --seco
+        if: always()
 
   # Igual que la anterior, para el Tribunal Constitucional: lee el listado del
   # último día y completa 2 resoluciones (el TC pide 30 s entre pedidos).
