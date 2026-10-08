@@ -1,0 +1,22 @@
+name: Sondeo PJ (temporal)
+on:
+  push:
+    branches: [fase-2-jurisprudencia-pj]
+jobs:
+  sondeo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install httpx beautifulsoup4
+      - run: >-
+          python .github/sondeo/pj.py
+          https://jurisprudencia.pj.gob.pe/robots.txt
+          https://jurisprudencia.pj.gob.pe/jurisprudenciaweb/faces/page/inicio.xhtml
+          https://jurisprudencia.pj.gob.pe/jurisprudenciaweb/faces/page/penal.xhtml
+          https://jurisprudencia.pj.gob.pe/jurisprudenciaweb/faces/page/resultado.xhtml
+          https://www.pj.gob.pe/robots.txt
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada/as_suprema/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada
