@@ -9,11 +9,27 @@ jobs:
       - run: |
           U=https://oqzkvtvvctiekodcxgfg.supabase.co/rest/v1
           K=sb_publishable_GAGFqluWty9vaopysXjoyw_UmHqeGkz
-          H=(-H "apikey: $K" -H "Authorization: Bearer $K")
-          curl -s "${H[@]}" "$U/normas?select=id,numero,titulo,sumilla,texto&texto=not.is.null&order=id.desc&limit=3" > n.json
-          jq -r '.[] | "=== \(.id) \(.numero)\nTITULO: \(.titulo)\nSUMILLA: \(.sumilla)\nTEXTO:\n\(.texto[0:2500])\n"' n.json
-          echo "--- conteos con < o &"
-          for p in '%3C' '%26'; do curl -s "${H[@]}" -H "Prefer: count=exact" -I "$U/normas?select=id&texto=like.*$p*" | grep -i content-range; done
-          curl -s "${H[@]}" -H "Prefer: count=exact" -I "$U/normas?select=id" | grep -i content-range
-          echo "--- muestra con <"
-          curl -s "${H[@]}" "$U/normas?select=id,texto&texto=like.*%3C*&limit=2" | jq -r '.[] | .texto[0:1500]'
+          curl -s -H "apikey: $K" "$U/normas?select=id,url_oficial,texto&texto=not.is.null&order=id.desc&limit=3" > n.json
+          jq -r '.[] | "=== \(.id) \(.url_oficial)\nCOLA:\n\(.texto[-1500:])\n"' n.json
+          URL=$(jq -r '.[0].url_oficial' n.json)
+          curl -sL -A "Mozilla/5.0" "$URL" -o d.html || true
+          echo "--- bytes $(wc -c < d.html)"
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          import re
+          s=open('d.html',encoding='utf-8',errors='replace').read()
+          # esqueleto: etiquetas con id/class y longitud de texto
+          class P(HTMLParser):
+              def __init__(s):
+                  super().__init__(); s.d=0
+              def handle_starttag(s,t,a):
+                  a=dict(a)
+                  if t in('div','section','article','main','header','footer','nav','ul','table','h1','h2','h3','h4','p','span','a','textarea','iframe','object','embed') and s.d<14:
+                      print('  '*s.d+t, a.get('id',''), a.get('class',''), (a.get('href') or a.get('src') or '')[:80])
+                  if t not in('br','img','meta','link','input','hr'): s.d+=1
+              def handle_endtag(s,t):
+                  if t not in('br','img','meta','link','input','hr'): s.d=max(0,s.d-1)
+          P().feed(s)
+          PY
+          echo "--- fragmento"
+          grep -n -i "Cuadernillo\|OSINERGMIN\|POR CUANTO\|Regístrese" d.html | cut -c1-300 | head -20
