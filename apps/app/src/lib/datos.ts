@@ -12,7 +12,16 @@ import {
   type Precedente,
 } from './precedentes';
 import { supabase } from './supabase';
-import type { Afectacion, Alerta, Compilado, Modelo, Norma, Resolucion, Vigencia } from './tipos';
+import type {
+  Afectacion,
+  Alerta,
+  Compilado,
+  Historial,
+  Modelo,
+  Norma,
+  Resolucion,
+  Vigencia,
+} from './tipos';
 
 const COLUMNAS_NORMA =
   'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en,clave';
@@ -170,7 +179,7 @@ export async function vigenciaDe(norma: Norma): Promise<Vigencia | null> {
   if (!supabase) return null;
   const cliente = supabase;
   return respaldo(`vigencia:${norma.id}`, async () => {
-    const [recibidas, emitidas] = await Promise.all([
+    const [recibidas, emitidas, compilados] = await Promise.all([
       norma.clave
         ? cliente
             .from('afectaciones')
@@ -178,9 +187,17 @@ export async function vigenciaDe(norma: Norma): Promise<Vigencia | null> {
             .eq('clave_afectada', norma.clave)
         : Promise.resolve({ data: [], error: null }),
       cliente.from('afectaciones').select(COLUMNAS_AFECTACION).eq('norma_id', norma.id),
+      norma.clave
+        ? cliente
+            .from('compilados')
+            .select('id,titulo')
+            .eq('activo', true)
+            .contains('claves', [norma.clave])
+        : Promise.resolve({ data: [], error: null }),
     ]);
     if (recibidas.error) throw recibidas.error;
     if (emitidas.error) throw emitidas.error;
+    if (compilados.error) throw compilados.error;
     const afectadaPor = ((recibidas.data ?? []) as unknown as Afectacion[]).sort((a, b) =>
       (b.norma?.fecha_publicacion ?? '').localeCompare(a.norma?.fecha_publicacion ?? ''),
     );
@@ -188,9 +205,69 @@ export async function vigenciaDe(norma: Norma): Promise<Vigencia | null> {
       ...a,
       norma: null,
     }));
-    return { afectadaPor, afecta };
+    return { afectadaPor, afecta, compilados: compilados.data ?? [] };
   });
 }
+
+const EMBEBIDA = `${COLUMNAS_AFECTACION},norma:normas(id,numero,titulo,fecha_publicacion)`;
+
+/**
+ * Qué normas cargadas modifican a la norma de esta clave, aunque ella misma no esté
+ * cargada (p. ej. una ley de 1997 modificada en 2026).
+ */
+export async function historialDe(clave: string): Promise<Historial | null> {
+  if (!supabase) return null;
+  const cliente = supabase;
+  return respaldo(`historial:${clave}`, async () => {
+    const [afectaciones, normas, compilados] = await Promise.all([
+      cliente.from('afectaciones').select(EMBEBIDA).eq('clave_afectada', clave),
+      cliente
+        .from('normas')
+        .select('id,numero,titulo,fecha_publicacion')
+        .eq('clave', clave)
+        .order('fecha_publicacion')
+        .limit(1),
+      cliente.from('compilados').select('id,titulo').eq('activo', true).contains('claves', [clave]),
+    ]);
+    if (afectaciones.error) throw afectaciones.error;
+    if (normas.error) throw normas.error;
+    if (compilados.error) throw compilados.error;
+    return {
+      clave,
+      norma: (normas.data?.[0] as Historial['norma']) ?? null,
+      compilados: compilados.data ?? [],
+      afectadaPor: (afectaciones.data ?? []) as unknown as Afectacion[],
+    };
+  });
+}
+
+/** Un texto actualizado y las normas cargadas que modifican a alguna de las que reúne. */
+export async function obtenerCompilado(
+  id: number,
+): Promise<{ compilado: Compilado; afectadaPor: Afectacion[] } | null> {
+  if (!supabase) return null;
+  const cliente = supabase;
+  return respaldo(`compilado:${id}`, async () => {
+    const { data, error } = await cliente
+      .from('compilados')
+      .select(COLUMNAS_COMPILADO)
+      .eq('id', id)
+      .maybeSingle();
+    if (error) throw error;
+    if (!data) return null;
+    const compilado = data as Compilado;
+    if (!compilado.claves?.length) return { compilado, afectadaPor: [] };
+    const r = await cliente
+      .from('afectaciones')
+      .select(EMBEBIDA)
+      .in('clave_afectada', compilado.claves);
+    if (r.error) throw r.error;
+    return { compilado, afectadaPor: (r.data ?? []) as unknown as Afectacion[] };
+  });
+}
+
+const COLUMNAS_COMPILADO =
+  'id,id_fuente,titulo,numeros,materia,url_pdf,claves,verificado_en,cambiado_en,creado_en';
 
 /**
  * Normas actualizadas de El Peruano (unas 150): se traen todas de una vez y se
@@ -202,7 +279,7 @@ export async function listarCompilados(): Promise<Compilado[]> {
   return respaldo('compilados', async () => {
     const { data, error } = await cliente
       .from('compilados')
-      .select('id,id_fuente,titulo,numeros,materia,url_pdf,verificado_en,cambiado_en,creado_en')
+      .select(COLUMNAS_COMPILADO)
       .eq('activo', true)
       .order('titulo');
     if (error) throw error;

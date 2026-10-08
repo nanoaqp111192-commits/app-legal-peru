@@ -23,6 +23,8 @@ export default function RootLayout() {
         <Stack.Screen name="resolucion/[id]" options={{ title: 'Resolución del TC' }} />
         <Stack.Screen name="precedente/[id]" options={{ title: 'Precedente' }} />
         <Stack.Screen name="modelo/[slug]" options={{ title: 'Modelo de escrito' }} />
+        <Stack.Screen name="afectada/[clave]" options={{ title: 'Modificaciones' }} />
+        <Stack.Screen name="compilado/[id]" options={{ title: 'Texto actualizado' }} />
       </Stack>
     </ThemeProvider>
   );

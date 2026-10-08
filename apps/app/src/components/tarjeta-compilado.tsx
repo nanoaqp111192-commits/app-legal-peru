@@ -1,6 +1,6 @@
+import { Link } from 'expo-router';
 import { Pressable, StyleSheet } from 'react-native';
 
-import { ExternalLink } from './external-link';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
 
@@ -16,7 +16,7 @@ export function TarjetaCompilado({ compilado: c }: { compilado: Compilado }) {
     ? `Cambio detectado el ${fechaCorta(diaEnLima(c.cambiado_en))}`
     : `Sin cambios desde que se vigila (${fechaCorta(diaEnLima(c.creado_en))})`;
   return (
-    <ExternalLink href={c.url_pdf} asChild>
+    <Link href={{ pathname: '/compilado/[id]', params: { id: String(c.id) } }} asChild>
       <Pressable style={({ pressed }) => pressed && { opacity: 0.7 }}>
         <ThemedView type="backgroundElement" style={[styles.tarjeta, { borderColor: tema.border }]}>
           <ThemedText type="smallBold" themeColor="textSecondary">
@@ -34,7 +34,7 @@ export function TarjetaCompilado({ compilado: c }: { compilado: Compilado }) {
           </ThemedText>
         </ThemedView>
       </Pressable>
-    </ExternalLink>
+    </Link>
   );
 }
 

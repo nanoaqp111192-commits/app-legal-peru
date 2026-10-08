@@ -74,3 +74,28 @@ def test_filas_para_la_base_y_clave_en_la_norma():
 
     norma = Norma("NL/1-1", "t", date(2026, 10, 7), "https://x", numero="LEY N° 32100")
     assert norma.como_fila()["clave"] == "ley 32100"
+
+
+def test_claves_en_numeros_abreviados_de_compilados():
+    from ingesta.vigencia import claves_en
+
+    assert claves_en("LEY Nº 29824\r\nD.S Nº 007-2013-JUS") == [
+        "ley 29824",
+        "decreto supremo 007-2013-jus",
+    ]
+    assert claves_en("D. LEG. N° 813") == ["decreto legislativo 813"]
+    assert claves_en("LEY Nº 29783    DECRETO SUPREMONº 005-2012-TR") == [
+        "ley 29783",
+        "decreto supremo 005-2012-tr",
+    ]
+    assert claves_en("DECRETO LEY Nº 19990") == ["decreto ley 19990"]
+    assert claves_en("REGLAMENTO DE LA LEY Nº 29733") == ["reglamento de ley 29733"]
+    # El título puede nombrar el código sin número.
+    assert claves_en("CÓDIGO PROCESAL CIVIL") == ["decreto legislativo 768"]
+
+
+def test_decreto_ley_no_se_confunde_con_ley():
+    [a] = afectaciones(
+        "Modifican el Decreto Ley N° 19990, que crea el Sistema Nacional de Pensiones"
+    )
+    assert a["clave_afectada"] == "decreto ley 19990"

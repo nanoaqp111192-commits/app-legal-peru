@@ -6,9 +6,10 @@ import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { useCarga } from '@/hooks/use-carga';
 import { vigenciaDe } from '@/lib/datos';
-import { fechaCorta } from '@/lib/fechas';
 import type { Norma } from '@/lib/tipos';
 import { estadoVigencia, TITULO_ESTADO, verbo } from '@/lib/vigencia';
+
+import { ListaModificaciones } from './lista-modificaciones';
 
 /** Verificación mínima de vigencia a partir de las normas ya cargadas. */
 export function BloqueVigencia({ norma }: { norma: Norma }) {
@@ -19,26 +20,25 @@ export function BloqueVigencia({ norma }: { norma: Norma }) {
   return (
     <ThemedView type="backgroundElement" style={styles.caja}>
       <ThemedText type="smallBold">Vigencia: {TITULO_ESTADO[estado]}</ThemedText>
-      {vigencia.afectadaPor.map((a) =>
-        a.norma ? (
-          <Link key={`${a.norma.id}-${a.efecto}`} href={`/norma/${a.norma.id}`}>
-            <ThemedText type="small">
-              {verbo(a)}:{' '}
-              <ThemedText type="linkPrimary">{a.norma.numero ?? a.norma.titulo}</ThemedText> (
-              {fechaCorta(a.norma.fecha_publicacion)})
-            </ThemedText>
-          </Link>
-        ) : null,
-      )}
+      <ListaModificaciones afectadaPor={vigencia.afectadaPor} />
+      {vigencia.compilados?.map((c) => (
+        <Link key={c.id} href={`/compilado/${c.id}`}>
+          <ThemedText type="linkPrimary">Texto actualizado de El Peruano: {c.titulo}</ThemedText>
+        </Link>
+      ))}
       {vigencia.afecta.length ? (
         <View style={styles.lista}>
           <ThemedText type="small" themeColor="textSecondary">
             Esta norma declara:
           </ThemedText>
           {vigencia.afecta.map((a) => (
-            <ThemedText key={`${a.clave_afectada}-${a.efecto}`} type="small">
-              {verbo(a)} {a.referencia}
-            </ThemedText>
+            <Link
+              key={`${a.clave_afectada}-${a.efecto}`}
+              href={{ pathname: '/afectada/[clave]', params: { clave: a.clave_afectada } }}>
+              <ThemedText type="small">
+                {verbo(a)} <ThemedText type="linkPrimary">{a.referencia}</ThemedText>
+              </ThemedText>
+            </Link>
           ))}
         </View>
       ) : null}

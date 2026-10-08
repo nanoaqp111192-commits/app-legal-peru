@@ -38,6 +38,16 @@ export type Vigencia = {
   afectadaPor: Afectacion[];
   /** Lo que esta norma declara derogar o modificar. */
   afecta: Afectacion[];
+  /** Textos actualizados de El Peruano que incluyen esta norma. */
+  compilados?: Pick<Compilado, 'id' | 'titulo'>[];
+};
+
+/** Todo lo que se sabe de una norma por su clave, aunque no esté cargada. */
+export type Historial = {
+  clave: string;
+  norma: Pick<Norma, 'id' | 'numero' | 'titulo' | 'fecha_publicacion'> | null;
+  compilados: Pick<Compilado, 'id' | 'titulo'>[];
+  afectadaPor: Afectacion[];
 };
 
 export type CampoModelo = {
@@ -97,6 +107,8 @@ export type Compilado = {
   numeros: string | null;
   materia: string | null;
   url_pdf: string;
+  /** Claves de las normas que reúne, p. ej. 'ley 29497'. */
+  claves: string[];
   verificado_en: string | null;
   cambiado_en: string | null;
   creado_en: string;
