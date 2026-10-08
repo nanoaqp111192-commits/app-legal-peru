@@ -1352,6 +1352,354 @@
     ]
   },
   {
+    "id": "res-0231-2026-sel-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0231-2026/SEL-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Eliminación de Barreras Burocráticas",
+    "fecha": "2026-06-21",
+    "tipo_fecha": "publicacion",
+    "tema": "Principio de interpretación favorable (art. 4.3 D. Leg. 1256): método de tres etapas cuando una norma admite varias lecturas",
+    "url_oficial": null,
+    "url_verificacion": "https://www.cuatrecasas.com/es/latam/publico/art/nuevo-precedente-eliminacion-barreras-burocraticas",
+    "ramas": [
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0047-2025-sco-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0047-2025/SCO-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Procedimientos Concursales",
+    "fecha": "2025-01-24",
+    "tipo_fecha": "sentencia",
+    "tema": "Pagar créditos concursales durante la suspensión de exigibilidad (art. 17 de la Ley General del Sistema Concursal) es una disposición patrimonial sancionable",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2025/04/Resolucion-0047-2025-SCO-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "comercial"
+    ]
+  },
+  {
+    "id": "res-1267-2023-spc-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 1267-2023/SPC-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Protección al Consumidor",
+    "fecha": "2024-10-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Es improcedente, por falta de agravio, la apelación del proveedor que se allanó en primera instancia",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/10/Resolucion-1267-2023-SPC-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "consumidor",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0898-2024-spc-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0898-2024/SPC-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Protección al Consumidor",
+    "fecha": "2024-10-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Es improcedente, por falta de agravio, la apelación del proveedor que reconoció los hechos infractores en primera instancia",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/10/Resolucion-1267-2023-SPC-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "consumidor",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0330-2024-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0330-2024/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2024-06-08",
+    "tipo_fecha": "publicacion",
+    "tema": "Notoriedad de signos: plazo máximo de cinco años entre el reconocimiento de la notoriedad y su invocación",
+    "url_oficial": null,
+    "url_verificacion": "https://proyectozero24.com/wp-content/uploads/2024/06/1.-INDECOPI.-Precedente-de-Observancia-Obligatoria-1.pdf",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0337-2024-sel-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0337-2024/SEL-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Eliminación de Barreras Burocráticas",
+    "fecha": "2024-06-07",
+    "tipo_fecha": "publicacion",
+    "tema": "Publicación de normas generales y del TUPA: sin publicación íntegra carecen de eficacia y no son oponibles",
+    "url_oficial": "https://barreras.indecopi.gob.pe/precedentes/",
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/06/Resolucion-0337-2024-SEL-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0648-2022-sco-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0648-2022/SCO-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Procedimientos Concursales",
+    "fecha": "2023-03-10",
+    "tipo_fecha": "publicacion",
+    "tema": "Disolución y liquidación: pago a prorrata de créditos de tercer orden garantizados (arts. 88.4 y 89.2 de la Ley General del Sistema Concursal)",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2023/03/Resolucion-0648-2022-SCO-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "comercial",
+      "civil"
+    ]
+  },
+  {
+    "id": "res-1185-2021-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 1185-2021/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2022-04-22",
+    "tipo_fecha": "publicacion",
+    "tema": "Derecho de autor: la remuneración por comunicación pública de obras audiovisuales es exigible tras un requerimiento válido de la entidad de gestión",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2022/04/Resolucion-1185-2021-TPI-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "comercial",
+      "civil",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-1266-2021-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 1266-2021/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2022-04-22",
+    "tipo_fecha": "publicacion",
+    "tema": "El plazo máximo de 180 días hábiles (art. 24 D. Leg. 1075) no rige si se anuló la primera instancia y debe resolverse de nuevo",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2022/04/Resolucion-1185-2021-TPI-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "administrativo",
+      "comercial"
+    ]
+  },
+  {
+    "id": "res-1688-2021-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 1688-2021/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2022-04-22",
+    "tipo_fecha": "publicacion",
+    "tema": "Nombre comercial: plazo para hacer valer derechos basados en un nombre comercial, esté o no registrado",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2022/04/Resolucion-1185-2021-TPI-Indecopi-LPDerecho.pdf",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0410-2020-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0410-2020/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2021-02-05",
+    "tipo_fecha": "publicacion",
+    "tema": "Cancelación por falta de uso: los mismos medios probatorios no acreditan el uso de varias marcas registradas por separado",
+    "url_oficial": null,
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2021/02/Resolucion-0410-2020TPI-Indecopi-LP.pdf",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0336-2019-sco-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0336-2019/SCO-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Procedimientos Concursales",
+    "fecha": "2020-05-15",
+    "tipo_fecha": "publicacion",
+    "tema": "Art. 39.2 de la Ley General del Sistema Concursal: los créditos basados en sentencias o laudos extranjeros requieren reconocimiento judicial en el Perú",
+    "url_oficial": "https://busquedas.elperuano.pe/normaslegales/confirman-la-resolucion-n-5484-2018cco-indecopi-y-aprueban-resolucion-no-0336-2019sco-indecopi-1866330-1",
+    "url_verificacion": "https://www.martinotabogados.pe/publicacion/2020-05-18/INDECOPI-emite-precedente-de-observancia-obligatoria-sobre-reconocimiento-de-sentencias-y-laudos-extranjeros-en-procesos-concursales.html",
+    "ramas": [
+      "comercial",
+      "civil"
+    ]
+  },
+  {
+    "id": "res-2076-2016-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 2076-2016/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2016-09-06",
+    "tipo_fecha": "publicacion",
+    "tema": "Cancelación parcial por falta de uso: modifica el precedente sobre el tercer párrafo del art. 165 de la Decisión 486",
+    "url_oficial": "https://www.gob.pe/institucion/indecopi/normas-legales/5457022-2076-2016-tpi-indecopi",
+    "url_verificacion": "https://prometheo.pe/la-dimension-real-de-las-marcas-valoracion-de-medios-probatorios-en-procedimientos-de-cancelacion-por-falta-de-uso/",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0888-2014-sco-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0888-2014/SCO-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Procedimientos Concursales",
+    "fecha": "2015-03-26",
+    "tipo_fecha": "publicacion",
+    "tema": "Art. 13 de la Ley General del Sistema Concursal: acceso a la información de los procedimientos concursales (reemplaza el precedente de la Res. 0988-2005/TDC)",
+    "url_oficial": "https://busquedas.elperuano.pe/dispositivo/NL/1216182-3",
+    "url_verificacion": "https://busquedas.elperuano.pe/dispositivo/NL/1216182-3",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-4665-2014-tpi-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 4665-2014/TPI-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Propiedad Intelectual",
+    "fecha": "2015-02-11",
+    "tipo_fecha": "publicacion",
+    "tema": "Signos distintivos: acuerdos de coexistencia de marcas",
+    "url_oficial": null,
+    "url_verificacion": "https://vlex.com.pe/vid/592316818",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0479-2014-sdc-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0479-2014/SDC-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Defensa de la Competencia",
+    "fecha": "2014-11-01",
+    "tipo_fecha": "publicacion",
+    "tema": "Libre competencia: alcances de la exención por conducta que es consecuencia de una norma legal (art. 3 D. Leg. 1034)",
+    "url_oficial": "https://busquedas.elperuano.pe/dispositivo/NL/1157928-1",
+    "url_verificacion": "https://busquedas.elperuano.pe/dispositivo/NL/1157928-1",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0623-2014-sdc-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0623-2014/SDC-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Defensa de la Competencia",
+    "fecha": "2014-11-01",
+    "tipo_fecha": "publicacion",
+    "tema": "Ley 26878 (concentraciones en el sector eléctrico): las condiciones de conducta deben tener plazo o revisión periódica",
+    "url_oficial": null,
+    "url_verificacion": "https://derechosincorbata.blogspot.com/2014/11/precedente-de-observancia-obligatoria.html",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-2311-2013-sdc-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 2311-2013/SDC-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala Especializada en Defensa de la Competencia",
+    "fecha": "2013-12-13",
+    "tipo_fecha": "sentencia",
+    "tema": "Art. 67.4 de la Ley General del Sistema Concursal: ante el incumplimiento del plan de reestructuración, la Comisión no puede limitarse a verificar el hecho objetivo",
+    "url_oficial": null,
+    "url_verificacion": "https://www.elperulegal.com/2014/04/resolucion-n-2311-2013sdc-indecopi.html",
+    "ramas": [
+      "comercial"
+    ]
+  },
+  {
+    "id": "res-3134-2010-sc1-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 3134-2010/SC1-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala de Defensa de la Competencia N° 1",
+    "fecha": "2010-11-29",
+    "tipo_fecha": "sentencia",
+    "tema": "Competencia desleal por violación de normas (art. 14.3 D. Leg. 1044): actividad empresarial del Estado sin cumplir el art. 60 de la Constitución",
+    "url_oficial": null,
+    "url_verificacion": "https://vlex.com.pe/vid/-446697058",
+    "ramas": [
+      "comercial",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-1535-2010-sc1-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 1535-2010/SC1-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala de Defensa de la Competencia N° 1",
+    "fecha": "2010-06-03",
+    "tipo_fecha": "publicacion",
+    "tema": "Revocación indirecta de actos administrativos: restringir derechos conferidos sin seguir los arts. 203 y 205 de la LPAG es ilegal",
+    "url_oficial": "https://barreras.indecopi.gob.pe/precedentes/",
+    "url_verificacion": "https://www.sunat.gob.pe/legislacion/resumen/2010/junio/dia03.htm",
+    "ramas": [
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0202-2010-sc2-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0202-2010/SC2-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala de Defensa de la Competencia N° 2",
+    "fecha": null,
+    "tipo_fecha": null,
+    "tema": "Servicios educativos: los colegios no pueden exigir el pago adelantado de pensiones (art. 16 Ley 26549)",
+    "url_oficial": null,
+    "url_verificacion": "https://lpderecho.pe/precedente-prohibe-colegios-cobro-anticipado-pensiones-resolucion-0202-2010-sc2-indecopi/",
+    "ramas": [
+      "consumidor",
+      "administrativo"
+    ]
+  },
+  {
+    "id": "res-0916-2010-sc1-indecopi",
+    "categoria": "precedente_indecopi",
+    "numero": "Resolución 0916-2010/SC1-INDECOPI",
+    "expediente": null,
+    "pleno": "Tribunal del Indecopi, Sala de Defensa de la Competencia N° 1",
+    "fecha": null,
+    "tipo_fecha": null,
+    "tema": "Art. 39.4 de la Ley General del Sistema Concursal: inversión de la carga de la prueba sobre créditos anteriores a los últimos cinco años",
+    "url_oficial": null,
+    "url_verificacion": "https://www.spdtss.org.pe/wp-content/uploads/2021/10/Homenaje-bodas-de-plata-full-355-375.pdf",
+    "ramas": [
+      "comercial",
+      "civil"
+    ]
+  },
+  {
     "id": "i-pleno-casatorio-civil-casacion-1465-2007-cajamarca",
     "categoria": "pleno_casatorio_civil",
     "numero": "I Pleno Casatorio Civil",
