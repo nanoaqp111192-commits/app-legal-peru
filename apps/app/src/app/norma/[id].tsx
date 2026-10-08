@@ -2,6 +2,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { Cargando, MensajeError, Vacio } from '@/components/avisos';
+import { BloqueVigencia } from '@/components/bloque-vigencia';
 import { ExternalLink } from '@/components/external-link';
 import { Pantalla } from '@/components/pantalla';
 import { ThemedText } from '@/components/themed-text';
@@ -57,6 +58,8 @@ export default function DetalleNorma() {
               Última verificación contra la fuente: {fechaCorta(norma.verificado_en.slice(0, 10))}
             </ThemedText>
           </ThemedView>
+
+          <BloqueVigencia norma={norma} />
 
           {norma.texto ? (
             <ThemedText selectable style={styles.texto}>
