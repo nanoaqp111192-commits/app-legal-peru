@@ -1,0 +1,47 @@
+[
+  {
+    "id": "i-pleno-casatorio-penal-sentencia-plenaria-casatoria-1-2017-cij-433",
+    "categoria": "pleno_casatorio_penal",
+    "numero": "I Pleno Casatorio Penal",
+    "expediente": "Sentencia Plenaria Casatoria 1-2017/CIJ-433",
+    "pleno": null,
+    "fecha": "2017-10-25",
+    "tipo_fecha": "publicacion",
+    "tema": "Lavado de activos: alcances del art. 10 del D. Leg. 1106 (mod. D. Leg. 1249) y estándar de prueba",
+    "url_oficial": null,
+    "url_verificacion": "https://perso.unifr.ch/derechopenal/assets/files/jurisprudencia/j_20171208_01.pdf",
+    "ramas": [
+      "penal"
+    ]
+  },
+  {
+    "id": "ii-pleno-casatorio-penal-sentencia-plenaria-casatoria-1-2018-cij-433",
+    "categoria": "pleno_casatorio_penal",
+    "numero": "II Pleno Casatorio Penal",
+    "expediente": "Sentencia Plenaria Casatoria 1-2018/CIJ-433",
+    "pleno": null,
+    "fecha": "2018-12-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Determinación de la pena en delitos sexuales; control de proporcionalidad de la atenuación",
+    "url_oficial": "https://elperuano.pe/NormasElperuano/2018/12/20/1724469-1/1724469-1.htm",
+    "url_verificacion": "https://lpderecho.pe/importante-emiten-pleno-casatorio-penal-sobre-prueba-de-adn-y-violacion-sexual-de-menores/",
+    "ramas": [
+      "penal"
+    ]
+  },
+  {
+    "id": "ii-pleno-casatorio-penal-sentencia-plenaria-casatoria-2-2018-cij-433",
+    "categoria": "pleno_casatorio_penal",
+    "numero": "II Pleno Casatorio Penal",
+    "expediente": "Sentencia Plenaria Casatoria 2-2018/CIJ-433",
+    "pleno": null,
+    "fecha": "2018-12-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Prueba de ADN en los delitos de violación sexual: valor y exigencia para condenar",
+    "url_oficial": "https://elperuano.pe/NormasElperuano/2018/12/20/1724469-1/1724469-1.htm",
+    "url_verificacion": "https://lpderecho.pe/importante-emiten-pleno-casatorio-penal-sobre-prueba-de-adn-y-violacion-sexual-de-menores/",
+    "ramas": [
+      "penal"
+    ]
+  }
+]

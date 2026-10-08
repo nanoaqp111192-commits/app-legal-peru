@@ -69,6 +69,20 @@ jobs:
           EXPO_PUBLIC_SUPABASE_URL: https://ejemplo.supabase.co
           EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY: clave-de-prueba
 
+  # Comprueba que los enlaces del catálogo de la Corte Suprema sigan vivos. No bloquea el PR.
+  enlaces-corte-suprema:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    defaults:
+      run:
+        working-directory: apps/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/comprobar-enlaces.mjs
+
   # Lee el listado real de El Peruano sin guardar nada. No bloquea el PR (depende de un
   # sitio externo), pero avisa si la fuente cambió de formato.
   fuente-el-peruano:

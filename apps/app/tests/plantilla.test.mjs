@@ -52,6 +52,7 @@ test('cada modelo empaquetado rellena todos sus marcadores', () => {
     const valores = Object.fromEntries(m.campos.map((c) => [c.clave, 'X']));
     const texto = rellenar(m.cuerpo, m.campos, valores);
     assert.ok(!texto.includes('{{'), `${m.slug}: quedó un marcador sin reemplazar`);
-    for (const c of m.campos) assert.ok(!texto.includes(`[${c.etiqueta}]`), `${m.slug}: ${c.clave}`);
+    for (const c of m.campos)
+      assert.ok(!texto.includes(`[${c.etiqueta}]`), `${m.slug}: ${c.clave}`);
   }
 });

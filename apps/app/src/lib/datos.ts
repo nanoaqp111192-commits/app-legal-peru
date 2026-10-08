@@ -1,9 +1,15 @@
 import { RESOLUCIONES_DEMO } from '@/data/jurisprudencia-demo';
 import { NORMAS_DEMO } from '@/data/normas-demo';
 import MODELOS from '@/data/modelos.json';
+import CATALOGO_PRECEDENTES from '@/data/precedentes.json';
 
 import { crearCache } from './cache';
 import { marcarCopia } from './conexion';
+import {
+  buscarPrecedentes as filtrarPrecedentes,
+  type Categoria,
+  type Precedente,
+} from './precedentes';
 import { supabase } from './supabase';
 import type { Alerta, Modelo, Norma, Resolucion } from './tipos';
 
@@ -11,6 +17,12 @@ const COLUMNAS_NORMA =
   'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en';
 
 const modelosLocales = MODELOS as Modelo[];
+/** Jurisprudencia vinculante de la Corte Suprema: viaja en la app, no depende del servidor. */
+export const PRECEDENTES = CATALOGO_PRECEDENTES as Precedente[];
+
+export async function buscarPrecedentes(consulta: string, categorias: Categoria[]) {
+  return filtrarPrecedentes(PRECEDENTES, consulta, categorias);
+}
 
 const cache = crearCache(() => (typeof localStorage === 'undefined' ? null : localStorage));
 
