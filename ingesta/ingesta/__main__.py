@@ -6,6 +6,7 @@
     python -m ingesta modelos [--validar]
     python -m ingesta compilados [--seco]
     python -m ingesta reparar-textos [--seco]
+    python -m ingesta reclasificar [--seco]
 
 ``diaria`` trae las normas del día de El Peruano, las clasifica, las guarda
 y envía los avisos; también registra qué normas anteriores derogan o
@@ -34,6 +35,7 @@ from ingesta.clasificador import clasificar
 from ingesta.fuentes import compilados as fuente_compilados
 from ingesta.fuentes import el_peruano
 from ingesta.fuentes import tribunal_constitucional as tc
+from ingesta.norma import Norma
 
 PAUSA_ANTES_DE_REINTENTAR = 300  # segundos
 
@@ -231,6 +233,56 @@ def reparar_textos(seco: bool, lote: int = 500) -> int:
     return 1 if fallidas else 0
 
 
+def reclasificar(seco: bool, lote: int = 1000) -> int:
+    """Vuelve a clasificar las normas guardadas con las reglas actuales del clasificador."""
+    from collections import Counter
+
+    from ingesta.supabase import Supabase
+
+    db = Supabase()
+    ultimo, revisadas = 0, 0
+    cambios: Counter[str] = Counter()
+    fallidas: list[int] = []
+    while True:
+        filas = db.leer(
+            "normas",
+            select="id,titulo,sumilla,numero,sector,fecha_publicacion,url_oficial,id_fuente,ramas",
+            id=f"gt.{ultimo}",
+            order="id",
+            limit=str(lote),
+        )
+        if not filas:
+            break
+        for fila in filas:
+            norma = Norma(
+                id_fuente=fila["id_fuente"],
+                titulo=fila["titulo"],
+                sumilla=fila["sumilla"],
+                numero=fila["numero"],
+                sector=fila["sector"],
+                fecha_publicacion=date.fromisoformat(fila["fecha_publicacion"]),
+                url_oficial=fila["url_oficial"],
+            )
+            ramas = clasificar(norma)
+            if ramas == fila["ramas"]:
+                continue
+            cambios[f"{'+'.join(fila['ramas']) or '-'} -> {'+'.join(ramas)}"] += 1
+            if not seco:
+                try:
+                    db.actualizar("normas", {"ramas": ramas}, id=f"eq.{fila['id']}")
+                except httpx.HTTPStatusError as error:
+                    fallidas.append(fila["id"])
+                    print(f"norma {fila['id']}: {error.response.text[:300]}")
+        revisadas += len(filas)
+        ultimo = filas[-1]["id"]
+        print(f"{revisadas} revisadas, {sum(cambios.values())} con ramas nuevas")
+    for cambio, cantidad in cambios.most_common(25):
+        print(f"{cantidad:6d}  {cambio}")
+    if fallidas:
+        print(f"{len(fallidas)} sin guardar: {fallidas[:50]}")
+    return 1 if fallidas else 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="ingesta")
     sub = parser.add_subparsers(dest="orden", required=True)
@@ -248,6 +300,8 @@ def main(argv: list[str] | None = None) -> int:
     p_comp.add_argument("--seco", action="store_true")
     p_reparar = sub.add_parser("reparar-textos")
     p_reparar.add_argument("--seco", action="store_true")
+    p_reclasificar = sub.add_parser("reclasificar")
+    p_reclasificar.add_argument("--seco", action="store_true")
     p_modelos = sub.add_parser("modelos")
     p_modelos.add_argument("--validar", action="store_true")
     args = parser.parse_args(argv)
@@ -262,6 +316,8 @@ def main(argv: list[str] | None = None) -> int:
         return compilados(args.seco)
     if args.orden == "reparar-textos":
         return reparar_textos(args.seco)
+    if args.orden == "reclasificar":
+        return reclasificar(args.seco)
 
     problemas = [e for m in modelos.leer() for e in modelos.errores(m)]
     if problemas:

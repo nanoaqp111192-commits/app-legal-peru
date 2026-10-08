@@ -15,8 +15,13 @@ export const RAMAS: Rama[] = [
   { slug: 'ambiental', nombre: 'Ambiental', profundidad: false },
   { slug: 'consumidor', nombre: 'Consumidor y competencia', profundidad: false },
   { slug: 'municipal', nombre: 'Municipal y regional', profundidad: false },
+  // No son ramas del derecho: agrupan los actos de personal y lo que no encaja en ninguna.
+  { slug: 'personal', nombre: 'Designaciones y viajes', profundidad: false },
   { slug: 'otros', nombre: 'Otros', profundidad: false },
 ];
+
+/** Categorías que no son ramas del derecho; no se ofrecen en búsquedas ni alertas. */
+export const SIN_RAMA = ['personal', 'otros'];
 
 export function nombreRama(slug: string): string {
   return RAMAS.find((r) => r.slug === slug)?.nombre ?? slug;
