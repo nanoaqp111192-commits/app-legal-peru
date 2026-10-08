@@ -1888,5 +1888,800 @@
       "laboral",
       "administrativo"
     ]
+  },
+  {
+    "id": "rtf-03975-11-2026",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03975-11-2026",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 11",
+    "fecha": "2026-05-06",
+    "tipo_fecha": "publicacion",
+    "tema": "Responsabilidad solidaria de consorciados con contabilidad independiente",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2026/resolucion/2026_11_03975.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=8710",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-08829-9-2024",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 08829-9-2024",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 9",
+    "fecha": "2024-10-11",
+    "tipo_fecha": "publicacion",
+    "tema": "No retroactividad de la modificación del art. 178 num. 1 del Código Tributario (D. Leg. 1311)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2024/resolucion/2024_9_08829.pdf",
+    "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/10/Tribunal-Fiscal-08829-9-2024-LPDerecho.pdf",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-08082-5-2024",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 08082-5-2024",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 5",
+    "fecha": "2024-09-29",
+    "tipo_fecha": "publicacion",
+    "tema": "Art. 13-B del Reglamento de Gradualidad y art. 176 num. 1 del Código Tributario",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2024/resolucion/2024_5_08082.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2024/resolucion/2024_5_08082.pdf",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-04154-9-2024",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 04154-9-2024",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 9",
+    "fecha": "2024-05-11",
+    "tipo_fecha": "publicacion",
+    "tema": "Diferencias de cambio cuando la contabilidad se lleva en moneda extranjera",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2024/resolucion/2024_9_04154.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=8150",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03442-1-2024",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03442-1-2024",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 1",
+    "fecha": "2024-04-18",
+    "tipo_fecha": "publicacion",
+    "tema": "Determinación declarada y pagos indebidos",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2024/resolucion/2024_1_03442.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=8150",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00549-q-2024",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00549-Q-2024",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2024-02-24",
+    "tipo_fecha": "publicacion",
+    "tema": "Suspensión de la prescripción por procedimiento contencioso tributario",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2024/resolucion/2024_Q_00549.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=8150",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00671-a-2024",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00671-A-2024",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2024-02-07",
+    "tipo_fecha": "publicacion",
+    "tema": "Clasificación arancelaria de bolas de zinc",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2023/resolucion/2024_A_00671.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7704",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-10387-5-2023",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 10387-5-2023",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 5",
+    "fecha": "2024-01-04",
+    "tipo_fecha": "publicacion",
+    "tema": "Valor de mercado de remuneraciones (art. 19-A del Reglamento de la Ley del Impuesto a la Renta)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2023/resolucion/2023_5_10387.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7704",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-10346-9-2023",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 10346-9-2023",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 9",
+    "fecha": "2023-12-19",
+    "tipo_fecha": "publicacion",
+    "tema": "Infracción del art. 177 num. 5 del Código Tributario",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2023/resolucion/2023_9_10346.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7704",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-09086-1-2023",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 09086-1-2023",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 1",
+    "fecha": "2023-11-11",
+    "tipo_fecha": "publicacion",
+    "tema": "R.S. de Adjunta Operativa 006-2016 y rectificatoria posterior a la sanción",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2023/resolucion/2023_1_09086.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7704",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-07112-2-2023",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 07112-2-2023",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 2",
+    "fecha": "2023-10-03",
+    "tipo_fecha": "publicacion",
+    "tema": "Acreditación de la notificación por Notificaciones SOL",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2023/resolucion/2023_2_07112.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7704",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-04777-12-2023",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 04777-12-2023",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 12",
+    "fecha": "2023-06-23",
+    "tipo_fecha": "publicacion",
+    "tema": "Intereses de los pagos a cuenta del aporte a PRONATEL",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2023/resolucion/2023_12_04777.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7704",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00358-1-2023",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00358-1-2023",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 1",
+    "fecha": "2023-02-03",
+    "tipo_fecha": "publicacion",
+    "tema": "Rectificatoria del Impuesto a la Renta y la Tasa Adicional",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2022/resolucion/2023_1_00358.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7307",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-08221-9-2022",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 08221-9-2022",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 9",
+    "fecha": "2022-11-22",
+    "tipo_fecha": "publicacion",
+    "tema": "Redondeo de la tasa de interés moratorio (TIM)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2022/resolucion/2022_9_08221.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7307",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-07682-7-2022",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 07682-7-2022",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 7",
+    "fecha": "2022-11-12",
+    "tipo_fecha": "publicacion",
+    "tema": "Apelación contra resoluciones de solicitudes no contenciosas",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2022/resolucion/2022_7_07682.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7307",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-05516-a-2022",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 05516-A-2022",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2022-08-02",
+    "tipo_fecha": "publicacion",
+    "tema": "Convenio Peruano-Colombiano con ingreso indirecto de la mercancía",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2022/resolucion/2022_A_05516.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7307",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03162-7-2022",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03162-7-2022",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 7",
+    "fecha": "2022-05-14",
+    "tipo_fecha": "publicacion",
+    "tema": "Impuesto Predial de la Iglesia Católica (Acuerdo con la Santa Sede)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2022/resolucion/2022_7_03162.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7307",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-01705-4-2022",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 01705-4-2022",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 4",
+    "fecha": "2022-03-15",
+    "tipo_fecha": "publicacion",
+    "tema": "Prescripción de los pagos a cuenta del Impuesto a la Renta de tercera categoría",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2022/resolucion/2022_4_01705.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=7307",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-11538-1-2021",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 11538-1-2021",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 1",
+    "fecha": "2022-01-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Prescripción de la devolución de percepciones y retenciones del IGV",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2021/resolucion/2021_1_11538.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6901",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-06569-a-2021",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 06569-A-2021",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2021-08-04",
+    "tipo_fecha": "publicacion",
+    "tema": "El Informe de Determinación de Valor no es reclamable",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2021/resolucion/2021_A_06569.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6901",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-05320-9-2021",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 05320-9-2021",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 9",
+    "fecha": "2021-07-01",
+    "tipo_fecha": "publicacion",
+    "tema": "Aplicación del art. 170 num. 1 del Código Tributario en relación con el Acuerdo 2021-03",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2021/resolucion/2021_9_05320.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6901",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03885-8-2021",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03885-8-2021",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 8",
+    "fecha": "2021-05-16",
+    "tipo_fecha": "publicacion",
+    "tema": "Compensación de saldos del ITAN",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2021/resolucion/2021_8_03885.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6901",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-02398-11-2021",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 02398-11-2021",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 11",
+    "fecha": "2021-04-02",
+    "tipo_fecha": "publicacion",
+    "tema": "Impuesto a la Renta del asociado en la asociación en participación",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2021/resolucion/2021_11_02398.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6901",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00681-a-2021",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00681-A-2021",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2021-01-29",
+    "tipo_fecha": "publicacion",
+    "tema": "Denegatoria ficta en devoluciones por valor en aduana y duda razonable",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2021/resolucion/2021_A_00681.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6901",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-06741-4-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 06741-4-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 4",
+    "fecha": "2020-12-16",
+    "tipo_fecha": "publicacion",
+    "tema": "Requerimiento del art. 75 del Código Tributario notificado vencido el plazo de fiscalización",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_4_06741.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03701-9-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03701-9-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 9",
+    "fecha": "2020-08-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Convenios para evitar la doble imposición: no se exige certificado de residencia si no hubo retención",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_9_03701.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03336-a-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03336-A-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2020-08-14",
+    "tipo_fecha": "publicacion",
+    "tema": "Infracción vinculada al contrabando: no responden transportista ni conductor si se identifica al propietario",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_A_03336.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03230-2-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03230-2-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 2",
+    "fecha": "2020-07-31",
+    "tipo_fecha": "publicacion",
+    "tema": "El Tribunal Fiscal no es competente sobre los registros de contribuyentes",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_2_03230.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-02708-8-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 02708-8-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 8",
+    "fecha": "2020-07-15",
+    "tipo_fecha": "publicacion",
+    "tema": "La denuncia de pérdida posterior al inicio de la fiscalización no justifica no exhibir",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_8_02708.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-01865-7-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 01865-7-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 7",
+    "fecha": "2020-02-29",
+    "tipo_fecha": "publicacion",
+    "tema": "Tres años de antigüedad para la inafectación del art. 37 inc. g) de la Ley de Tributación Municipal",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_7_01865.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00222-1-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00222-1-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 1",
+    "fecha": "2020-01-24",
+    "tipo_fecha": "publicacion",
+    "tema": "Gradualidad: el pago es exigible solo si la rectificatoria deja tributo por pagar",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_1_00222.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00016-q-2020",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00016-Q-2020",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2020-01-15",
+    "tipo_fecha": "publicacion",
+    "tema": "Créditos protegidos de empresas prestadoras en Régimen de Apoyo Transitorio",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2020/resolucion/2020_Q_00016.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=6256",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-09741-a-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 09741-A-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2019-11-15",
+    "tipo_fecha": "publicacion",
+    "tema": "Acreditación de origen en el TLC Perú-China",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_A_09741.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-08267-2-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 08267-2-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 2",
+    "fecha": "2019-10-16",
+    "tipo_fecha": "publicacion",
+    "tema": "Empleador y trabajador legitimados para pedir la devolución de aportes al SNP",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_2_08267.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-08679-3-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 08679-3-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 3",
+    "fecha": "2019-09-30",
+    "tipo_fecha": "publicacion",
+    "tema": "Compensación a solicitud del saldo a favor del Impuesto a la Renta con otras deudas",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_3_08679.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-07441-1-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 07441-1-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 1",
+    "fecha": "2019-09-04",
+    "tipo_fecha": "publicacion",
+    "tema": "La demanda de amparo sin medida cautelar firme no suspende la aplicación de la norma",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_1_07441.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-07308-2-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 07308-2-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 2",
+    "fecha": "2019-08-24",
+    "tipo_fecha": "publicacion",
+    "tema": "Observaciones aceptadas vía declaración rectificatoria no constituyen reparos",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_2_07308.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-04715-4-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 04715-4-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 4",
+    "fecha": "2019-06-03",
+    "tipo_fecha": "publicacion",
+    "tema": "Orden de pago al objetarse la prórroga del IGV de la MYPE",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_4_04715.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-01580-10-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 01580-10-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 10",
+    "fecha": "2019-03-29",
+    "tipo_fecha": "publicacion",
+    "tema": "Costo computable de acciones de no domiciliados con aportes en moneda nacional pagados en moneda extranjera",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_10_01580.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00460-q-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00460-Q-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2019-03-06",
+    "tipo_fecha": "publicacion",
+    "tema": "En queja: devolución de embargos imputados a deuda prescrita",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_Q_00460.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-01065-10-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 01065-10-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 10",
+    "fecha": "2019-03-01",
+    "tipo_fecha": "publicacion",
+    "tema": "Cese de la suspensión de la prescripción si la pérdida del fraccionamiento no se notificó conforme a ley",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_10_01065.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00665-a-2019",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00665-A-2019",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2019-02-01",
+    "tipo_fecha": "publicacion",
+    "tema": "Gradualidad de sanciones a despachadores de aduana (R.S. 473-2012)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2019/resolucion/2019_A_00665.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5874",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-10588-a-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 10588-A-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2019-01-15",
+    "tipo_fecha": "publicacion",
+    "tema": "Uso de medios de pago (Ley 28194) para acogerse al drawback",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_A_10588.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-10007-a-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 10007-A-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2019-01-13",
+    "tipo_fecha": "publicacion",
+    "tema": "Plazo de regularización de importaciones (Convenio Peruano-Colombiano y Ley 27037)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_A_10007.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-02911-q-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 02911-Q-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2018-10-12",
+    "tipo_fecha": "publicacion",
+    "tema": "Devolución de dinero embargado en cautelar previa o cobranza coactiva indebida",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_Q_02911.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-06888-7-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 06888-7-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 7",
+    "fecha": "2018-09-28",
+    "tipo_fecha": "publicacion",
+    "tema": "Inafectación de Alcabala de titulares mineros fuera de zona urbana",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_7_06888.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-02162-q-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 02162-Q-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2018-07-22",
+    "tipo_fecha": "publicacion",
+    "tema": "Plazo para ampliar una fiscalización parcial a definitiva",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_Q_02162.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-02081-q-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 02081-Q-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2018-07-12",
+    "tipo_fecha": "publicacion",
+    "tema": "Competencia del Tribunal Fiscal sobre impugnaciones vinculadas al FRAES (D. Leg. 1257)",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_Q_02081.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-02118-q-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 02118-Q-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Oficina de Atención de Quejas",
+    "fecha": "2018-07-12",
+    "tipo_fecha": "publicacion",
+    "tema": "Competencia sobre denegatorias de extinción de deudas del art. 11 del D. Leg. 1257",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_Q_02118.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-04369-7-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 04369-7-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 7",
+    "fecha": "2018-06-21",
+    "tipo_fecha": "publicacion",
+    "tema": "Organismos públicos como sujetos del Impuesto Predial, Alcabala y Patrimonio Vehicular",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_7_04369.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-03568-5-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 03568-5-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 5",
+    "fecha": "2018-05-26",
+    "tipo_fecha": "publicacion",
+    "tema": "Cese de vigencia del REFT (Ley 27344) y suspensión de la prescripción",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_5_03568.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-01779-7-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 01779-7-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala 7",
+    "fecha": "2018-03-20",
+    "tipo_fecha": "publicacion",
+    "tema": "Beneficio del art. 19 de la Ley de Tributación Municipal sin acto administrativo previo",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2018/resolucion/2018_7_01779.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5625",
+    "ramas": [
+      "tributario"
+    ]
+  },
+  {
+    "id": "rtf-00720-a-2018",
+    "categoria": "precedente_tribunal_fiscal",
+    "numero": "RTF 00720-A-2018",
+    "expediente": null,
+    "pleno": "Tribunal Fiscal, Sala de Aduanas",
+    "fecha": "2018-02-11",
+    "tipo_fecha": "publicacion",
+    "tema": "Transferencias bancarias que también pagan otras facturas como prueba de pago de la factura de importación",
+    "url_oficial": "https://www.mef.gob.pe/contenidos/tribu_fisc/jurisprude/acuer_sala/2017/resolucion/2018_A_00720.pdf",
+    "url_verificacion": "https://www.mef.gob.pe/es/ique-es?id=5190",
+    "ramas": [
+      "tributario"
+    ]
   }
 ]
