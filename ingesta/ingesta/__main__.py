@@ -27,6 +27,8 @@ import sys
 import time
 from datetime import UTC, date, datetime, timedelta
 
+import httpx
+
 from ingesta import alertas, modelos, vigencia
 from ingesta.clasificador import clasificar
 from ingesta.fuentes import compilados as fuente_compilados
@@ -196,6 +198,7 @@ def reparar_textos(seco: bool, lote: int = 500) -> int:
 
     db = Supabase()
     ultimo, revisadas, reparadas = 0, 0, 0
+    fallidas: list[int] = []
     while True:
         filas = db.leer(
             "normas",
@@ -214,11 +217,18 @@ def reparar_textos(seco: bool, lote: int = 500) -> int:
                 if seco and reparadas <= 2:
                     print(f"--- norma {fila['id']}\n{limpio[:600]}\n")
                 if not seco:
-                    db.actualizar("normas", {"texto": limpio}, id=f"eq.{fila['id']}")
+                    try:
+                        db.actualizar("normas", {"texto": limpio}, id=f"eq.{fila['id']}")
+                    except httpx.HTTPStatusError as error:
+                        # Una norma que no se pueda guardar no detiene el resto.
+                        fallidas.append(fila["id"])
+                        print(f"norma {fila['id']}: {error.response.text[:300]}")
         revisadas += len(filas)
         ultimo = filas[-1]["id"]
         print(f"{revisadas} revisadas, {reparadas} {'por reparar' if seco else 'reparadas'}")
-    return 0
+    if fallidas:
+        print(f"{len(fallidas)} sin guardar: {fallidas[:50]}")
+    return 1 if fallidas else 0
 
 
 def main(argv: list[str] | None = None) -> int:
