@@ -9,7 +9,7 @@ import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { PRECEDENTES } from '@/lib/datos';
 import { fechaLarga } from '@/lib/fechas';
-import { CATEGORIAS, ETIQUETA_FECHA } from '@/lib/precedentes';
+import { CATEGORIAS, ETIQUETA_FECHA, ORGANOS, organo } from '@/lib/precedentes';
 
 export default function DetallePrecedente() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -17,13 +17,15 @@ export default function DetallePrecedente() {
 
   return (
     <Pantalla conEncabezado>
-      <Stack.Screen options={{ title: p ? p.numero : 'Corte Suprema' }} />
+      <Stack.Screen options={{ title: p ? p.numero : 'Precedente' }} />
       {!p ? <Vacio>No encontramos este precedente.</Vacio> : null}
       {p ? (
         <>
           <View style={styles.bloque}>
             <ThemedText type="smallBold" themeColor="textSecondary">
-              Corte Suprema · {CATEGORIAS[p.categoria]}
+              {organo(p.categoria) === 'cs'
+                ? `${ORGANOS.cs} · ${CATEGORIAS[p.categoria]}`
+                : CATEGORIAS[p.categoria]}
             </ThemedText>
             <ThemedText style={styles.titulo}>{p.numero}</ThemedText>
             {p.expediente ? <ThemedText>{p.expediente}</ThemedText> : null}

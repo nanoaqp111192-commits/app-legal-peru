@@ -10,10 +10,7 @@
     "tema": "Bonificación por preparación de clases y evaluación: se calcula sobre la remuneración total o íntegra (art. 48 Ley 24029)",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/06/Casacion-55355-2022-Huaura-LPDerecho.pdf",
-    "ramas": [
-      "laboral",
-      "administrativo"
-    ]
+    "ramas": ["laboral", "administrativo"]
   },
   {
     "id": "casacion-6619-2021-lima",
@@ -26,10 +23,7 @@
     "tema": "Intereses moratorios de pagos a cuenta del impuesto a la renta; improcedencia de capitalización; inaplicación del art. 33 del Código Tributario",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2023/04/Casacion-6619-2021-Lima-LPDerecho.pdf",
-    "ramas": [
-      "tributario",
-      "administrativo"
-    ]
+    "ramas": ["tributario", "administrativo"]
   },
   {
     "id": "casacion-546-2022-lima",
@@ -42,9 +36,7 @@
     "tema": "Medios probatorios en el procedimiento administrativo y en el proceso contencioso-administrativo; plena jurisdicción",
     "url_oficial": null,
     "url_verificacion": "https://www.zyaabogados.com/staff-abogados/web/uploads/07-09-23/precedente-medios-de-prueba-limpio.pdf",
-    "ramas": [
-      "administrativo"
-    ]
+    "ramas": ["administrativo"]
   },
   {
     "id": "casacion-3158-2022-lima",
@@ -57,10 +49,7 @@
     "tema": "Declaración rectificatoria que recoge observaciones de la fiscalización: acto voluntario, sin materia controvertible",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2023/08/Casacion-03158-2022-Lima-LPDerecho.pdf",
-    "ramas": [
-      "tributario",
-      "administrativo"
-    ]
+    "ramas": ["tributario", "administrativo"]
   },
   {
     "id": "casacion-79-2023-lima",
@@ -73,10 +62,7 @@
     "tema": "Los derechos antidumping no son multas y son deducibles para el impuesto a la renta",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/01/Casacion-79-2023-Lima-LPDerecho.pdf",
-    "ramas": [
-      "tributario",
-      "administrativo"
-    ]
+    "ramas": ["tributario", "administrativo"]
   },
   {
     "id": "casacion-17824-2023-lima",
@@ -89,10 +75,7 @@
     "tema": "Suspensión del plazo de fiscalización (art. 62-A del Código Tributario) aplicable a precios de transferencia",
     "url_oficial": null,
     "url_verificacion": "https://www.garrigues.com/es_ES/noticia/peru-corte-suprema-fija-precedente-vinculante-suspension-plazo-fiscalizacion-materia",
-    "ramas": [
-      "tributario",
-      "administrativo"
-    ]
+    "ramas": ["tributario", "administrativo"]
   },
   {
     "id": "casacion-16618-2023-lima",
@@ -105,10 +88,7 @@
     "tema": "Tarifa por el uso de agua subterránea",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/01/Casacion-16618-2023-Lima-LPDerecho.pdf",
-    "ramas": [
-      "administrativo",
-      "ambiental"
-    ]
+    "ramas": ["administrativo", "ambiental"]
   },
   {
     "id": "casacion-16018-2023-lima",
@@ -121,10 +101,7 @@
     "tema": "Alcance de la facultad de la Administración Tributaria de revocar o modificar actos notificados (art. 108.1 del Código Tributario)",
     "url_oficial": null,
     "url_verificacion": "https://zyaabogados.com/wp-content/uploads/2024/01/CASACION-No-16018-2023.pdf",
-    "ramas": [
-      "tributario",
-      "administrativo"
-    ]
+    "ramas": ["tributario", "administrativo"]
   },
   {
     "id": "casacion-34397-2023-lima",
@@ -137,9 +114,6 @@
     "tema": "Base de cálculo de la bonificación por preparación de clases y evaluación: remuneración total o íntegra (docentes activos y cesantes)",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2025/11/Casacion-034397-2023-Lima-LPDerecho.pdf",
-    "ramas": [
-      "laboral",
-      "administrativo"
-    ]
+    "ramas": ["laboral", "administrativo"]
   }
 ]

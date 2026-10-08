@@ -8,6 +8,7 @@ import { marcarCopia } from './conexion';
 import {
   buscarPrecedentes as filtrarPrecedentes,
   type Categoria,
+  type Organo,
   type Precedente,
 } from './precedentes';
 import { supabase } from './supabase';
@@ -17,11 +18,11 @@ const COLUMNAS_NORMA =
   'id,id_fuente,tipo,numero,titulo,sumilla,sector,fecha_publicacion,edicion_extraordinaria,url_oficial,url_pdf,ramas,verificado_en';
 
 const modelosLocales = MODELOS as Modelo[];
-/** Jurisprudencia vinculante de la Corte Suprema: viaja en la app, no depende del servidor. */
+/** Precedentes de la Corte Suprema y de tribunales administrativos: viajan en la app. */
 export const PRECEDENTES = CATALOGO_PRECEDENTES as Precedente[];
 
-export async function buscarPrecedentes(consulta: string, categorias: Categoria[]) {
-  return filtrarPrecedentes(PRECEDENTES, consulta, categorias);
+export async function buscarPrecedentes(consulta: string, categorias: Categoria[], de: Organo) {
+  return filtrarPrecedentes(PRECEDENTES, consulta, categorias, de);
 }
 
 const cache = crearCache(() => (typeof localStorage === 'undefined' ? null : localStorage));
