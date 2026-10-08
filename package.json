@@ -1,0 +1,8 @@
+{
+  "name": "app-legal-peru-raiz",
+  "private": true,
+  "description": "Punto de entrada para publicar la web (Cloudflare Pages) desde la raíz del repositorio.",
+  "scripts": {
+    "build:web": "npm --prefix apps/app ci && npm --prefix apps/app run build:web && rm -rf dist && cp -r apps/app/dist dist"
+  }
+}
