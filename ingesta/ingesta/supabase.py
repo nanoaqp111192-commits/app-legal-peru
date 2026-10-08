@@ -18,8 +18,9 @@ def cabeceras(clave: str) -> dict[str, str]:
 
 class Supabase:
     def __init__(self, url: str | None = None, clave: str | None = None):
-        url = url or os.environ.get("SUPABASE_URL")
-        clave = clave or os.environ.get("SUPABASE_SERVICE_ROLE_KEY")
+        # Los secretos pegados a mano suelen traer espacios o saltos de línea.
+        url = (url or os.environ.get("SUPABASE_URL") or "").strip()
+        clave = (clave or os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or "").strip()
         if not url or not clave:
             raise RuntimeError("Faltan SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY")
         self.http = httpx.Client(
