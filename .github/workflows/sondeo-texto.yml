@@ -1,0 +1,19 @@
+name: sondeo-texto
+on:
+  push:
+    branches: [sondeo-texto]
+jobs:
+  sondeo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          U=https://oqzkvtvvctiekodcxgfg.supabase.co/rest/v1
+          K=sb_publishable_GAGFqluWty9vaopysXjoyw_UmHqeGkz
+          H=(-H "apikey: $K" -H "Authorization: Bearer $K")
+          curl -s "${H[@]}" "$U/normas?select=id,numero,titulo,sumilla,texto&texto=not.is.null&order=id.desc&limit=3" > n.json
+          jq -r '.[] | "=== \(.id) \(.numero)\nTITULO: \(.titulo)\nSUMILLA: \(.sumilla)\nTEXTO:\n\(.texto[0:2500])\n"' n.json
+          echo "--- conteos con < o &"
+          for p in '%3C' '%26'; do curl -s "${H[@]}" -H "Prefer: count=exact" -I "$U/normas?select=id&texto=like.*$p*" | grep -i content-range; done
+          curl -s "${H[@]}" -H "Prefer: count=exact" -I "$U/normas?select=id" | grep -i content-range
+          echo "--- muestra con <"
+          curl -s "${H[@]}" "$U/normas?select=id,texto&texto=like.*%3C*&limit=2" | jq -r '.[] | .texto[0:1500]'
