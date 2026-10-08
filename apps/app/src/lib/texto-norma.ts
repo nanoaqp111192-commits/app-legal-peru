@@ -67,9 +67,9 @@ export function limpiarTexto(texto: string, titulo?: string | null): string[] {
     pegar = RE_NUMERAL.test(linea) || (linea.endsWith('.-') && linea.length < 80);
   }
 
-  // La sumilla ya se muestra como título de la ficha.
-  const objetivo = comparable(titulo ?? '');
-  if (objetivo && unidas.length && comparable(unidas[0]) === objetivo) unidas.shift();
+  // La sumilla ya se muestra como título de la ficha (a veces con otra puntuación).
+  const objetivo = comparable(titulo ?? '').slice(0, 40);
+  if (objetivo && unidas.length && comparable(unidas[0]).slice(0, 40) === objetivo) unidas.shift();
   return unidas.map(unir);
 }
 
