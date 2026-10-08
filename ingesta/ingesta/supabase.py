@@ -41,11 +41,14 @@ class Supabase:
         respuesta.raise_for_status()
         return respuesta.json()
 
-    def insertar_ignorando_duplicados(self, tabla: str, filas: list[dict]) -> None:
+    def insertar_ignorando_duplicados(
+        self, tabla: str, filas: list[dict], conflicto: str | None = None
+    ) -> None:
         if not filas:
             return
         respuesta = self.http.post(
             f"/{tabla}",
+            params={"on_conflict": conflicto} if conflicto else None,
             json=filas,
             headers={"Prefer": "resolution=ignore-duplicates,return=minimal"},
         )

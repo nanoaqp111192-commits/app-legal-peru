@@ -68,3 +68,28 @@ do $$ begin
 exception when insufficient_privilege then raise notice 'ok: anon no escribe jurisprudencia';
 end $$;
 reset role;
+
+-- Vigencia: una norma posterior deroga a otra por su clave
+insert into normas (id_fuente, titulo, numero, clave, fecha_publicacion, url_oficial) values
+  ('NL/900-1', 'Ley antigua', 'LEY N° 31000', 'ley 31000', '2026-01-10', 'https://x/900'),
+  ('NL/901-1', 'Derogan la Ley N° 31000', 'LEY N° 32100', 'ley 32100', '2026-09-01', 'https://x/901');
+insert into afectaciones (norma_id, efecto, parcial, clave_afectada, referencia)
+  select id, 'deroga', false, 'ley 31000', 'Ley N° 31000' from normas where id_fuente = 'NL/901-1';
+do $$ begin
+  if (select count(*) from afectaciones a join normas n on n.clave = a.clave_afectada
+      where n.id_fuente = 'NL/900-1' and a.efecto = 'deroga') <> 1 then
+    raise exception 'la derogación no se vincula a la norma afectada';
+  end if;
+  begin
+    insert into afectaciones (norma_id, efecto, clave_afectada, referencia)
+      select id, 'deroga', 'ley 31000', 'x' from normas where id_fuente = 'NL/901-1';
+    raise exception 'se aceptó una afectación duplicada';
+  exception when unique_violation then null;
+  end;
+  raise notice 'ok: vigencia';
+end $$;
+set role anon;
+do $$ begin
+  if (select count(*) from afectaciones) <> 1 then raise exception 'anon no lee afectaciones'; end if;
+end $$;
+reset role;
