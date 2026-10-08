@@ -13,10 +13,10 @@ jobs:
       - run: pip install httpx beautifulsoup4
       - run: >-
           python .github/sondeo/pj.py
-          https://jurisprudencia.pj.gob.pe/robots.txt
-          https://jurisprudencia.pj.gob.pe/jurisprudenciaweb/faces/page/inicio.xhtml
-          https://jurisprudencia.pj.gob.pe/jurisprudenciaweb/faces/page/penal.xhtml
-          https://jurisprudencia.pj.gob.pe/jurisprudenciaweb/faces/page/resultado.xhtml
-          https://www.pj.gob.pe/robots.txt
-          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada/as_suprema/
-          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_cij_jurisprudencia_nuevo/as_jurisprudencia_sistematizada/as_acuerdos_plenarios/as_AcuerdosPlenariosenMateriaPenal/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_cij_jurisprudencia_nuevo/as_jurisprudencia_sistematizada/as_ejecutorias_vinculantes/as_civil/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_cij_jurisprudencia_nuevo/as_jurisprudencia_sistematizada/as_ejecutorias_vinculantes/as_penal/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_cij_jurisprudencia_nuevo/as_jurisprudencia_sistematizada/as_ejecutorias_vinculantes/as_laboral/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_cij_jurisprudencia_nuevo/as_jurisprudencia_sistematizada/as_acuerdos_plenarios/as_AcuerdosPlenariosenMateriaLaboral/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_cij_jurisprudencia_nuevo/as_jurisprudencia_sistematizada/as_boletin_jurisprudencial/
+          https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada/as_suprema/as_cij-juris_resol_nlpt/

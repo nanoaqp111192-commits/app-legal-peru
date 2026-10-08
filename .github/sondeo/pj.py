@@ -33,9 +33,10 @@ with httpx.Client(headers=H, timeout=40, follow_redirects=True, verify=False) as
                     print("      OPC", [o.get_text(strip=True)[:30] + "=" + (o.get("value") or "") for o in i.find_all("option")][:40])
         links = [(a.get_text(" ", strip=True)[:70], a.get("href")) for a in s.find_all("a") if a.get("href")]
         print("LINKS", len(links))
-        for t, h in links[:150]:
+        for t, h in [l for l in links if re.search(r"(?i)pdf|connect/[^ ]*(acuerdo|pleno|casac|resol|cas_)|\?|page", (l[1] or "")+l[0])][:200]:
             print("   ", t, "|", h)
         scripts = [x.get("src") for x in s.find_all("script") if x.get("src")]
         print("SCRIPTS", scripts[:20])
         txt = re.sub(r"\s+", " ", s.get_text(" "))
-        print("TEXTO", txt[:2500])
+        i = txt.find("Acuerdo") if "Acuerdo" in txt else 0
+        print("TEXTO", txt[max(0, i - 200) : i + 3500])
