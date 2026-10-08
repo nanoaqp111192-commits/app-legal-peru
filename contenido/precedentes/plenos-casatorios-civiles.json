@@ -10,9 +10,7 @@
     "tema": "Transacción extrajudicial no homologada opuesta como excepción; daños por derrame de mercurio (Choropampa)",
     "url_oficial": "https://historico.pj.gob.pe/cortesuprema/cij/documentos/PrimerPlenoCasatorio130509.pdf",
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2023/10/Sentencias-y-Acuerdos-Plenarios-de-la-CSJ-LPDerecho.pdf",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   },
   {
     "id": "ii-pleno-casatorio-civil-casacion-2229-2008-lambayeque",
@@ -25,9 +23,7 @@
     "tema": "Prescripción adquisitiva de dominio a favor de coposeedores",
     "url_oficial": null,
     "url_verificacion": "https://repositorio.ucp.edu.pe/bitstreams/6e95ec05-64b6-45b1-9a9e-65df53243bbb/download",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   },
   {
     "id": "iii-pleno-casatorio-civil-casacion-4664-2010-puno",
@@ -40,10 +36,7 @@
     "tema": "Divorcio por separación de hecho: indemnización al cónyuge perjudicado y flexibilización procesal en familia",
     "url_oficial": "https://www.pj.gob.pe/wps/wcm/connect/1ca71e004a1e6356a681ee91cb0ca5a5/III+Pleno+Casatorio+Civil.pdf?MOD=AJPERES",
     "url_verificacion": "https://pdfcoffee.com/marco-torres-los-plenos-casatorios-civiles-evaluacion-dogmatica-y-practica-stamped-pdf-free.html",
-    "ramas": [
-      "civil",
-      "familia"
-    ]
+    "ramas": ["civil", "familia"]
   },
   {
     "id": "iv-pleno-casatorio-civil-casacion-2195-2011-ucayali",
@@ -56,9 +49,7 @@
     "tema": "Ocupante precario: supuestos y alcances del art. 911 del Código Civil en el desalojo",
     "url_oficial": null,
     "url_verificacion": "https://www.studocu.com/pe/document/universidad-cesar-vallejo/derechos-reales/4to-pleno-casatorio-civil/36792676",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   },
   {
     "id": "v-pleno-casatorio-civil-casacion-3189-2012-lima-norte",
@@ -71,9 +62,7 @@
     "tema": "Impugnación de acuerdos de asociaciones (art. 92 CC) frente a la nulidad de acto jurídico",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2024/01/Casacion-3189-2012-Lima-Norte-Legis.pe_.pdf",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   },
   {
     "id": "vi-pleno-casatorio-civil-casacion-2402-2012-lambayeque",
@@ -86,10 +75,7 @@
     "tema": "Ejecución de garantías reales: requisitos de la demanda, título y saldo deudor",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2023/12/VI-Pleno-Casatorio-Civil-Casacion-2402-2012-Lambayeque-LPDerecho.pdf",
-    "ramas": [
-      "civil",
-      "comercial"
-    ]
+    "ramas": ["civil", "comercial"]
   },
   {
     "id": "vii-pleno-casatorio-civil-casacion-3671-2014-lima",
@@ -102,10 +88,7 @@
     "tema": "Tercería de propiedad: propiedad no inscrita oponible al embargo inscrito (art. 2022 CC)",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2020/12/Septimo-Pleno-Casatorio-Civil-Casacion-3671-2014-Lima-LP.pdf",
-    "ramas": [
-      "civil",
-      "registral"
-    ]
+    "ramas": ["civil", "registral"]
   },
   {
     "id": "viii-pleno-casatorio-civil-casacion-3006-2015-junin",
@@ -118,10 +101,7 @@
     "tema": "Disposición de bienes de la sociedad conyugal por un solo cónyuge: nulidad del acto (art. 315 CC)",
     "url_oficial": "https://www.pj.gob.pe/wps/wcm/connect/1c1e29004b06002bb041b31955d33df0/VIII+PLENO+CASATORIO+CIVIL+-+NULIDAD+DE+ACTO+JURIDICO.pdf?MOD=AJPERES",
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2020/09/VIII-Pleno-Casatorio-Civil-LP.pdf",
-    "ramas": [
-      "civil",
-      "familia"
-    ]
+    "ramas": ["civil", "familia"]
   },
   {
     "id": "ix-pleno-casatorio-civil-casacion-4442-2015-moquegua",
@@ -134,9 +114,7 @@
     "tema": "Otorgamiento de escritura pública: control de validez y nulidad manifiesta declarada de oficio",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2017/01/IX-Pleno-Casatorio-Civil-Casaci%C3%B3n-444-2015-Moquegua-Legis.pe_.pdf",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   },
   {
     "id": "x-pleno-casatorio-civil-casacion-1242-2017-lima-este",
@@ -149,9 +127,7 @@
     "tema": "Prueba de oficio: alcances, límites y valoración en el proceso civil",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2020/09/X-Pleno-Casatorio-Civil-LP-1.pdf",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   },
   {
     "id": "xi-pleno-casatorio-civil-casacion-2582-2023-santa",
@@ -164,8 +140,6 @@
     "tema": "Prescripción adquisitiva de dominio: posesión pacífica, interrupción, justo título, Ley 29618 y personas jurídicas. Audiencia el 29/10/2025; sentencia no publicada a la fecha de verificación",
     "url_oficial": null,
     "url_verificacion": "https://img.lpderecho.pe/wp-content/uploads/2025/09/Casacion-2582-2023-Santa-LPDerecho.pdf",
-    "ramas": [
-      "civil"
-    ]
+    "ramas": ["civil"]
   }
 ]
