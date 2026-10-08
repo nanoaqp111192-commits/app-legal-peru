@@ -14,15 +14,16 @@ import { PROCESOS_TC } from '@/data/jurisprudencia-demo';
 import { useCarga } from '@/hooks/use-carga';
 import { useTheme } from '@/hooks/use-theme';
 import { buscarJurisprudencia, buscarNormas, buscarPrecedentes } from '@/lib/datos';
-import { CATEGORIAS, type Categoria, type Precedente } from '@/lib/precedentes';
+import { CATEGORIAS, categoriasDe, type Categoria, type Precedente } from '@/lib/precedentes';
 import type { Norma, Resolucion } from '@/lib/tipos';
 
-type Fuente = 'normas' | 'tc' | 'cs';
+type Fuente = 'normas' | 'tc' | 'cs' | 'ta';
+const esPrecedente = (f: Fuente): f is 'cs' | 'ta' => f === 'cs' || f === 'ta';
 
 type Resultados =
   | { fuente: 'normas'; lista: Norma[] }
   | { fuente: 'tc'; lista: Resolucion[] }
-  | { fuente: 'cs'; lista: Precedente[] }
+  | { fuente: 'cs' | 'ta'; lista: Precedente[] }
   | null;
 
 export default function Buscar() {
@@ -45,11 +46,17 @@ export default function Buscar() {
   const { datos, error, cargando } = useCarga<Resultados>(
     async () => {
       if (fuente === 'tc') return { fuente, lista: await buscarJurisprudencia(consulta, procesos) };
-      if (fuente === 'cs') return { fuente, lista: await buscarPrecedentes(consulta, categorias) };
+      if (esPrecedente(fuente))
+        return { fuente, lista: await buscarPrecedentes(consulta, categorias, fuente) };
       return activa ? { fuente, lista: await buscarNormas(consulta, ramas) } : null;
     },
     `${fuente}|${consulta}|${ramas.join(',')}|${procesos.join(',')}|${categorias.join(',')}`,
   );
+
+  const cambiarFuente = (f: Fuente) => {
+    setFuente(f);
+    setCategorias([]);
+  };
 
   const alternar = <T,>(lista: T[], valor: T) =>
     lista.includes(valor) ? lista.filter((v) => v !== valor) : [...lista, valor];
@@ -61,20 +68,25 @@ export default function Buscar() {
         <Chip
           etiqueta="Normas"
           activo={fuente === 'normas'}
-          alPresionar={() => setFuente('normas')}
+          alPresionar={() => cambiarFuente('normas')}
         />
         <Chip
           etiqueta="Tribunal Constitucional"
           activo={fuente === 'tc'}
-          alPresionar={() => setFuente('tc')}
+          alPresionar={() => cambiarFuente('tc')}
         />
         <Chip
           etiqueta="Corte Suprema"
           activo={fuente === 'cs'}
-          alPresionar={() => setFuente('cs')}
+          alPresionar={() => cambiarFuente('cs')}
+        />
+        <Chip
+          etiqueta="Tribunales administrativos"
+          activo={fuente === 'ta'}
+          alPresionar={() => cambiarFuente('ta')}
         />
       </View>
-      {fuente !== 'cs' ? <AvisoDemo /> : null}
+      {!esPrecedente(fuente) ? <AvisoDemo /> : null}
       <TextInput
         value={texto}
         onChangeText={setTexto}
@@ -83,7 +95,9 @@ export default function Buscar() {
             ? 'Expediente, parte o tema (ej.: 05853-2025, prisión preventiva)'
             : fuente === 'cs'
               ? 'Número o tema (ej.: precario, colusión, 4-2016)'
-              : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
+              : fuente === 'ta'
+                ? 'Número o tema (ej.: intereses moratorios, idoneidad, penalidad)'
+                : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
         }
         placeholderTextColor={tema.textSecondary}
         returnKeyType="search"
@@ -95,9 +109,9 @@ export default function Buscar() {
         ]}
       />
       {fuente === 'normas' ? <SelectorRamas seleccion={ramas} alCambiar={setRamas} /> : null}
-      {fuente === 'cs' ? (
+      {esPrecedente(fuente) ? (
         <View style={styles.fila}>
-          {(Object.keys(CATEGORIAS) as Categoria[]).map((c) => (
+          {categoriasDe(fuente).map((c) => (
             <Chip
               key={c}
               etiqueta={CATEGORIAS[c]}
@@ -129,10 +143,12 @@ export default function Buscar() {
           Resoluciones publicadas más recientemente por el Tribunal Constitucional.
         </ThemedText>
       ) : null}
-      {fuente === 'cs' ? (
+      {esPrecedente(fuente) ? (
         <ThemedText type="small" themeColor="textSecondary">
-          Plenos casatorios, acuerdos plenarios y precedentes vinculantes de la Corte Suprema,
-          verificados uno por uno. Disponibles sin conexión.
+          {fuente === 'cs'
+            ? 'Plenos casatorios, acuerdos plenarios y precedentes vinculantes de la Corte Suprema'
+            : 'Precedentes de observancia obligatoria del Tribunal Fiscal, Indecopi, Servir, el Tribunal de Contrataciones y Sunafil'}
+          , verificados uno por uno. Disponibles sin conexión.
         </ThemedText>
       ) : null}
       {activa && cargando ? <Cargando /> : null}
@@ -144,7 +160,7 @@ export default function Buscar() {
       {!error && datos?.fuente === 'tc'
         ? datos.lista.map((r) => <TarjetaResolucion key={r.id} resolucion={r} />)
         : null}
-      {!error && datos?.fuente === 'cs'
+      {!error && (datos?.fuente === 'cs' || datos?.fuente === 'ta')
         ? datos.lista.map((p) => <TarjetaPrecedente key={p.id} precedente={p} />)
         : null}
     </Pantalla>

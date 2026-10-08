@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 
-import { CATEGORIAS, buscarPrecedentes } from '../src/lib/precedentes.ts';
+import { CATEGORIAS, buscarPrecedentes, categoriasDe, organo } from '../src/lib/precedentes.ts';
 
 const lista = [
   {
@@ -78,4 +78,16 @@ test('el catálogo incluido en la app es válido', () => {
       assert.match(u, /^https:\/\//, `enlace no seguro en ${p.id}`);
     }
   }
+});
+
+test('separa la Corte Suprema de los tribunales administrativos', () => {
+  const tf = { ...lista[0], id: 'tf', categoria: 'precedente_tribunal_fiscal' };
+  assert.equal(organo('precedente_tribunal_fiscal'), 'ta');
+  assert.equal(organo('acuerdo_plenario_penal'), 'cs');
+  assert.ok(categoriasDe('ta').includes('precedente_indecopi'));
+  assert.deepEqual(
+    buscarPrecedentes([...lista, tf], '', [], 'ta').map((p) => p.id),
+    ['tf'],
+  );
+  assert.equal(buscarPrecedentes([...lista, tf], '', [], 'cs').length, 2);
 });

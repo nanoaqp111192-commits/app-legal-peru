@@ -1,5 +1,5 @@
 // Jurisprudencia vinculante de la Corte Suprema (plenos casatorios, acuerdos plenarios,
-// precedentes). Es un catálogo curado y verificado que viaja dentro de la app: se busca sin
+// precedentes) y precedentes de observancia obligatoria de tribunales administrativos. Es un catálogo curado y verificado que viaja dentro de la app: se busca sin
 // servidor y funciona sin conexión. Lógica pura para poder probarla en Node.
 
 export type Categoria =
@@ -8,7 +8,15 @@ export type Categoria =
   | 'acuerdo_plenario_penal'
   | 'pleno_laboral'
   | 'pleno_constitucional_contencioso'
-  | 'precedente_vinculante';
+  | 'precedente_vinculante'
+  | 'precedente_tribunal_fiscal'
+  | 'precedente_indecopi'
+  | 'precedente_servir'
+  | 'acuerdo_tce'
+  | 'precedente_sunafil';
+
+/** Corte Suprema o tribunales administrativos: cada uno es una opción en Buscar. */
+export type Organo = 'cs' | 'ta';
 
 export type Precedente = {
   id: string;
@@ -31,7 +39,33 @@ export const CATEGORIAS: Record<Categoria, string> = {
   pleno_laboral: 'Pleno laboral y previsional',
   pleno_constitucional_contencioso: 'Pleno constitucional y contencioso',
   precedente_vinculante: 'Precedente vinculante',
+  precedente_tribunal_fiscal: 'Tribunal Fiscal',
+  precedente_indecopi: 'Indecopi',
+  precedente_servir: 'Tribunal del Servicio Civil',
+  acuerdo_tce: 'Tribunal de Contrataciones',
+  precedente_sunafil: 'Tribunal de Fiscalización Laboral',
 };
+
+export const ORGANOS: Record<Organo, string> = {
+  cs: 'Corte Suprema',
+  ta: 'Tribunales administrativos',
+};
+
+const ADMINISTRATIVOS: Categoria[] = [
+  'precedente_tribunal_fiscal',
+  'precedente_indecopi',
+  'precedente_servir',
+  'acuerdo_tce',
+  'precedente_sunafil',
+];
+
+export function organo(c: Categoria): Organo {
+  return ADMINISTRATIVOS.includes(c) ? 'ta' : 'cs';
+}
+
+export function categoriasDe(o: Organo): Categoria[] {
+  return (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => organo(c) === o);
+}
 
 export const ETIQUETA_FECHA: Record<NonNullable<Precedente['tipo_fecha']>, string> = {
   publicacion: 'Publicado en El Peruano',
@@ -57,9 +91,11 @@ export function buscarPrecedentes(
   lista: Precedente[],
   consulta: string,
   categorias: Categoria[] = [],
+  de?: Organo,
 ): Precedente[] {
   const palabras = normalizar(consulta).split(/\s+/).filter(Boolean);
   return lista
+    .filter((p) => !de || organo(p.categoria) === de)
     .filter((p) => !categorias.length || categorias.includes(p.categoria))
     .filter((p) => {
       if (!palabras.length) return true;
