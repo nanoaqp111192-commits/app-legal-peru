@@ -8,6 +8,14 @@ from collections.abc import Iterable
 import httpx
 
 
+def cabeceras(clave: str) -> dict[str, str]:
+    """Las claves nuevas (sb_secret_...) no son JWT: van solo en `apikey`. La clave
+    service_role antigua (un JWT) también va como Bearer."""
+    if clave.startswith("eyJ"):
+        return {"apikey": clave, "Authorization": f"Bearer {clave}"}
+    return {"apikey": clave}
+
+
 class Supabase:
     def __init__(self, url: str | None = None, clave: str | None = None):
         url = url or os.environ.get("SUPABASE_URL")
@@ -16,7 +24,7 @@ class Supabase:
             raise RuntimeError("Faltan SUPABASE_URL y SUPABASE_SERVICE_ROLE_KEY")
         self.http = httpx.Client(
             base_url=f"{url.rstrip('/')}/rest/v1",
-            headers={"apikey": clave, "Authorization": f"Bearer {clave}"},
+            headers=cabeceras(clave),
             timeout=60,
         )
 
