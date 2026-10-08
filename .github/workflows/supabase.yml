@@ -1,0 +1,59 @@
+name: Supabase (esquema y modelos)
+
+# Aplica las migraciones pendientes a la base de datos y carga los modelos de escritos.
+# Necesita los secretos SUPABASE_DB_URL (cadena "Session pooler"), SUPABASE_URL y
+# SUPABASE_SERVICE_ROLE_KEY. Las migraciones ya aplicadas no se repiten.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "supabase/migrations/**"
+      - "contenido/modelos/**"
+      - ".github/workflows/supabase.yml"
+
+concurrency:
+  group: supabase
+  cancel-in-progress: false
+
+jobs:
+  esquema:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - name: Comprobar secretos
+        id: secretos
+        run: |
+          faltan=()
+          for s in SUPABASE_DB_URL SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
+            [ -n "${!s}" ] || faltan+=("$s")
+          done
+          if [ ${#faltan[@]} -gt 0 ]; then
+            echo "::warning::Faltan los secretos: ${faltan[*]}. No se aplicó nada."
+            echo "listo=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "listo=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.secretos.outputs.listo == 'true'
+      - uses: supabase/setup-cli@v1
+        if: steps.secretos.outputs.listo == 'true'
+        with:
+          version: latest
+      - name: Aplicar migraciones
+        if: steps.secretos.outputs.listo == 'true'
+        run: supabase db push --db-url "$SUPABASE_DB_URL" --include-all
+      - uses: actions/setup-python@v5
+        if: steps.secretos.outputs.listo == 'true'
+        with:
+          python-version: "3.13"
+      - name: Cargar los modelos de escritos
+        if: steps.secretos.outputs.listo == 'true'
+        working-directory: ingesta
+        run: |
+          pip install -e .
+          python -m ingesta modelos
