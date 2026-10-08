@@ -4,7 +4,7 @@ Normas legales del Perú publicadas cada día en El Peruano, clasificadas por ra
 derecho, con búsqueda, alertas y modelos de escritos. Una sola base de código para web,
 Android e iOS.
 
-Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos, jurisprudencia del TC y modo sin conexión listos) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
+Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos, jurisprudencia del TC y de la Corte Suprema, y modo sin conexión listos) del [plan](https://claude.ai/code/artifact/218e4dcd-3ccc-4702-bcab-54c0fd39d8c8).
 
 ## Qué hay en este repositorio
 
@@ -14,6 +14,7 @@ Estado: **fase 1 (MVP)** lista; **fase 2** en curso (calculadora de plazos, juri
 | `ingesta` | Proceso en Python que trae las normas del día de El Peruano y las resoluciones del Tribunal Constitucional, las clasifica, las guarda y envía los avisos push. |
 | `supabase/migrations` | Esquema de la base de datos (PostgreSQL en Supabase) con búsqueda de texto completo y seguridad por filas. |
 | `contenido/modelos` | Modelos de escritos (JSON). Fuente única: la app y la base de datos se alimentan de aquí. |
+| `contenido/precedentes` | Plenos casatorios, acuerdos plenarios y precedentes vinculantes de la Corte Suprema, verificados uno por uno. Viajan dentro de la app (`npm run modelos`). |
 | `.github/workflows` | Pruebas en cada cambio (`ci.yml`) e ingesta programada dos veces al día (`ingesta.yml`). |
 
 ## Probar la app sin servidor
