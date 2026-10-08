@@ -22,6 +22,7 @@ TIPOS = [
     "ley organica",
     "ley",
     "decreto legislativo",
+    "decreto ley",
     "decreto de urgencia",
     "decreto supremo",
     "decreto de alcaldia",
@@ -86,6 +87,17 @@ _RE_CODIGO = re.compile(r"\b(" + "|".join(re.escape(c) for c in CODIGOS) + r")\b
 _CORTE = re.compile(r"\b(?:aprueb\w*|design\w*|autoriz\w*|encarg\w*|acept\w*|conform\w*)\b")
 
 
+# Abreviaturas frecuentes en los números de los textos compilados de El Peruano.
+_ABREVIATURAS = [
+    (re.compile(r"\bd[.,]?\s*leg(?:islativo)?\b\.?"), "decreto legislativo"),
+    (re.compile(r"\bd\.?\s*ley\b"), "decreto ley"),
+    (re.compile(r"\bd\.?\s*s\b\.?"), "decreto supremo"),
+    (re.compile(r"\bd\.?\s*u\b\.?"), "decreto de urgencia"),
+    # "DECRETO SUPREMONº 005-2012-TR": el número viene pegado al tipo.
+    (re.compile(r"([a-z])(n\s*[°º])"), r"\1 \2"),
+]
+
+
 def sin_tildes(texto: str) -> str:
     plano = unicodedata.normalize("NFD", texto)
     plano = "".join(c for c in plano if unicodedata.category(c) != "Mn")
@@ -105,6 +117,25 @@ def clave_de(numero: str | None) -> str | None:
         return None
     m = _RE_REFERENCIA.search(sin_tildes(numero))
     return clave(m.group("tipo"), m.group(m.lastindex)) if m else None
+
+
+def claves_en(texto: str) -> list[str]:
+    """Claves de todas las normas que nombra un texto (sin repetir, en orden).
+
+    Sirve para los textos compilados, cuyo campo de números mezcla abreviaturas
+    ('D.S Nº 007-2013-JUS', 'D. LEG. N° 813') y cuyo título puede nombrar un código.
+    """
+    t = sin_tildes(texto)
+    for patron, reemplazo in _ABREVIATURAS:
+        t = patron.sub(reemplazo, t)
+    encontradas = [
+        clave(m.group("tipo"), m.group(m.lastindex), m.group("prefijo"))
+        for m in _RE_REFERENCIA.finditer(t)
+    ]
+    for cod in _RE_CODIGO.finditer(t):
+        if not re.search(r"reglamento\s+de(?:l)?\s*$", t[: cod.start()]):
+            encontradas.append(CODIGOS[cod.group(1)])
+    return list(dict.fromkeys(encontradas))
 
 
 def afectaciones(titulo: str, propia: str | None = None) -> list[dict]:

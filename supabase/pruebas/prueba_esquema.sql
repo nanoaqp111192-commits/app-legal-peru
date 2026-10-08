@@ -117,3 +117,12 @@ do $$ begin
   end;
 end $$;
 reset role;
+
+-- Enlaces: un compilado se encuentra por la clave de la norma que reúne
+update compilados set claves = array['ley 29497'] where id_fuente = 48;
+do $$ begin
+  if (select count(*) from compilados where claves @> array['ley 29497']) <> 1 then
+    raise exception 'el compilado no se encuentra por su clave';
+  end if;
+  raise notice 'ok: enlaces de compilados';
+end $$;

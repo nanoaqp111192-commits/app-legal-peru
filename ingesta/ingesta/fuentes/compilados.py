@@ -22,6 +22,7 @@ from dataclasses import dataclass
 import httpx
 
 from ingesta.fuentes.el_peruano import PAUSA_ENTRE_PEDIDOS
+from ingesta.vigencia import claves_en
 
 BASE = "https://diariooficial.elperuano.pe/Normas"
 URL_LISTA = f"{BASE}/consultarNormasActualizadas"
@@ -42,6 +43,11 @@ class Compilado:
     titulo: str
     numeros: str | None
     materia: str | None
+
+    @property
+    def claves(self) -> list[str]:
+        """Normas que reúne el compilado, para enlazarlo con sus modificaciones."""
+        return claves_en(f"{self.numeros or ''} {self.titulo}")
 
     @property
     def url_pdf(self) -> str:
@@ -123,6 +129,7 @@ def comparar(
             "numeros": c.numeros,
             "materia": c.materia,
             "url_pdf": c.url_pdf,
+            "claves": c.claves,
             "activo": True,
             "hash": previo.get("hash"),
             "bytes": previo.get("bytes"),
@@ -184,6 +191,7 @@ _COLUMNAS = (
     "numeros",
     "materia",
     "url_pdf",
+    "claves",
     "activo",
     "hash",
     "bytes",
