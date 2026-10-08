@@ -40,16 +40,31 @@ def cliente() -> httpx.Client:
     )
 
 
+# Esperas (segundos) antes de reintentar el listado. En la carga histórica del
+# 08/10/2026 el diario cortó la conexión (SSL EOF) en tandas de varios días seguidos.
+ESPERAS_REINTENTO = (15, 60, 180)
+
+
 def pedir_listado(http: httpx.Client, dia: date) -> str:
-    """Devuelve el HTML del listado de normas publicadas en ``dia``."""
+    """Devuelve el HTML del listado de normas publicadas en ``dia``.
+
+    Reintenta ante cortes de conexión y errores 5xx del diario."""
     fecha = dia.strftime("%d/%m/%Y")
-    respuesta = http.post(
-        URL_LISTADO,
-        data={"cddesde": fecha, "cdhasta": fecha, "X-Requested-With": "XMLHttpRequest"},
-        headers={"X-Requested-With": "XMLHttpRequest"},
-    )
-    respuesta.raise_for_status()
-    return respuesta.text
+    for espera in (*ESPERAS_REINTENTO, None):
+        try:
+            respuesta = http.post(
+                URL_LISTADO,
+                data={"cddesde": fecha, "cdhasta": fecha, "X-Requested-With": "XMLHttpRequest"},
+                headers={"X-Requested-With": "XMLHttpRequest"},
+            )
+            if respuesta.status_code < 500 or espera is None:
+                respuesta.raise_for_status()
+                return respuesta.text
+        except httpx.TransportError:
+            if espera is None:
+                raise
+        time.sleep(espera)
+    raise AssertionError("inalcanzable")
 
 
 def separar_titulo(titulo: str) -> tuple[str | None, str | None]:

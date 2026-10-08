@@ -1,7 +1,7 @@
 """Uso:
 
     python -m ingesta diaria [--fecha AAAA-MM-DD] [--seco]
-    python -m ingesta historico --desde AAAA-MM-DD [--hasta AAAA-MM-DD]
+    python -m ingesta historico --desde AAAA-MM-DD [--hasta AAAA-MM-DD] [--solo-faltantes]
     python -m ingesta tc [--seco] [--maximo N]
     python -m ingesta modelos [--validar]
     python -m ingesta compilados [--seco]
@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+import time
 from datetime import UTC, date, datetime, timedelta
 
 from ingesta import alertas, modelos, vigencia
@@ -28,6 +29,8 @@ from ingesta.clasificador import clasificar
 from ingesta.fuentes import compilados as fuente_compilados
 from ingesta.fuentes import el_peruano
 from ingesta.fuentes import tribunal_constitucional as tc
+
+PAUSA_ANTES_DE_REINTENTAR = 300  # segundos
 
 
 def diaria(fecha: date, seco: bool) -> int:
@@ -64,29 +67,51 @@ def diaria(fecha: date, seco: bool) -> int:
     return 0
 
 
-def historico(desde: date, hasta: date) -> int:
-    """Carga día por día, sin avisos: los usuarios no esperan alertas de meses pasados."""
+def historico(desde: date, hasta: date, solo_faltantes: bool = False) -> int:
+    """Carga día por día, sin avisos: los usuarios no esperan alertas de meses pasados.
+
+    Con ``solo_faltantes`` salta los días que ya tienen normas guardadas. Los días
+    que fallan se reintentan una vez al final, tras una pausa."""
     from ingesta.supabase import Supabase
 
     db = Supabase()
-    total = fallidos = 0
+    total = 0
+    pendientes = []
     dia = desde
     while dia <= hasta:
-        try:
-            normas = el_peruano.normas_del_dia(dia)
-            for norma in normas:
-                norma.ramas = clasificar(norma)
-            guardadas = db.upsert(
-                "normas", [n.como_fila() for n in normas], conflicto="fuente,id_fuente"
-            )
-            afectadas = vigencia.guardar(db, guardadas)
-            total += len(guardadas)
-            print(f"{dia.isoformat()}: {len(guardadas)} normas, {afectadas} afectaciones")
-        except Exception as error:  # un día fallido no detiene el resto
-            fallidos += 1
-            print(f"{dia.isoformat()}: ERROR {error}")
+        if not (
+            solo_faltantes
+            and db.leer("normas", select="id", fecha_publicacion=f"eq.{dia}", limit="1")
+        ):
+            pendientes.append(dia)
         dia += timedelta(days=1)
-    print(f"Total: {total} normas; {fallidos} días con error")
+    print(f"{len(pendientes)} días por cargar")
+
+    fallidos: list[date] = []
+    for ronda in (1, 2):
+        if ronda == 2:
+            if not fallidos:
+                break
+            print(f"Reintentando {len(fallidos)} días con error tras una pausa")
+            time.sleep(PAUSA_ANTES_DE_REINTENTAR)
+            pendientes, fallidos = fallidos, []
+        for dia in pendientes:
+            try:
+                normas = el_peruano.normas_del_dia(dia)
+                for norma in normas:
+                    norma.ramas = clasificar(norma)
+                guardadas = db.upsert(
+                    "normas", [n.como_fila() for n in normas], conflicto="fuente,id_fuente"
+                )
+                afectadas = vigencia.guardar(db, guardadas)
+                total += len(guardadas)
+                print(f"{dia.isoformat()}: {len(guardadas)} normas, {afectadas} afectaciones")
+            except Exception as error:  # un día fallido no detiene el resto
+                fallidos.append(dia)
+                print(f"{dia.isoformat()}: ERROR {error}")
+    print(f"Total: {total} normas; {len(fallidos)} días con error")
+    for dia in fallidos:
+        print(f"  sin cargar: {dia.isoformat()}")
     return 1 if fallidos else 0
 
 
@@ -172,6 +197,7 @@ def main(argv: list[str] | None = None) -> int:
     p_hist = sub.add_parser("historico")
     p_hist.add_argument("--desde", type=date.fromisoformat, required=True)
     p_hist.add_argument("--hasta", type=date.fromisoformat, default=None)
+    p_hist.add_argument("--solo-faltantes", action="store_true")
     p_tc = sub.add_parser("tc")
     p_tc.add_argument("--seco", action="store_true")
     p_tc.add_argument("--maximo", type=int, default=None)
@@ -184,7 +210,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.orden == "diaria":
         return diaria(args.fecha or el_peruano.hoy_en_lima(), args.seco)
     if args.orden == "historico":
-        return historico(args.desde, args.hasta or el_peruano.hoy_en_lima())
+        return historico(args.desde, args.hasta or el_peruano.hoy_en_lima(), args.solo_faltantes)
     if args.orden == "tc":
         return tribunal(args.seco, args.maximo)
     if args.orden == "compilados":
