@@ -27,14 +27,20 @@ async function estado(url) {
   }
 }
 
-const fallidos = [];
+// Solo "no existe" (404/410) es un enlace roto. Muchos sitios rechazan a los robots (403,
+// 202 con desafío, 429) o cortan la conexión; esos se listan para revisar a mano.
+const rotos = [];
+const dudosos = [];
 for (let i = 0; i < enlaces.length; i += 6) {
   const lote = enlaces.slice(i, i + 6);
   const estados = await Promise.all(lote.map(estado));
   lote.forEach((u, j) => {
-    if (estados[j] !== 200) fallidos.push(`${estados[j]} ${u}`);
+    if (estados[j] === 404 || estados[j] === 410) rotos.push(`${estados[j]} ${u}`);
+    else if (estados[j] !== 200) dudosos.push(`${estados[j]} ${u}`);
   });
 }
-console.log(`${enlaces.length - fallidos.length} de ${enlaces.length} enlaces responden.`);
-for (const f of fallidos) console.log(`  FALLA ${f}`);
-if (fallidos.length) process.exit(1);
+const ok = enlaces.length - rotos.length - dudosos.length;
+console.log(`${ok} de ${enlaces.length} enlaces responden.`);
+for (const d of dudosos) console.log(`  NO VERIFICABLE (revisar a mano) ${d}`);
+for (const r of rotos) console.log(`  ROTO ${r}`);
+if (rotos.length) process.exit(1);
