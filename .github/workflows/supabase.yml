@@ -20,14 +20,33 @@ jobs:
   esquema:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    env:
-      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
     steps:
       - name: Comprobar secretos
         id: secretos
+        # Los secretos entran solo a este paso; los siguientes reciben los valores ya limpios.
+        env:
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
+          # Con SUPABASE_DB_PASSWORD basta la contraseña: la cadena del Session pooler se arma
+          # aquí probando las regiones, porque la región no figura en la URL del proyecto.
+          if [ -n "$SUPABASE_DB_PASSWORD" ] && [ -n "$SUPABASE_URL" ]; then
+            ref="$(printf '%s' "$SUPABASE_URL" | tr -d '[:space:]' | sed -E 's#^https?://([^.]+)\.supabase\.co.*#\1#')"
+            clave="$(printf '%s' "$SUPABASE_DB_PASSWORD" | tr -d '\r\n' | python3 -c 'import sys,urllib.parse;print(urllib.parse.quote(sys.stdin.read(),safe=""))')"
+            echo "::add-mask::$clave"
+            SUPABASE_DB_URL=""
+            for pre in aws-0 aws-1; do
+              for region in us-east-1 us-east-2 us-west-1 us-west-2 sa-east-1 ca-central-1 eu-west-1 eu-west-2 eu-west-3 eu-central-1 eu-central-2 eu-north-1 ap-south-1 ap-southeast-1 ap-southeast-2 ap-northeast-1 ap-northeast-2; do
+                url="postgresql://postgres.$ref:$clave@$pre-$region.pooler.supabase.com:5432/postgres"
+                if PGCONNECT_TIMEOUT=8 psql "$url" -Atqc 'select 1' >/dev/null 2>&1; then
+                  SUPABASE_DB_URL="$url"; echo "Base encontrada en $pre-$region."; break 2
+                fi
+              done
+            done
+            [ -n "$SUPABASE_DB_URL" ] || { echo "::error::Con SUPABASE_DB_PASSWORD no se pudo entrar a la base: revisa que la contraseña sea la de Project Settings → Database."; exit 1; }
+          fi
           faltan=()
           for s in SUPABASE_DB_URL SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
             [ -n "${!s}" ] || faltan+=("$s")
