@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native';
 
 import { AvisoDemo, Cargando, MensajeError, Vacio } from '@/components/avisos';
 import { BotonEnlace } from '@/components/boton';
-import { Interruptor } from '@/components/interruptor';
 import { Pantalla } from '@/components/pantalla';
 import { SelectorRamas } from '@/components/selector-ramas';
 import { TarjetaCompilado } from '@/components/tarjeta-compilado';
@@ -20,7 +19,6 @@ import { fechaLarga, hoyEnLima } from '@/lib/fechas';
 export default function Hoy() {
   const escritorio = useEscritorio();
   const [ramas, setRamas] = useState<string[]>([]);
-  const [verDesignaciones, setVerDesignaciones] = useState(false);
 
   const { datos, error, cargando, recargar } = useCarga(async () => {
     const hoy = hoyEnLima();
@@ -44,23 +42,21 @@ export default function Hoy() {
     compilados.recargar();
   };
 
-  const visibles = (datos?.normas ?? []).filter(
-    (n) =>
-      (verDesignaciones || !(n.ramas.length === 1 && n.ramas[0] === 'otros')) &&
-      (!ramas.length || n.ramas.some((r) => ramas.includes(r))),
-  );
-  const ocultas = (datos?.normas.length ?? 0) - visibles.length;
+  // Se muestran todas las normas del día; el filtro solo las clasifica por rama.
+  const normas = datos?.normas ?? [];
+  const visibles = ramas.length
+    ? normas.filter((n) => n.ramas.some((r) => ramas.includes(r)))
+    : normas;
+  const porRama: Record<string, number> = {};
+  for (const n of normas) for (const r of n.ramas) porRama[r] = (porRama[r] ?? 0) + 1;
 
   const filtros = (
-    <>
-      <SelectorRamas seleccion={ramas} alCambiar={setRamas} />
-      <Interruptor
-        etiqueta="Incluir designaciones y otras normas sin rama"
-        detalle="Nombramientos, encargos, viajes y similares"
-        valor={verDesignaciones}
-        alCambiar={setVerDesignaciones}
-      />
-    </>
+    <SelectorRamas
+      seleccion={ramas}
+      alCambiar={setRamas}
+      titulo="Clasificar por rama del derecho"
+      conteos={{ total: normas.length, porRama }}
+    />
   );
 
   const actualizados = compilados.datos?.length ? (
@@ -78,8 +74,9 @@ export default function Hoy() {
       {error ? <MensajeError error={error} /> : null}
       {datos ? (
         <ThemedText type="small" themeColor="textSecondary">
-          {visibles.length} de {datos.normas.length} normas publicadas
-          {ocultas > 0 ? ` (${ocultas} ocultas por los filtros)` : ''}
+          {ramas.length
+            ? `${visibles.length} de ${datos.normas.length} normas publicadas`
+            : `${datos.normas.length} normas publicadas`}
         </ThemedText>
       ) : null}
       {datos && !visibles.length ? (

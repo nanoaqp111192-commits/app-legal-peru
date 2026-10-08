@@ -2,9 +2,10 @@
 
 Reglas simples y auditables: el sector que publica la norma y palabras clave
 en su título. Una norma puede pertenecer a varias ramas. Los actos de
-personal (designaciones, ceses, renuncias, licencias, encargos) van siempre
-a "otros", aunque el título nombre una materia ("Designan fiscal ... Delitos
-de Lesiones"), para que no ensucien las alertas.
+personal (designaciones, ceses, renuncias, licencias, encargos, viajes) van
+siempre a "personal", aunque el título nombre una materia ("Designan fiscal
+... Delitos de Lesiones"), para que no ensucien las alertas. "otros" queda
+para lo que no encaja en ninguna rama.
 """
 
 from __future__ import annotations
@@ -55,7 +56,7 @@ POR_SECTOR: list[tuple[str, tuple[str, ...]]] = [
 POR_PALABRAS: list[tuple[str, tuple[str, ...]]] = [
     (
         r"codigo penal|procesal penal|delito|penitenciari|pena privativa|crimen organizado"
-        r"|lavado de activos|extorsion|flagrancia",
+        r"|lavado de activos|extorsion|flagrancia|extradicion",
         ("penal",),
     ),
     (
@@ -72,7 +73,10 @@ POR_PALABRAS: list[tuple[str, tuple[str, ...]]] = [
     ),
     (r"constituci|habeas|amparo|reforma constitucional", ("constitucional",)),
     (
-        r"procedimiento administrativo|\blpag\b|sancionador|silencio administrativo|\btupa\b",
+        r"procedimiento administrativo|\blpag\b|sancionador|silencio administrativo|\btupa\b"
+        r"|patrimonio cultural|arqueologic|grupo de trabajo|lineamientos|directiva"
+        r"|manual de operaciones|reglamento de organizacion y funciones|transferencia financiera"
+        r"|presupuest|rectifican error",
         ("administrativo",),
     ),
     (r"tribut|impuesto|\bigv\b|renta|aduan|arancel|\bitf\b", ("tributario",)),
@@ -99,7 +103,9 @@ POR_PALABRAS: list[tuple[str, tuple[str, ...]]] = [
 _ACTO_DE_PERSONAL = re.compile(
     r"^(designan|formalizan (la )?designacion|dan por concluid[oa]s?|dejan sin efecto (la )?"
     r"designacion|aceptan (la )?renuncia|encargan|autorizan viaje|nombran|ratifican"
-    r"|delegan facultades|cesan|conceden licencia|convocan a ciudadan|restituyen credencial)"
+    r"|delegan facultades|cesan|conceden licencia|convocan a ciudadan|restituyen credencial"
+    r"|autorizan mision|formalizan acuerdo que aprueba la designacion"
+    r"|acuerdo adoptado sobre directores)"
     r"|\by cesan\b"
 )
 
@@ -108,7 +114,7 @@ def clasificar(norma: Norma) -> list[str]:
     titulo = normalizar(f"{norma.titulo} {norma.sumilla or ''} {norma.numero or ''}")
     sector = normalizar(norma.sector)
     if _ACTO_DE_PERSONAL.search(normalizar(norma.titulo).strip()):
-        return ["otros"]
+        return ["personal"]
 
     ramas: list[str] = []
     for patron, destino in POR_PALABRAS:

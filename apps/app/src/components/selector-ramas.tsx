@@ -5,12 +5,16 @@ import { ThemedText } from './themed-text';
 
 import { Spacing } from '@/constants/theme';
 import { useEscritorio } from '@/hooks/use-escritorio';
-import { RAMAS } from '@/lib/ramas';
+import { RAMAS, SIN_RAMA } from '@/lib/ramas';
 
 type Props = {
   seleccion: string[];
   alCambiar: (seleccion: string[]) => void;
-  incluirOtros?: boolean;
+  /**
+   * Cantidad por rama. Si se pasa, cada opción muestra su cantidad, aparecen las categorías sin rama y se
+   * esconden las ramas sin resultados, para que el filtro sirva para clasificar.
+   */
+  conteos?: { total: number; porRama: Record<string, number> };
   /** Rótulo sobre las opciones; null cuando la pantalla ya pone el suyo. */
   titulo?: string | null;
 };
@@ -22,11 +26,16 @@ type Props = {
 export function SelectorRamas({
   seleccion,
   alCambiar,
-  incluirOtros = false,
+  conteos,
   titulo = 'Filtrar por rama del derecho',
 }: Props) {
   const escritorio = useEscritorio();
-  const ramas = RAMAS.filter((r) => incluirOtros || r.slug !== 'otros');
+  const ramas = RAMAS.filter((r) =>
+    conteos
+      ? (conteos.porRama[r.slug] ?? 0) > 0 || seleccion.includes(r.slug)
+      : !SIN_RAMA.includes(r.slug),
+  );
+  const conCantidad = (nombre: string, n?: number) => (conteos ? `${nombre} · ${n ?? 0}` : nombre);
   const alternar = (slug: string) =>
     alCambiar(
       seleccion.includes(slug) ? seleccion.filter((s) => s !== slug) : [...seleccion, slug],
@@ -34,11 +43,15 @@ export function SelectorRamas({
 
   const opciones = (
     <>
-      <Chip etiqueta="Todas" activo={seleccion.length === 0} alPresionar={() => alCambiar([])} />
+      <Chip
+        etiqueta={conCantidad('Todas', conteos?.total)}
+        activo={seleccion.length === 0}
+        alPresionar={() => alCambiar([])}
+      />
       {ramas.map((r) => (
         <Chip
           key={r.slug}
-          etiqueta={r.nombre}
+          etiqueta={conCantidad(r.nombre, conteos?.porRama[r.slug])}
           activo={seleccion.includes(r.slug)}
           alPresionar={() => alternar(r.slug)}
         />

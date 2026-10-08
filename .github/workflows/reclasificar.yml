@@ -1,0 +1,36 @@
+name: Reclasificar normas
+
+# Vuelve a clasificar por rama las normas guardadas cuando cambian las reglas
+# del clasificador. Se puede repetir sin daño.
+on:
+  workflow_dispatch:
+    inputs:
+      seco:
+        description: "Solo contar los cambios, sin guardar"
+        type: boolean
+        default: false
+
+concurrency:
+  group: reclasificar
+  cancel-in-progress: false
+
+jobs:
+  reclasificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    defaults:
+      run:
+        working-directory: ingesta
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -e .
+      - name: Reclasificar
+        env:
+          SECO: ${{ inputs.seco }}
+        run: python -m ingesta reclasificar $([ "$SECO" = "true" ] && echo --seco)
