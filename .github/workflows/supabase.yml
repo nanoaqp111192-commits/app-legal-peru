@@ -35,9 +35,57 @@ jobs:
           if [ ${#faltan[@]} -gt 0 ]; then
             echo "::warning::Faltan los secretos: ${faltan[*]}. No se aplicó nada."
             echo "listo=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "listo=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          # Quita espacios y saltos de línea que suelen colarse al pegar.
+          for s in SUPABASE_DB_URL SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY; do
+            v="$(printf '%s' "${!s}" | tr -d '[:space:]')"
+            v="${v#[\"\']}"; v="${v%[\"\']}"
+            [ "$s" = SUPABASE_URL ] && v="${v%/}"
+            echo "::add-mask::$v"
+            echo "$s=$v" >> "$GITHUB_ENV"
+            declare "$s=$v"
+          done
+          # Al pegar desde un chat la cadena a veces llega como enlace: [postgresql://...](mailto:...).
+          if [[ "$SUPABASE_DB_URL" =~ ^\[(postgres(ql)?://[^]]+)\]\(.*\)$ ]]; then
+            SUPABASE_DB_URL="${BASH_REMATCH[1]}"
+            echo "::add-mask::$SUPABASE_DB_URL"
+            echo "SUPABASE_DB_URL=$SUPABASE_DB_URL" >> "$GITHUB_ENV"
+            echo "::notice::SUPABASE_DB_URL venía pegada como enlace; se usó solo la cadena."
+          fi
+          # Revisa la forma de cada secreto sin mostrar su valor.
+          primero="${SUPABASE_DB_URL:0:1}"
+          [[ "$primero" =~ [A-Za-z0-9] ]] || echo "SUPABASE_DB_URL empieza con el signo '$primero' y mide ${#SUPABASE_DB_URL} caracteres."
+          errores=()
+          case "$SUPABASE_DB_URL" in
+            postgresql://*@*|postgres://*@*) ;;
+            *) errores+=("SUPABASE_DB_URL debe empezar con postgresql:// (cadena 'Session pooler' de Connect).") ;;
+          esac
+          case "$SUPABASE_DB_URL" in
+            *YOUR-PASSWORD*|*\[*|*\]*) errores+=("SUPABASE_DB_URL aún tiene [YOUR-PASSWORD] o corchetes: reemplázalo por la contraseña, sin corchetes.") ;;
+          esac
+          resto="${SUPABASE_DB_URL#*://}"
+          [ "$(printf '%s' "$resto" | tr -cd '@' | wc -c)" -le 1 ] || errores+=("La contraseña de SUPABASE_DB_URL contiene '@': cámbiala en Supabase por una sin símbolos.")
+          host="${resto##*@}"; host="${host%%/*}"; host="${host%%:*}"
+          case "$host" in
+            *.pooler.supabase.com) ;;
+            *) errores+=("SUPABASE_DB_URL apunta a '${host:-vacío}': usa la cadena 'Session pooler', que termina en pooler.supabase.com.") ;;
+          esac
+          case "$SUPABASE_URL" in
+            https://*.supabase.co) ;;
+            *) errores+=("SUPABASE_URL debe ser https://<proyecto>.supabase.co, sin nada al final.") ;;
+          esac
+          case "$SUPABASE_SERVICE_ROLE_KEY" in
+            sb_secret_*|eyJ*) ;;
+            sb_publishable_*) errores+=("SUPABASE_SERVICE_ROLE_KEY tiene la clave pública: debe ser la secreta (sb_secret_...).") ;;
+            *) errores+=("SUPABASE_SERVICE_ROLE_KEY no parece una clave de Supabase (sb_secret_...).") ;;
+          esac
+          if [ ${#errores[@]} -gt 0 ]; then
+            for e in "${errores[@]}"; do echo "::error::$e"; done
+            exit 1
+          fi
+          echo "Secretos con forma correcta (base: $host)."
+          echo "listo=true" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
         if: steps.secretos.outputs.listo == 'true'
       - uses: supabase/setup-cli@v1
