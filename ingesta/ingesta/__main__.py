@@ -5,6 +5,7 @@
     python -m ingesta tc [--seco] [--maximo N]
     python -m ingesta modelos [--validar]
     python -m ingesta compilados [--seco]
+    python -m ingesta reparar-textos [--seco]
 
 ``diaria`` trae las normas del día de El Peruano, las clasifica, las guarda
 y envía los avisos; también registra qué normas anteriores derogan o
@@ -13,6 +14,8 @@ modifican. ``historico`` hace lo mismo día por día hacia atrás, sin avisos
 por el Tribunal Constitucional (en seco, solo las 2 primeras: el TC pide 30
 segundos entre pedidos). ``compilados`` revisa si cambió algún PDF de las
 "Normas actualizadas" de El Peruano (en seco, lista y calcula la huella de 2).
+``reparar-textos`` limpia el texto de las normas guardadas antes de leer el
+visor de la ficha (menús de la página y negritas partidas en varias líneas).
 Con ``--seco`` solo imprimen lo que harían.
 """
 
@@ -188,6 +191,36 @@ def compilados(seco: bool) -> int:
     return 1 if fallidos > len(actuales) // 10 else 0
 
 
+def reparar_textos(seco: bool, lote: int = 500) -> int:
+    from ingesta.supabase import Supabase
+
+    db = Supabase()
+    ultimo, revisadas, reparadas = 0, 0, 0
+    while True:
+        filas = db.leer(
+            "normas",
+            select="id,titulo,texto",
+            texto="not.is.null",
+            id=f"gt.{ultimo}",
+            order="id",
+            limit=str(lote),
+        )
+        if not filas:
+            break
+        for fila in filas:
+            limpio = el_peruano.limpiar_texto_guardado(fila["texto"], fila["titulo"])
+            if limpio != fila["texto"]:
+                reparadas += 1
+                if seco and reparadas <= 2:
+                    print(f"--- norma {fila['id']}\n{limpio[:600]}\n")
+                if not seco:
+                    db.actualizar("normas", {"texto": limpio}, id=f"eq.{fila['id']}")
+        revisadas += len(filas)
+        ultimo = filas[-1]["id"]
+        print(f"{revisadas} revisadas, {reparadas} {'por reparar' if seco else 'reparadas'}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="ingesta")
     sub = parser.add_subparsers(dest="orden", required=True)
@@ -203,6 +236,8 @@ def main(argv: list[str] | None = None) -> int:
     p_tc.add_argument("--maximo", type=int, default=None)
     p_comp = sub.add_parser("compilados")
     p_comp.add_argument("--seco", action="store_true")
+    p_reparar = sub.add_parser("reparar-textos")
+    p_reparar.add_argument("--seco", action="store_true")
     p_modelos = sub.add_parser("modelos")
     p_modelos.add_argument("--validar", action="store_true")
     args = parser.parse_args(argv)
@@ -215,6 +250,8 @@ def main(argv: list[str] | None = None) -> int:
         return tribunal(args.seco, args.maximo)
     if args.orden == "compilados":
         return compilados(args.seco)
+    if args.orden == "reparar-textos":
+        return reparar_textos(args.seco)
 
     problemas = [e for m in modelos.leer() for e in modelos.errores(m)]
     if problemas:

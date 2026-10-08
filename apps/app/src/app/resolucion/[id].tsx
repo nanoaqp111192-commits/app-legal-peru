@@ -2,7 +2,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { Cargando, MensajeError, Vacio } from '@/components/avisos';
-import { ExternalLink } from '@/components/external-link';
+import { BotonEnlace } from '@/components/boton';
 import { Pantalla } from '@/components/pantalla';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -57,14 +57,22 @@ export default function DetalleResolucion() {
               La versión oficial es la publicada por el Tribunal Constitucional. Revísala antes de
               citarla.
             </ThemedText>
-            {r.url_pdf ? (
-              <ExternalLink href={r.url_pdf}>
-                <ThemedText type="linkPrimary">Ver PDF oficial</ThemedText>
-              </ExternalLink>
-            ) : null}
-            <ExternalLink href={r.url_oficial}>
-              <ThemedText type="linkPrimary">Ver la ficha del expediente en el TC</ThemedText>
-            </ExternalLink>
+            <View style={styles.acciones}>
+              {r.url_pdf ? (
+                <BotonEnlace
+                  href={r.url_pdf}
+                  externo
+                  icono="descargar"
+                  etiqueta="Ver PDF oficial"
+                />
+              ) : null}
+              <BotonEnlace
+                href={r.url_oficial}
+                externo
+                variante={r.url_pdf ? 'secundario' : 'primario'}
+                etiqueta="Ficha del expediente en el TC"
+              />
+            </View>
           </ThemedView>
 
           {r.texto ? (
@@ -90,6 +98,7 @@ function Dato({ etiqueta, valor }: { etiqueta: string; valor: string }) {
 }
 
 const styles = StyleSheet.create({
+  acciones: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
   bloque: { gap: Spacing.one },
   titulo: { fontSize: 20, lineHeight: 28, fontWeight: 600 },
   caja: { padding: Spacing.three, borderRadius: Spacing.three, gap: Spacing.one },

@@ -5,7 +5,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { AvisoSinConexion } from './avisos';
 import { ThemedView } from './themed-view';
 
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import {
+  AnchoAmplio,
+  AnchoLectura,
+  BottomTabInset,
+  MaxContentWidth,
+  Spacing,
+} from '@/constants/theme';
+import { useEscritorio } from '@/hooks/use-escritorio';
 
 type Props = {
   children: ReactNode;
@@ -13,21 +20,25 @@ type Props = {
   alRefrescar?: () => void;
   // En las pantallas apiladas (detalle) el encabezado ya respeta el área segura superior.
   conEncabezado?: boolean;
+  /** Columna angosta para leer textos largos (normas, resoluciones). */
+  lectura?: boolean;
 };
 
-export function Pantalla({ children, refrescando, alRefrescar, conEncabezado }: Props) {
+export function Pantalla({ children, refrescando, alRefrescar, conEncabezado, lectura }: Props) {
+  const escritorio = useEscritorio();
+  const ancho = !escritorio ? MaxContentWidth : lectura ? AnchoLectura : AnchoAmplio;
   return (
     <ThemedView style={styles.fondo}>
       <SafeAreaView style={styles.fondo} edges={conEncabezado ? ['left', 'right'] : undefined}>
         <ScrollView
-          contentContainerStyle={[styles.contenido, !conEncabezado && styles.bajoPestanasWeb]}
+          contentContainerStyle={[styles.contenido, escritorio && styles.contenidoEscritorio]}
           keyboardShouldPersistTaps="handled"
           refreshControl={
             alRefrescar ? (
               <RefreshControl refreshing={!!refrescando} onRefresh={alRefrescar} />
             ) : undefined
           }>
-          <View style={styles.columna}>
+          <View style={[styles.columna, { maxWidth: ancho }]}>
             <AvisoSinConexion />
             {children}
           </View>
@@ -44,7 +55,9 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.three,
     paddingBottom: BottomTabInset + Spacing.five,
   },
-  // En web la barra de pestañas flota sobre el contenido.
-  bajoPestanasWeb: process.env.EXPO_OS === 'web' ? { paddingTop: 88 } : {},
-  columna: { width: '100%', maxWidth: MaxContentWidth, alignSelf: 'center', gap: Spacing.three },
+  contenidoEscritorio: {
+    paddingHorizontal: Spacing.five,
+    paddingTop: Spacing.five,
+  },
+  columna: { width: '100%', alignSelf: 'center', gap: Spacing.three },
 });

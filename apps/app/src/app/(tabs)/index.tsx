@@ -2,19 +2,23 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { AvisoDemo, Cargando, MensajeError, Vacio } from '@/components/avisos';
-import { Chip } from '@/components/chip';
+import { BotonEnlace } from '@/components/boton';
+import { Interruptor } from '@/components/interruptor';
 import { Pantalla } from '@/components/pantalla';
 import { SelectorRamas } from '@/components/selector-ramas';
 import { TarjetaCompilado } from '@/components/tarjeta-compilado';
 import { TarjetaNorma } from '@/components/tarjeta-norma';
 import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
 import { Spacing } from '@/constants/theme';
 import { useCarga } from '@/hooks/use-carga';
+import { useEscritorio } from '@/hooks/use-escritorio';
 import { cambiosRecientes } from '@/lib/compilados';
 import { listarCompilados, normasDeFecha, ultimaFechaConNormas } from '@/lib/datos';
 import { fechaLarga, hoyEnLima } from '@/lib/fechas';
 
 export default function Hoy() {
+  const escritorio = useEscritorio();
   const [ramas, setRamas] = useState<string[]>([]);
   const [verDesignaciones, setVerDesignaciones] = useState(false);
 
@@ -47,39 +51,37 @@ export default function Hoy() {
   );
   const ocultas = (datos?.normas.length ?? 0) - visibles.length;
 
-  return (
-    <Pantalla refrescando={cargando && !!datos} alRefrescar={recargarTodo}>
-      <View style={styles.cabecera}>
-        <ThemedText type="subtitle">Normas del día</ThemedText>
-        {datos ? (
-          <ThemedText themeColor="textSecondary">
-            {datos.fecha === datos.hoy
-              ? `Hoy, ${fechaLarga(datos.fecha)}`
-              : `Última edición: ${fechaLarga(datos.fecha)}`}
-          </ThemedText>
-        ) : null}
-      </View>
-      <AvisoDemo />
+  const filtros = (
+    <>
       <SelectorRamas seleccion={ramas} alCambiar={setRamas} />
-      <View style={styles.fila}>
-        <Chip
-          etiqueta={verDesignaciones ? 'Ocultar designaciones' : 'Ver designaciones y otros'}
-          activo={verDesignaciones}
-          alPresionar={() => setVerDesignaciones((v) => !v)}
-        />
-      </View>
+      <Interruptor
+        etiqueta="Incluir designaciones y otras normas sin rama"
+        detalle="Nombramientos, encargos, viajes y similares"
+        valor={verDesignaciones}
+        alCambiar={setVerDesignaciones}
+      />
+    </>
+  );
 
-      {compilados.datos?.length ? (
-        <View style={styles.cabecera}>
-          <ThemedText type="smallBold">Textos actualizados que cambiaron esta semana</ThemedText>
-          {compilados.datos.map((c) => (
-            <TarjetaCompilado key={c.id} compilado={c} />
-          ))}
-        </View>
-      ) : null}
+  const actualizados = compilados.datos?.length ? (
+    <View style={styles.seccion}>
+      <ThemedText type="smallBold">Textos actualizados que cambiaron esta semana</ThemedText>
+      {compilados.datos.map((c) => (
+        <TarjetaCompilado key={c.id} compilado={c} />
+      ))}
+    </View>
+  ) : null;
 
+  const lista = (
+    <View style={styles.seccion}>
       {cargando && !datos ? <Cargando /> : null}
       {error ? <MensajeError error={error} /> : null}
+      {datos ? (
+        <ThemedText type="small" themeColor="textSecondary">
+          {visibles.length} de {datos.normas.length} normas publicadas
+          {ocultas > 0 ? ` (${ocultas} ocultas por los filtros)` : ''}
+        </ThemedText>
+      ) : null}
       {datos && !visibles.length ? (
         <Vacio>
           {datos.normas.length
@@ -90,17 +92,64 @@ export default function Hoy() {
       {visibles.map((n) => (
         <TarjetaNorma key={n.id} norma={n} />
       ))}
-      {datos && ocultas > 0 ? (
-        <ThemedText type="small" themeColor="textSecondary" style={styles.pie}>
-          {ocultas} {ocultas === 1 ? 'norma oculta' : 'normas ocultas'} por los filtros.
-        </ThemedText>
-      ) : null}
+    </View>
+  );
+
+  return (
+    <Pantalla refrescando={cargando && !!datos} alRefrescar={recargarTodo}>
+      <View style={styles.cabecera}>
+        <ThemedText type="subtitle">Normas del día</ThemedText>
+        {datos ? (
+          <ThemedText themeColor="textSecondary">
+            {datos.fecha === datos.hoy
+              ? `Diario oficial El Peruano de hoy, ${fechaLarga(datos.fecha)}`
+              : `Última edición publicada: ${fechaLarga(datos.fecha)}`}
+          </ThemedText>
+        ) : null}
+      </View>
+      <AvisoDemo />
+
+      {escritorio ? (
+        <View style={styles.columnas}>
+          <View style={styles.principal}>{lista}</View>
+          <View style={styles.lateral}>
+            <ThemedView type="backgroundElement" style={styles.panel}>
+              {filtros}
+            </ThemedView>
+            {actualizados}
+            <ThemedView type="backgroundElement" style={styles.panel}>
+              <ThemedText type="smallBold">Herramientas</ThemedText>
+              <BotonEnlace
+                href="/plazos"
+                icono="plazos"
+                variante="secundario"
+                etiqueta="Calcular un plazo"
+              />
+              <BotonEnlace
+                href="/modelos"
+                icono="modelos"
+                variante="secundario"
+                etiqueta="Redactar un escrito"
+              />
+            </ThemedView>
+          </View>
+        </View>
+      ) : (
+        <>
+          {filtros}
+          {actualizados}
+          {lista}
+        </>
+      )}
     </Pantalla>
   );
 }
 
 const styles = StyleSheet.create({
   cabecera: { gap: Spacing.one },
-  fila: { flexDirection: 'row' },
-  pie: { textAlign: 'center' },
+  seccion: { gap: Spacing.three },
+  columnas: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.five },
+  principal: { flex: 1, minWidth: 0 },
+  lateral: { width: 340, gap: Spacing.four },
+  panel: { padding: Spacing.three, borderRadius: Spacing.three, gap: Spacing.three },
 });

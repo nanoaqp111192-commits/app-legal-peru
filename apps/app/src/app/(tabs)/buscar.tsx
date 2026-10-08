@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { AvisoDemo, Cargando, MensajeError, Vacio } from '@/components/avisos';
+import { CampoBusqueda } from '@/components/campo-busqueda';
 import { Chip } from '@/components/chip';
 import { Pantalla } from '@/components/pantalla';
+import { Rejilla } from '@/components/rejilla';
+import { Segmentos } from '@/components/segmentos';
 import { SelectorRamas } from '@/components/selector-ramas';
 import { TarjetaCompilado } from '@/components/tarjeta-compilado';
 import { TarjetaNorma } from '@/components/tarjeta-norma';
@@ -13,7 +16,6 @@ import { ThemedText } from '@/components/themed-text';
 import { Spacing } from '@/constants/theme';
 import { PROCESOS_TC } from '@/data/jurisprudencia-demo';
 import { useCarga } from '@/hooks/use-carga';
-import { useTheme } from '@/hooks/use-theme';
 import { filtrarCompilados } from '@/lib/compilados';
 import {
   buscarJurisprudencia,
@@ -35,7 +37,6 @@ type Resultados =
   | null;
 
 export default function Buscar() {
-  const tema = useTheme();
   const [fuente, setFuente] = useState<Fuente>('normas');
   const [texto, setTexto] = useState('');
   const [consulta, setConsulta] = useState('');
@@ -74,37 +75,21 @@ export default function Buscar() {
   return (
     <Pantalla>
       <ThemedText type="subtitle">Buscar</ThemedText>
-      <View style={styles.fila}>
-        <Chip
-          etiqueta="Normas"
-          activo={fuente === 'normas'}
-          alPresionar={() => cambiarFuente('normas')}
-        />
-        <Chip
-          etiqueta="Textos actualizados"
-          activo={fuente === 'na'}
-          alPresionar={() => cambiarFuente('na')}
-        />
-        <Chip
-          etiqueta="Tribunal Constitucional"
-          activo={fuente === 'tc'}
-          alPresionar={() => cambiarFuente('tc')}
-        />
-        <Chip
-          etiqueta="Corte Suprema"
-          activo={fuente === 'cs'}
-          alPresionar={() => cambiarFuente('cs')}
-        />
-        <Chip
-          etiqueta="Tribunales administrativos"
-          activo={fuente === 'ta'}
-          alPresionar={() => cambiarFuente('ta')}
-        />
-      </View>
+      <Segmentos
+        opciones={[
+          { valor: 'normas', etiqueta: 'Normas' },
+          { valor: 'na', etiqueta: 'Textos actualizados' },
+          { valor: 'tc', etiqueta: 'Tribunal Constitucional' },
+          { valor: 'cs', etiqueta: 'Corte Suprema' },
+          { valor: 'ta', etiqueta: 'Tribunales administrativos' },
+        ]}
+        valor={fuente}
+        alCambiar={cambiarFuente}
+      />
       {!esPrecedente(fuente) ? <AvisoDemo /> : null}
-      <TextInput
-        value={texto}
-        onChangeText={setTexto}
+      <CampoBusqueda
+        valor={texto}
+        alCambiar={setTexto}
         placeholder={
           fuente === 'na'
             ? 'Ley o tema (ej.: 29497, sociedades, CTS)'
@@ -116,16 +101,9 @@ export default function Buscar() {
                   ? 'Número o tema (ej.: intereses moratorios, idoneidad, penalidad)'
                   : 'Número, título o tema (ej.: 32999, desalojo, CTS)'
         }
-        placeholderTextColor={tema.textSecondary}
-        returnKeyType="search"
-        autoCorrect={false}
-        accessibilityLabel={
+        etiqueta={
           fuente === 'normas' || fuente === 'na' ? 'Buscar normas' : 'Buscar jurisprudencia'
         }
-        style={[
-          styles.entrada,
-          { color: tema.text, borderColor: tema.border, backgroundColor: tema.backgroundElement },
-        ]}
       />
       {fuente === 'normas' ? <SelectorRamas seleccion={ramas} alCambiar={setRamas} /> : null}
       {esPrecedente(fuente) ? (
@@ -179,29 +157,21 @@ export default function Buscar() {
       {activa && cargando ? <Cargando /> : null}
       {error ? <MensajeError error={error} /> : null}
       {activa && !cargando && datos?.lista.length === 0 ? <Vacio>Sin resultados.</Vacio> : null}
-      {!error && datos?.fuente === 'normas'
-        ? datos.lista.map((n) => <TarjetaNorma key={n.id} norma={n} mostrarFecha />)
-        : null}
-      {!error && datos?.fuente === 'na'
-        ? datos.lista.map((c) => <TarjetaCompilado key={c.id} compilado={c} />)
-        : null}
-      {!error && datos?.fuente === 'tc'
-        ? datos.lista.map((r) => <TarjetaResolucion key={r.id} resolucion={r} />)
-        : null}
-      {!error && (datos?.fuente === 'cs' || datos?.fuente === 'ta')
-        ? datos.lista.map((p) => <TarjetaPrecedente key={p.id} precedente={p} />)
-        : null}
+      {!error && datos?.lista.length ? (
+        <Rejilla>
+          {datos.fuente === 'normas'
+            ? datos.lista.map((n) => <TarjetaNorma key={n.id} norma={n} mostrarFecha />)
+            : datos.fuente === 'na'
+              ? datos.lista.map((c) => <TarjetaCompilado key={c.id} compilado={c} />)
+              : datos.fuente === 'tc'
+                ? datos.lista.map((r) => <TarjetaResolucion key={r.id} resolucion={r} />)
+                : datos.lista.map((p) => <TarjetaPrecedente key={p.id} precedente={p} />)}
+        </Rejilla>
+      ) : null}
     </Pantalla>
   );
 }
 
 const styles = StyleSheet.create({
   fila: { flexDirection: 'row', flexWrap: 'wrap', gap: Spacing.two },
-  entrada: {
-    borderWidth: 1,
-    borderRadius: Spacing.three,
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two + Spacing.one,
-    fontSize: 16,
-  },
 });

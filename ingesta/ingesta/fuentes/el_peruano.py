@@ -148,26 +148,122 @@ def parsear_listado(html: str, dia: date) -> list[Norma]:
     return list(normas.values())
 
 
+# Bloques que forman una línea del texto; lo que va dentro (spans, negritas) se une.
+_BLOQUES = ["h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "tr", "blockquote", "pre"]
+
+
+def _unir(texto: str) -> str:
+    """Espacios simples y sin espacio antes de la puntuación ("Noveno .-" -> "Noveno.-")."""
+    texto = " ".join(texto.split())
+    texto = re.sub(r"\s+([.,;:)\]])", r"\1", texto)
+    return re.sub(r"([(\[“\"])\s+", r"\1", texto)
+
+
+def _lineas_del_visor(visor: Tag) -> list[str]:
+    lineas: list[str] = []
+    for bloque in visor.find_all(_BLOQUES):
+        if bloque.find_parent(_BLOQUES):
+            continue  # ya incluido en su bloque contenedor
+        if "sumilla" in (bloque.get("class") or []):
+            continue  # es el título, que la app muestra aparte
+        if bloque.name == "tr":
+            celdas = [_unir(c.get_text(" ")) for c in bloque.find_all(["td", "th"])]
+            linea = " | ".join(c for c in celdas if c)
+        else:
+            linea = _unir(bloque.get_text(" "))
+        if linea and not _RE_CODIGO_CIERRE.fullmatch(linea):
+            lineas.append(linea)
+    return lineas
+
+
 def parsear_dispositivo(html: str) -> dict:
-    """Extrae título, fecha y texto de la ficha de una norma."""
+    """Extrae título, fecha y texto de la ficha de una norma.
+
+    El texto está en el visor HTML de la ficha (``#visor-html``, con la norma
+    dentro de ``.story``): un párrafo por línea. Si el diario cambia ese
+    diseño, se toma el texto de toda la página sin menús.
+    """
     sopa = BeautifulSoup(html, "html.parser")
     meta = sopa.find("meta", property="og:title") or sopa.find("meta", attrs={"name": "title"})
     titulo = meta["content"].strip() if meta and meta.get("content") else None
-    h1 = sopa.find("h1")
-    if h1:
-        titulo = " ".join(h1.get_text(" ").split())
-
-    for basura in sopa(["script", "style", "nav", "header", "footer", "noscript"]):
-        basura.decompose()
-    contenedor = sopa.find("article") or sopa.find("main") or sopa.body or sopa
-    lineas = [" ".join(linea.split()) for linea in contenedor.get_text("\n").splitlines()]
-    texto = "\n".join(linea for linea in lineas if linea)
+    sumilla = sopa.select_one("#visor-html h1.sumilla") or sopa.find("h1")
+    if sumilla:
+        titulo = _unir(sumilla.get_text(" "))
 
     fecha = None
-    m = re.search(r"Fecha de publicaci[oó]n:?\s*(\d{2}/\d{2}/\d{4})", texto)
+    m = re.search(r"Fecha de publicaci[oó]n:?\s*(\d{2}/\d{2}/\d{4})", sopa.get_text(" "))
     if m:
         fecha = _fecha(m.group(1))
+
+    visor = sopa.select_one("#visor-html .story") or sopa.select_one("#visor-html")
+    if visor:
+        texto = "\n".join(_lineas_del_visor(visor))
+    else:
+        for basura in sopa(["script", "style", "nav", "header", "footer", "noscript"]):
+            basura.decompose()
+        contenedor = sopa.find("article") or sopa.find("main") or sopa.body or sopa
+        lineas = [" ".join(linea.split()) for linea in contenedor.get_text("\n").splitlines()]
+        texto = "\n".join(linea for linea in lineas if linea)
     return {"titulo": titulo, "fecha_publicacion": fecha, "texto": texto}
+
+
+# Código de la publicación al pie de cada norma (p. ej. "2557156-1").
+_RE_CODIGO_CIERRE = re.compile(r"\d{6,8}-\d{1,2}")
+_RE_SOLO_PUNTUACION = re.compile(r"[.\-–—:;,]+")
+_RE_NUMERAL = re.compile(r"(\d{1,3}(\.\d{1,3})*|[a-zA-Z]|[ivxlcdmIVXLCDM]{1,6})[.)]")
+_CABECERA_VISOR = ("PDF", "HTML", "Cuadernillo")
+
+
+def _comparable(texto: str) -> str:
+    return re.sub(r"[^0-9a-záéíóúüñ]", "", texto.lower())
+
+
+def limpiar_texto_guardado(texto: str, titulo: str | None = None) -> str:
+    """Repara el texto que se guardó antes de leer el visor de la ficha.
+
+    Quita la cabecera de la página (PDF / HTML / Cuadernillo / fecha / un título
+    ajeno / la sumilla), el código final de la publicación, y vuelve a unir las
+    líneas que la extracción partió en cada negrita ("Artículo Sexto" / ".-" /
+    "CONSTITUIR..." -> "Artículo Sexto.- CONSTITUIR..."). Es idempotente.
+    """
+    lineas = [linea.strip() for linea in texto.splitlines() if linea.strip()]
+    if tuple(lineas[:3]) == _CABECERA_VISOR:
+        lineas = lineas[3:]
+        if lineas and re.match(r"Fecha de publicaci[oó]n", lineas[0]):
+            lineas = lineas[1:]
+            if lineas and _RE_FECHA.fullmatch(lineas[0]):
+                lineas = lineas[1:]
+        # Sigue un título ajeno (el <title> del documento incrustado) y la sumilla.
+        objetivo = _comparable(titulo or "")
+        corte = None
+        for i, linea in enumerate(lineas[:3]):
+            if objetivo and _comparable(linea) == objetivo:
+                corte = i + 1
+                break
+        if corte is None:
+            corte = 2 if len(lineas) > 2 else 0
+        lineas = lineas[corte:]
+    while lineas and _RE_CODIGO_CIERRE.fullmatch(lineas[-1]):
+        lineas.pop()
+
+    unidas: list[str] = []
+    pegar = False
+    for linea in lineas:
+        if _RE_SOLO_PUNTUACION.fullmatch(linea) and unidas:
+            unidas[-1] = unidas[-1] + linea
+            pegar = linea.endswith("-")
+            continue
+        if pegar:
+            unidas[-1] = f"{unidas[-1]} {linea}"
+            pegar = False
+            continue
+        unidas.append(linea)
+        if _RE_NUMERAL.fullmatch(linea):
+            pegar = True  # "1." / "a)" sueltos van con su texto
+            continue
+        # Un encabezado suelto ("Artículo Segundo.-") va con el párrafo que le sigue.
+        pegar = linea.endswith(".-") and len(linea) < 80
+    return "\n".join(_unir(linea) for linea in unidas)
 
 
 def normas_del_dia(dia: date, con_texto: bool = True) -> list[Norma]:

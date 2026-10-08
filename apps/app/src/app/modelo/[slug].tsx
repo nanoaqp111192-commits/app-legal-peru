@@ -139,6 +139,8 @@ export default function EditorModelo() {
       <View style={styles.acciones}>
         <Boton
           etiqueta="Copiar texto"
+          icono="copiar"
+          variante="secundario"
           alPresionar={() =>
             confirmar(async () => {
               await copiar(texto);
@@ -149,6 +151,7 @@ export default function EditorModelo() {
         {process.env.EXPO_OS === 'web' ? (
           <Boton
             etiqueta="Descargar Word"
+            icono="descargar"
             alPresionar={() => confirmar(() => descargarWord(modelo.slug, texto))}
           />
         ) : (
