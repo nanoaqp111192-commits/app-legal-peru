@@ -48,3 +48,41 @@ def test_dispositivo_extrae_titulo_fecha_y_texto_sin_menus():
     assert "Artículo 1. Objeto" in ficha["texto"]
     assert "Buscador El Peruano" not in ficha["texto"]
     assert "var x" not in ficha["texto"]
+
+
+def _cliente(respuestas):
+    import httpx
+
+    def manejar(request):
+        r = respuestas.pop(0)
+        if isinstance(r, Exception):
+            raise r
+        return httpx.Response(r, text="ok")
+
+    return httpx.Client(transport=httpx.MockTransport(manejar))
+
+
+def test_listado_reintenta_cortes_y_errores_del_servidor(monkeypatch):
+    import httpx
+
+    from ingesta.fuentes import el_peruano
+
+    esperas = []
+    monkeypatch.setattr(el_peruano.time, "sleep", esperas.append)
+    corte = httpx.ConnectError("[SSL: UNEXPECTED_EOF_WHILE_READING]")
+    http = _cliente([corte, 503, 200])
+    assert el_peruano.pedir_listado(http, date(2026, 2, 5)) == "ok"
+    assert esperas == list(el_peruano.ESPERAS_REINTENTO[:2])
+
+
+def test_listado_se_rinde_tras_los_reintentos(monkeypatch):
+    import httpx
+    import pytest
+
+    from ingesta.fuentes import el_peruano
+
+    monkeypatch.setattr(el_peruano.time, "sleep", lambda _s: None)
+    corte = httpx.ConnectError("corte")
+    http = _cliente([corte] * (len(el_peruano.ESPERAS_REINTENTO) + 1))
+    with pytest.raises(httpx.ConnectError):
+        el_peruano.pedir_listado(http, date(2026, 2, 5))

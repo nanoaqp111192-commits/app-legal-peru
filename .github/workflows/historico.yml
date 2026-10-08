@@ -12,6 +12,10 @@ on:
       hasta:
         description: "Último día (AAAA-MM-DD). Vacío = ayer en Lima."
         required: false
+      solo_faltantes:
+        description: "Saltar los días que ya tienen normas guardadas"
+        type: boolean
+        default: true
 
 concurrency:
   group: historico
@@ -50,7 +54,8 @@ jobs:
     timeout-minutes: 300
     strategy:
       fail-fast: false
-      max-parallel: 2
+      # Un mes a la vez: con dos en paralelo el diario cortó conexiones (08/10/2026).
+      max-parallel: 1
       matrix:
         tramo: ${{ fromJson(needs.meses.outputs.tramos) }}
     defaults:
@@ -66,4 +71,9 @@ jobs:
           python-version: "3.13"
       - run: pip install -e .
       - name: Cargar ${{ matrix.tramo.desde }} a ${{ matrix.tramo.hasta }}
-        run: python -m ingesta historico --desde "${{ matrix.tramo.desde }}" --hasta "${{ matrix.tramo.hasta }}"
+        env:
+          SOLO_FALTANTES: ${{ inputs.solo_faltantes }}
+        run: |
+          args=(--desde "${{ matrix.tramo.desde }}" --hasta "${{ matrix.tramo.hasta }}")
+          if [ "$SOLO_FALTANTES" = "true" ]; then args+=(--solo-faltantes); fi
+          python -m ingesta historico "${args[@]}"
