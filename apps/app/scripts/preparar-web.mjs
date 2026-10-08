@@ -27,5 +27,7 @@ for (const ruta of paginas(DIST)) {
   copyFileSync(ruta, join(DIST, copia));
   reglas.push(`/${carpeta}/* /${carpeta}/_${parametro}_ 200`);
 }
+// Página 404 que Cloudflare sirve para rutas inexistentes.
+copyFileSync(join(DIST, '+not-found.html'), join(DIST, '404.html'));
 writeFileSync(join(DIST, '_redirects'), `${reglas.join('\n')}\n`);
 console.log(`_redirects con ${reglas.length} rutas:\n${reglas.join('\n')}`);
