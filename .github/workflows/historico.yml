@@ -16,6 +16,10 @@ on:
         description: "Saltar los días que ya tienen normas guardadas"
         type: boolean
         default: true
+      siguientes:
+        description: "Tramos a lanzar al terminar, separados por ';' (AAAA-MM-DD:AAAA-MM-DD)"
+        required: false
+        default: ""
 
 concurrency:
   group: historico
@@ -77,3 +81,24 @@ jobs:
           args=(--desde "${{ matrix.tramo.desde }}" --hasta "${{ matrix.tramo.hasta }}")
           if [ "$SOLO_FALTANTES" = "true" ]; then args+=(--solo-faltantes); fi
           python -m ingesta historico "${args[@]}"
+
+  # Lanza el tramo siguiente al terminar, para encadenar años sin que nadie
+  # tenga que volver a lanzarlo (el grupo de concurrencia solo admite uno en cola).
+  encadenar:
+    needs: cargar
+    if: ${{ always() && inputs.siguientes != '' }}
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          SIGUIENTES: ${{ inputs.siguientes }}
+          SOLO_FALTANTES: ${{ inputs.solo_faltantes }}
+        run: |
+          primero="${SIGUIENTES%%;*}"
+          resto=""
+          if [ "$primero" != "$SIGUIENTES" ]; then resto="${SIGUIENTES#*;}"; fi
+          gh workflow run historico.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME" \
+            -f desde="${primero%%:*}" -f hasta="${primero#*:}" \
+            -f solo_faltantes="$SOLO_FALTANTES" -f siguientes="$resto"
