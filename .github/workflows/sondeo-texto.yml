@@ -24,6 +24,12 @@ jobs:
           g "afectaciones?select=*&limit=200" > afectaciones.json
           ls -la
           curl -sL -A "Mozilla/5.0" "$(jq -r '.[0].url_oficial' normas-texto.json)" -o ficha.html
+          for d in 02/01/2024 03/01/2022 04/01/2021 02/01/2020 03/01/2018 04/01/2016 05/01/2015 02/01/2014 03/01/2012 04/01/2010 05/01/2005 03/01/2000 05/01/1995; do
+            n=$(curl -s -A "Mozilla/5.0" -X POST https://diariooficial.elperuano.pe/Normas/Filtro -d "cddesde=$d&cdhasta=$d&X-Requested-With=XMLHttpRequest" | grep -oE "dispositivo/[A-Z]+/[0-9]+-[0-9]+" | sort -u | wc -l)
+            b=$(curl -s -A "Mozilla/5.0" -X POST https://diariooficial.elperuano.pe/Normas/Filtro -d "cddesde=$d&cdhasta=$d&X-Requested-With=XMLHttpRequest" | wc -c)
+            echo "$d $n $b" >> antiguedad.txt
+          done
+          cat antiguedad.txt
       - run: |
           npm i -g playwright@1.56.1 >/dev/null 2>&1 && npx playwright install --with-deps chromium >/dev/null 2>&1
           cat > cap.mjs <<'JS'
