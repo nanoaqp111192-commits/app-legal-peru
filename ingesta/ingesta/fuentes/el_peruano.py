@@ -14,6 +14,7 @@ diario cambia su web.
 
 from __future__ import annotations
 
+import hashlib
 import re
 import time
 from datetime import date, datetime, timedelta, timezone
@@ -152,6 +153,68 @@ def parsear_listado(html: str, dia: date) -> list[Norma]:
             edicion_extraordinaria="extraordinaria" in texto_bloque,
             url_oficial=f"https://busquedas.elperuano.pe/dispositivo/{id_fuente}",
             url_pdf=(pdf.get("href") or pdf.get("data-url")) if pdf else None,
+        )
+    return list(normas.values()) or _listado_sin_fichas(sopa, dia)
+
+
+# En el listado de 2008 a 2015 la imagen de cada norma lleva su identificador.
+_RE_ID_PORTADA = re.compile(r"PortadaFull/(?!1825/)\d{4}/\d{2}/\d{2}/(\d+-\d+)_Portada")
+
+
+def _listado_sin_fichas(sopa: BeautifulSoup, dia: date) -> list[Norma]:
+    """Listados anteriores a 2016: sin enlace propio por norma.
+
+    Cada norma es un ``article`` con sector (h4), número (h5), fecha y sumilla.
+    Si la imagen trae el identificador (2008, 2012 a 2015) se enlaza su ficha;
+    si no, el identificador se arma con la fecha y los datos de la norma, y el
+    enlace oficial es el cuadernillo del día.
+    """
+    normas: dict[str, Norma] = {}
+    cuadernillo = f"https://busquedas.elperuano.pe/cuadernillo/NL/{dia:%Y%m%d}"
+    for articulo in sopa.select("article.edicionesoficiales_articulos"):
+        texto = articulo.select_one(".ediciones_texto") or articulo
+        encabezado = texto.find("h4")
+        sector = " ".join(encabezado.get_text(" ").split()) if encabezado else None
+        h5 = texto.find("h5")
+        titulo_enlace = " ".join(h5.get_text(" ").split()) if h5 else ""
+        tipo, numero = separar_titulo(titulo_enlace)
+        if not numero and titulo_enlace:
+            # Antes de 2008 el número suele venir sin "N°": "ACUERDO 121-2004-CR/GR-LL".
+            numero = titulo_enlace
+            m = re.match(r"([^\d]+?)\s+\d", titulo_enlace)
+            tipo = m.group(1) if m else None
+        parrafos = [" ".join(p.get_text(" ").split()) for p in texto.find_all("p")]
+        fecha = next((f for f in map(_fecha, parrafos) if f), None) or dia
+        sumilla = next((p for p in parrafos if p and not _RE_FECHA.search(p) and len(p) > 15), None)
+        if not (sumilla or titulo_enlace):
+            continue
+
+        imagen = articulo.find("img", src=_RE_ID_PORTADA)
+        descarga = next(
+            (a["href"] for a in articulo.find_all("a", href=True) if "Descarga" in a.get_text()),
+            None,
+        )
+        if imagen:
+            id_fuente = f"NL/{_RE_ID_PORTADA.search(imagen['src']).group(1)}"
+            url_oficial = f"https://busquedas.elperuano.pe/dispositivo/{id_fuente}"
+            descarga = None  # en estos años el enlace de descarga apunta a otra norma
+        else:
+            huella = hashlib.sha1(f"{sector}|{titulo_enlace}|{sumilla}".encode()).hexdigest()
+            id_fuente = f"NL/{dia:%Y%m%d}-{huella[:10]}"
+            url_oficial = cuadernillo
+        if id_fuente in normas:
+            continue
+        normas[id_fuente] = Norma(
+            id_fuente=id_fuente,
+            titulo=sumilla or titulo_enlace,
+            tipo=tipo,
+            numero=numero,
+            sumilla=sumilla,
+            sector=sector,
+            fecha_publicacion=fecha,
+            edicion_extraordinaria="extraordinaria" in texto.get_text(" ").lower(),
+            url_oficial=url_oficial,
+            url_pdf=descarga,
         )
     return list(normas.values())
 

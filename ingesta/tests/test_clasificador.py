@@ -110,3 +110,12 @@ def norma(titulo, sector=None):
 )
 def test_clasificar(titulo, sector, esperado):
     assert clasificar(norma(titulo, sector)) == esperado
+
+
+def test_ratificar_ordenanzas_no_es_acto_de_personal():
+    assert clasificar(norma("Ratifican las Ordenanzas N°s. 57 y 58", "MUNICIPALIDAD DE LIMA")) == [
+        "municipal"
+    ]
+    assert clasificar(norma("Ratifican a Director Regional en el cargo", "EDUCACION")) == [
+        "personal"
+    ]

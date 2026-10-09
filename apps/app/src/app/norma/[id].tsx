@@ -78,7 +78,12 @@ export default function DetalleNorma() {
           {norma.texto ? (
             <TextoNorma texto={norma.texto} titulo={norma.titulo} />
           ) : (
-            <Vacio>El texto completo aún no se ha descargado. Ábrelo en El Peruano.</Vacio>
+            <Vacio>
+              {/* Antes de 2024 El Peruano publica estas normas solo en PDF. */}
+              {norma.fecha_publicacion < '2024-01-01'
+                ? 'El texto de esta norma está en el PDF oficial. Ábrelo en El Peruano.'
+                : 'El texto completo aún no se ha descargado. Ábrelo en El Peruano.'}
+            </Vacio>
           )}
         </>
       ) : null}

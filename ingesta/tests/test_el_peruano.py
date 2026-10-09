@@ -170,3 +170,32 @@ def test_dispositivo_solo_pdf_no_guarda_texto():
     ficha = parsear_dispositivo(html)
     assert ficha["texto"] is None
     assert ficha["fecha_publicacion"] == date(2020, 1, 2)
+
+
+def test_listado_2012_toma_el_identificador_de_la_imagen():
+    # Listado real del 03/01/2012: todas las descargas apuntan a la misma norma.
+    normas = parsear_listado((FIXTURES / "listado_2012.html").read_text(), date(2012, 1, 3))
+    assert len(normas) == 41
+    ley = normas[0]
+    assert ley.id_fuente == "NL/736089-1"
+    assert ley.url_oficial == "https://busquedas.elperuano.pe/dispositivo/NL/736089-1"
+    assert (ley.tipo, ley.numero) == ("LEY", "LEY N° 29824")
+    assert ley.titulo == "Ley de la Justicia de Paz"
+    assert ley.sector == "CONGRESO DE LA REPUBLICA"
+    assert ley.url_pdf is None
+
+
+def test_listado_2005_arma_identificador_estable_y_enlaza_el_cuadernillo():
+    html = (FIXTURES / "listado_2005.html").read_text()
+    normas = parsear_listado(html, date(2005, 1, 5))
+    assert len(normas) == 51
+    assert len({n.id_fuente for n in normas}) == 51
+    acuerdo = normas[0]
+    assert acuerdo.id_fuente.startswith("NL/20050105-")
+    assert acuerdo.url_oficial == "https://busquedas.elperuano.pe/cuadernillo/NL/20050105"
+    assert (acuerdo.tipo, acuerdo.numero) == ("ACUERDO", "ACUERDO 121-2004-CR/GR-LL")
+    assert acuerdo.fecha_publicacion == date(2005, 1, 5)
+    # Repetir la lectura da los mismos identificadores (la carga no duplica).
+    assert [n.id_fuente for n in parsear_listado(html, date(2005, 1, 5))] == [
+        n.id_fuente for n in normas
+    ]
