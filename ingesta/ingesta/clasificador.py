@@ -103,7 +103,8 @@ POR_PALABRAS: list[tuple[str, tuple[str, ...]]] = [
 # improcedente ... y cesan por límite de edad").
 _ACTO_DE_PERSONAL = re.compile(
     r"^(designan|formalizan (la )?designacion|dan por concluid[oa]s?|dejan sin efecto (la )?"
-    r"designacion|aceptan (la )?renuncia|encargan|autorizan viaje|nombran|ratifican"
+    r"designacion|aceptan (la )?renuncia|encargan|autorizan viaje|nombran"
+    r"|ratifican (a|al|en el cargo)"
     r"|delegan facultades|cesan|conceden licencia|convocan a ciudadan|restituyen credencial"
     r"|autorizan mision|formalizan acuerdo que aprueba la designacion"
     r"|acuerdo adoptado sobre directores)"
