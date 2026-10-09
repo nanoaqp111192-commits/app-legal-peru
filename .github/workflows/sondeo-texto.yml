@@ -24,17 +24,18 @@ jobs:
           g "afectaciones?select=*&limit=200" > afectaciones.json
           ls -la
           curl -sL -A "Mozilla/5.0" "$(jq -r '.[0].url_oficial' normas-texto.json)" -o ficha.html
-          for y in 2024 2023 2022 2021 2020 2019 2018 2017 2016 2015 2014 2013 2012 2011 2010 2008 2005 2002 2000; do
-            d=15/06/$y
+          for y in 2015 2014 2013 2012 2011 2010 2009 2008; do
+            for d in 15/03/$y 15/09/$y; do
             curl -s -A "Mozilla/5.0" -X POST https://diariooficial.elperuano.pe/Normas/Filtro -d "cddesde=$d&cdhasta=$d&X-Requested-With=XMLHttpRequest" -o l.html
-            echo "$d disp=$(grep -oE 'dispositivo/[A-Z]+/[0-9]+-[0-9]+' l.html | sort -u | wc -l) nl=$(grep -oE 'normaslegales/[^\"]+-[0-9]+-[0-9]+/\"' l.html | sort -u | wc -l) portada=$(grep -oE 'NormasElperuano/Portada/[^\"]+' l.html | sort -u | wc -l) fechas=$(grep -c 'Fecha:' l.html) bytes=$(wc -c < l.html)" >> antiguedad.txt
+            echo "$d items=$(grep -c ediciones_texto l.html) ids=$(grep -oE 'PortadaFull/[0-9]{4}/[^"]+' l.html | grep -v 1825 | sort -u | wc -l) nl=$(grep -oE 'normaslegales/[^\"]+-[0-9]+-[0-9]+/\"' l.html | sort -u | wc -l)" >> antiguedad.txt
+            done
           done
           rm -f l.html
           cat antiguedad.txt
-          curl -sL -A "Mozilla/5.0" "https://busquedas.elperuano.pe/normaslegales/aceptan-renuncia-de-fiscal-adjunto-provincial-penal-de-chucu-resolucion-n-115-2019-mp-fn-jfs-1842040-1/" -o ficha_nl.html
-          curl -sL -A "Mozilla/5.0" "https://busquedas.elperuano.pe/dispositivo/NL/1842040-1" -o ficha_disp_vieja.html
-          curl -sL -A "Mozilla/5.0" "https://elperuano.pe/NormasElperuano/Portada/2012/01/03/735796-1.html" -o portada_2012.html
-          ls -la ficha_* portada_*
+          curl -sL -A "Mozilla/5.0" "https://busquedas.elperuano.pe/dispositivo/NL/736089-1" -o ficha_2012.html
+          curl -sL -A "Mozilla/5.0" "https://busquedas.elperuano.pe/dispositivo/NL/736089-2" -o ficha_2012b.html
+          grep -o '<title>[^<]*' ficha_2012.html ficha_2012b.html
+          ls -la ficha_*
       - run: |
           npm i -g playwright@1.56.1 >/dev/null 2>&1 && npx playwright install --with-deps chromium >/dev/null 2>&1
           cat > cap.mjs <<'JS'
