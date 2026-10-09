@@ -43,3 +43,19 @@
 15/06/2005 disp=0 nl=0 portada=0 fechas=56 bytes=90484
 15/06/2002 disp=0 nl=0 portada=0 fechas=72 bytes=116951
 15/06/2000 disp=0 nl=0 portada=0 fechas=69 bytes=109723
+15/03/2015 items=33 ids=33 nl=0
+15/09/2015 items=38 ids=38 nl=0
+15/03/2014 items=71 ids=71 nl=0
+15/09/2014 items=39 ids=39 nl=0
+15/03/2013 items=82 ids=82 nl=0
+15/09/2013 items=30 ids=30 nl=0
+15/03/2012 items=72 ids=72 nl=0
+15/09/2012 items=63 ids=63 nl=0
+15/03/2011 items=37 ids=0 nl=0
+15/09/2011 items=66 ids=0 nl=0
+15/03/2010 items=21 ids=0 nl=0
+15/09/2010 items=108 ids=0 nl=0
+15/03/2009 items=36 ids=0 nl=0
+15/09/2009 items=40 ids=0 nl=0
+15/03/2008 items=83 ids=83 nl=0
+15/09/2008 items=15 ids=15 nl=0
