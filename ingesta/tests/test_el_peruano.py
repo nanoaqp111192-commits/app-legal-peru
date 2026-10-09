@@ -146,3 +146,27 @@ def test_limpiar_texto_guardado_quita_la_sumilla_aunque_cambie_al_final():
     )
     titulo = "Acceden a solicitud de extradición activa de ciudadano peruano para ser extraditado"
     assert limpiar_texto_guardado(texto, titulo).splitlines()[0] == "RESOLUCIÓN SUPREMA"
+
+
+def test_listado_2016_a_2023_usa_enlaces_normaslegales():
+    # Listado real de El Peruano del 02/01/2023 (formato de 2016 a 2023).
+    normas = parsear_listado((FIXTURES / "listado_2023.html").read_text(), date(2023, 1, 2))
+    assert len(normas) == 14
+    rs = normas[0]
+    assert rs.id_fuente == "NL/2139892-1"
+    assert rs.url_oficial == "https://busquedas.elperuano.pe/dispositivo/NL/2139892-1"
+    assert rs.sector == "PRESIDENCIA DEL CONSEJO DE MINISTROS"
+    assert rs.numero == "RESOLUCION SUPREMA N° 001-2023-PCM"
+    assert rs.edicion_extraordinaria
+    assert not any(n.id_fuente.endswith("/pdf") for n in normas)
+
+
+def test_dispositivo_solo_pdf_no_guarda_texto():
+    html = (
+        '<html><head><meta property="og:title" content="Aceptan renuncia - RESOLUCION - "/>'
+        "</head><body><main>PDF Cuadernillo Fecha de publicación: 02/01/2020"
+        " Cargando visor PDF...</main></body></html>"
+    )
+    ficha = parsear_dispositivo(html)
+    assert ficha["texto"] is None
+    assert ficha["fecha_publicacion"] == date(2020, 1, 2)

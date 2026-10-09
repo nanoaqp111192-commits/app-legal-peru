@@ -27,7 +27,18 @@ URL_LISTADO = "https://diariooficial.elperuano.pe/Normas/Filtro"
 AGENTE = "AppLegalPeru-ingesta/0.1 (+https://github.com/nanoaqp111192-commits/app-legal-peru)"
 PAUSA_ENTRE_PEDIDOS = 1.0  # segundos; no sobrecargar el servidor del diario
 
-_RE_DISPOSITIVO = re.compile(r"busquedas\.elperuano\.pe/dispositivo/([A-Z]+/[\d]+-\d+)")
+# Desde 2024 el listado enlaza a /dispositivo/NL/<id>; de 2016 a 2023, a
+# /normaslegales/<texto>-<id>/. Ambos llevan a la misma ficha /dispositivo/NL/<id>.
+_RE_DISPOSITIVO = re.compile(
+    r"busquedas\.elperuano\.pe/(?:dispositivo/([A-Z]+/\d+-\d+)|normaslegales/[^\"]*?-(\d+-\d+)/?$)"
+)
+
+
+def _id_fuente(href: str) -> str:
+    m = _RE_DISPOSITIVO.search(href)
+    return m.group(1) or f"NL/{m.group(2)}"
+
+
 _RE_FECHA = re.compile(r"(\d{2})/(\d{2})/(\d{4})")
 _RE_NUMERO = re.compile(r"\bN[°º.o]?\s*[\dA-Z]", re.IGNORECASE)
 
@@ -97,10 +108,7 @@ def _bloque(enlace: Tag) -> Tag:
     for padre in enlace.parents:
         if not isinstance(padre, Tag) or padre.name in ("body", "html"):
             break
-        ids = {
-            _RE_DISPOSITIVO.search(a["href"]).group(1)
-            for a in padre.find_all("a", href=_RE_DISPOSITIVO)
-        }
+        ids = {_id_fuente(a["href"]) for a in padre.find_all("a", href=_RE_DISPOSITIVO)}
         if len(ids) > 1:
             break
         if padre.name in ("article", "li") or padre.find(["h4", "h3"]):
@@ -112,7 +120,7 @@ def parsear_listado(html: str, dia: date) -> list[Norma]:
     sopa = BeautifulSoup(html, "html.parser")
     normas: dict[str, Norma] = {}
     for enlace in sopa.find_all("a", href=_RE_DISPOSITIVO):
-        id_fuente = _RE_DISPOSITIVO.search(enlace["href"]).group(1)
+        id_fuente = _id_fuente(enlace["href"])
         if id_fuente in normas:
             continue
         bloque = _bloque(enlace)
@@ -198,6 +206,9 @@ def parsear_dispositivo(html: str) -> dict:
     visor = sopa.select_one("#visor-html .story") or sopa.select_one("#visor-html")
     if visor:
         texto = "\n".join(_lineas_del_visor(visor))
+    elif "Cargando visor PDF" in sopa.get_text(" "):
+        # Normas anteriores a 2024: la ficha solo muestra el PDF, sin texto.
+        texto = None
     else:
         for basura in sopa(["script", "style", "nav", "header", "footer", "noscript"]):
             basura.decompose()
@@ -270,10 +281,14 @@ def limpiar_texto_guardado(texto: str, titulo: str | None = None) -> str:
     return "\n".join(_unir(linea) for linea in unidas)
 
 
+# Antes de 2024 la ficha solo muestra el PDF: no vale la pena pedirla norma por norma.
+PRIMER_DIA_CON_TEXTO = date(2024, 1, 1)
+
+
 def normas_del_dia(dia: date, con_texto: bool = True) -> list[Norma]:
     with cliente() as http:
         normas = parsear_listado(pedir_listado(http, dia), dia)
-        if con_texto:
+        if con_texto and dia >= PRIMER_DIA_CON_TEXTO:
             for norma in normas:
                 time.sleep(PAUSA_ENTRE_PEDIDOS)
                 try:
