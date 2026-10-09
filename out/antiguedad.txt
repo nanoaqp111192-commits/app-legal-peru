@@ -24,3 +24,22 @@
 05/01/2005 0 82397
 03/01/2000 0 11577
 05/01/1995 0 736
+15/06/2024 disp=46 nl=0 portada=0 fechas=46 bytes=75239
+15/06/2023 disp=0 nl=86 portada=0 fechas=86 bytes=156673
+15/06/2022 disp=0 nl=64 portada=0 fechas=65 bytes=119276
+15/06/2021 disp=0 nl=37 portada=0 fechas=37 bytes=68755
+15/06/2020 disp=0 nl=33 portada=0 fechas=33 bytes=63678
+15/06/2019 disp=0 nl=76 portada=0 fechas=76 bytes=138145
+15/06/2018 disp=0 nl=78 portada=0 fechas=79 bytes=140868
+15/06/2017 disp=0 nl=65 portada=0 fechas=65 bytes=116902
+15/06/2016 disp=0 nl=78 portada=0 fechas=78 bytes=138209
+15/06/2015 disp=0 nl=0 portada=0 fechas=43 bytes=70539
+15/06/2014 disp=0 nl=0 portada=0 fechas=42 bytes=69139
+15/06/2013 disp=0 nl=0 portada=2 fechas=90 bytes=145914
+15/06/2012 disp=0 nl=0 portada=2 fechas=82 bytes=134956
+15/06/2011 disp=0 nl=0 portada=2 fechas=45 bytes=72904
+15/06/2010 disp=0 nl=0 portada=0 fechas=28 bytes=45418
+15/06/2008 disp=0 nl=0 portada=0 fechas=23 bytes=37802
+15/06/2005 disp=0 nl=0 portada=0 fechas=56 bytes=90484
+15/06/2002 disp=0 nl=0 portada=0 fechas=72 bytes=116951
+15/06/2000 disp=0 nl=0 portada=0 fechas=69 bytes=109723
